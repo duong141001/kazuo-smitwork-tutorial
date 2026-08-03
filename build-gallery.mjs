@@ -164,90 +164,85 @@ const navScreens = CAT_ORDER.filter((k) => grouped[k]).map((k) => `
       <span class="nav-group">${esc(grouped[k].name)}</span>
       ${grouped[k].items.map((s) => `<a href="#${anchor(s)}" data-link>${esc(shortTitle(s.label))}</a>`).join('\n      ')}`).join('\n');
 
-// Scrum how-to guide for the team. Plain Vietnamese, step-by-step.
+// Scrum methodology (framework only — roles, events, artifacts). Tool steps live
+// in the Kazuo gallery section, kept separate on purpose.
 const scrumGuide = `
     <section class="intro" id="scrum">
-      <h2><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.2-8.5"/><path d="M21 3v6h-6"/></svg></span> Hướng dẫn làm việc theo Scrum trên Kazuo</h2>
-      <p class="lead">Scrum là cách làm việc chia theo từng chu kỳ ngắn (gọi là <b>Sprint</b>, thường 1–2 tuần).
-      Mỗi sprint đội cam kết làm xong một số việc, cuối kỳ nhìn lại và cải thiện. Dưới đây là quy trình chuẩn ánh xạ vào Kazuo.</p>
+      <h2><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.2-8.5"/><path d="M21 3v6h-6"/></svg></span> Nghi thức Scrum đầy đủ</h2>
+      <p class="lead">Scrum là khung làm việc (framework) chia công việc theo từng chu kỳ ngắn gọi là <b>Sprint</b> (thường 1–2 tuần). Mỗi Sprint đội cam kết hoàn thành một phần việc, cuối kỳ nhìn lại và cải thiện liên tục. Phần này mô tả <b>đầy đủ các nghi thức Scrum</b> (vai trò · tài liệu · sự kiện). Cách thao tác cụ thể trên phần mềm nằm ở mục <a href="#tool">Hướng dẫn Tool Kazuo</a>.</p>
 
-      <h3>0. Khái niệm cần nắm (5 từ khóa)</h3>
+      <h3>A. Ba vai trò</h3>
       <ul class="terms">
-        <li><b>Epic</b> — tính năng lớn (vd: "Hệ thống Môn phái"). Chứa nhiều Story.</li>
-        <li><b>Story</b> — một việc mang lại giá trị, làm xong trong 1 sprint (vd: "Luồng đăng nhập").</li>
-        <li><b>Subtask</b> — việc nhỏ chia ra từ Story để dễ làm/dễ chia người.</li>
-        <li><b>Sprint</b> — chu kỳ làm việc cố định (vd 2 tuần) với danh sách việc đã cam kết.</li>
-        <li><b>Estimate</b> — ước lượng thời gian hoàn thành mỗi Story (theo giờ hoặc ngày), để biết sprint có "gánh" nổi không.</li>
+        <li><b>Product Owner (PO)</b> — chủ sản phẩm: quyết định làm gì trước/sau, sắp xếp độ ưu tiên Backlog, đại diện cho quyền lợi khách hàng.</li>
+        <li><b>Scrum Master (SM)</b> — người điều phối: đảm bảo đội theo đúng quy trình, tổ chức các buổi họp, gỡ vướng mắc (impediments) cho đội.</li>
+        <li><b>Nhóm phát triển (Dev Team)</b> — người trực tiếp làm ra sản phẩm: tự tổ chức, cùng nhau cam kết và hoàn thành công việc trong Sprint.</li>
       </ul>
 
-      <h3>1. Chuẩn bị Backlog (trước sprint)</h3>
-      <ol>
-        <li>Vào dự án → tab <b>Backlog</b>.</li>
-        <li>Tạo <b>Epic</b> cho từng nhóm tính năng lớn (nút <b>Create epic</b> ở cột trái).</li>
-        <li>Bấm <b>Tạo Issue</b> / <b>Thêm Story</b> để tạo Story trong Epic. Đặt tên theo mẫu: <i>"Là [vai trò], tôi cần [việc] để [mục đích]"</i> hoặc ngắn gọn rõ ràng.</li>
-        <li>Mở Story, điền <b>Mô tả</b> và <b>tiêu chí hoàn thành</b> (Definition of Done) để ai đọc cũng hiểu thế nào là xong.</li>
-      </ol>
-
-      <h3>2. Lên một Story chuẩn (quan trọng nhất)</h3>
-      <ol>
-        <li>Ở Backlog, bấm vào một Story để mở màn <b>Chi tiết Story</b>.</li>
-        <li>Đặt <b>Ưu tiên</b> (Critical / High / Medium / Low).</li>
-        <li>Gán <b>người Thực hiện</b> (mỗi Story nên có đúng 1 người chịu trách nhiệm chính).</li>
-        <li>Điền <b>Estimate</b> (vd 8h hoặc "8d"). <b>Không để trống</b> — thiếu estimate thì không đo được tải sprint.</li>
-        <li>Đặt <b>Ngày bắt đầu</b> / hạn nếu cần.</li>
-        <li>Chia <b>Subtask</b> nếu Story lớn; mỗi subtask cũng gán người + estimate.</li>
-        <li>Dùng <b>Nhãn</b> để phân loại (vd: backend, UI, bug...).</li>
-      </ol>
-
-      <h3>3. Sprint Planning (đầu sprint)</h3>
-      <ol>
-        <li>Tab <b>Backlog</b> → bấm <b>Tạo Sprint</b>, đặt tên + ngày bắt đầu/kết thúc + <b>mục tiêu sprint</b> (Sprint Goal).</li>
-        <li>Kéo các Story ưu tiên cao nhất từ Backlog vào Sprint.</li>
-        <li>Cộng tổng <b>Estimate</b> — đừng nhận quá sức đội. Nếu quá tải, bỏ bớt Story ra.</li>
-        <li>Chốt: mọi Story trong sprint đều có người thực hiện + estimate.</li>
-      </ol>
-
-      <h3>4. Trong sprint (mỗi ngày)</h3>
-      <ol>
-        <li>Mở tab <b>Board</b>: kéo thẻ Story qua các cột <b>TODO → Đang làm → Hoàn thành</b> theo tiến độ thật.</li>
-        <li>Chỉ nên nhận <b>1–2 việc "Đang làm"</b> cùng lúc để tập trung.</li>
-        <li>Cập nhật trạng thái subtask khi làm xong từng phần.</li>
-        <li><b>Daily report</b>: vào <b>Báo cáo công việc</b>, ghi <i>Hôm qua làm gì · Hôm nay làm gì · Vướng mắc gì</i>. Nộp đúng giờ.</li>
-      </ol>
-
+      <h3>B. Ba tài liệu (Artifacts)</h3>
+      <ul class="terms">
+        <li><b>Product Backlog</b> — kho toàn bộ việc cần làm của sản phẩm, sắp theo độ ưu tiên. PO quản lý.</li>
+        <li><b>Sprint Backlog</b> — danh sách việc đội chọn làm trong Sprint hiện tại + kế hoạch thực hiện.</li>
+        <li><b>Increment</b> — phần sản phẩm hoàn chỉnh, dùng được, làm ra sau mỗi Sprint (thỏa <b>Definition of Done</b>).</li>
+      </ul>
       <div class="callout">
-        <b>Daily Meeting — họp đứng 15 phút mỗi ngày</b>
-        <p class="lead" style="margin:8px 0 12px">Đầu ngày cả đội họp nhanh (đứng, đúng 15 phút, cùng giờ cố định) để đồng bộ tiến độ và gỡ vướng mắc sớm. Mỗi người lần lượt trả lời <b>3 câu hỏi</b>:</p>
-        <ol>
-          <li><b>Hôm qua tôi đã làm gì?</b> (đã đẩy được việc nào gần Done)</li>
-          <li><b>Hôm nay tôi sẽ làm gì?</b> (tập trung vào việc nào)</li>
-          <li><b>Tôi đang vướng gì?</b> (ai/cái gì đang cản, cần hỗ trợ gì)</li>
-        </ol>
-        <p class="lead" style="margin:12px 0 6px"><b>Quy tắc giữ họp gọn trong 15 phút:</b></p>
+        <b>Definition of Done (DoD) — "thế nào là xong"</b>
+        <p class="lead" style="margin:8px 0 0">Tiêu chuẩn chung cả đội thống nhất để coi một việc là <b>thật sự hoàn thành</b> (vd: code xong + test pass + review + merge). Mọi Story phải đạt DoD mới được tính Done — tránh cãi nhau "xong rồi mà chưa xong".</p>
+      </div>
+
+      <h3>C. Năm sự kiện (Events)</h3>
+
+      <h4 class="evt">1. Sprint — chu kỳ làm việc</h4>
+      <p class="lead">Khung thời gian cố định (1–2 tuần) chứa tất cả các sự kiện còn lại. Sprint này kết thúc thì Sprint sau bắt đầu ngay, không nghỉ giữa chừng. Độ dài Sprint giữ ổn định để đội có nhịp.</p>
+
+      <h4 class="evt">2. Sprint Planning — họp lập kế hoạch (đầu Sprint)</h4>
+      <ul>
+        <li><b>Ai:</b> cả đội (PO + SM + Dev). <b>Thời lượng:</b> ~2 giờ cho Sprint 1 tuần.</li>
+        <li>Trả lời 2 câu: <i>Sprint này làm được gì?</i> (chọn Story ưu tiên cao) và <i>Làm bằng cách nào?</i> (chia subtask, ước lượng).</li>
+        <li>Chốt <b>Sprint Goal</b> (mục tiêu Sprint) + <b>Sprint Backlog</b>. Không nhận quá sức đội.</li>
+      </ul>
+
+      <h4 class="evt">3. Daily Scrum — họp đứng 15 phút mỗi ngày</h4>
+      <p class="lead" style="margin:0 0 10px">Đầu ngày cả đội họp nhanh (đứng, đúng 15 phút, cùng giờ & chỗ cố định) để đồng bộ tiến độ và gỡ vướng sớm. Mỗi người trả lời <b>3 câu hỏi</b>:</p>
+      <ol>
+        <li><b>Hôm qua tôi đã làm gì?</b> (đẩy được việc nào gần Done)</li>
+        <li><b>Hôm nay tôi sẽ làm gì?</b> (tập trung việc nào)</li>
+        <li><b>Tôi đang vướng gì?</b> (ai/cái gì đang cản, cần hỗ trợ gì)</li>
+      </ol>
+      <div class="callout">
+        <b>Quy tắc giữ Daily gọn trong 15 phút:</b>
         <ul>
-          <li>Đúng giờ, đúng 15 phút — ai cũng đứng để không lan man.</li>
-          <li>Mở tab <b>Board</b> làm nền: nhìn thẻ story để nói cho sát thực tế.</li>
-          <li>Chỉ <b>đồng bộ + nêu vướng mắc</b>, KHÔNG giải quyết vấn đề chi tiết tại chỗ.</li>
-          <li>Vấn đề cần bàn sâu → hẹn "họp sau" (parking lot) với đúng người liên quan.</li>
-          <li>Nội dung 3 câu hỏi trùng với <b>daily report</b> — họp xong ghi luôn vào Báo cáo công việc.</li>
+          <li>Đúng giờ, đúng 15 phút — đứng họp để không lan man.</li>
+          <li>Chỉ <b>đồng bộ + nêu vướng mắc</b>, KHÔNG giải quyết chi tiết tại chỗ.</li>
+          <li>Vấn đề cần bàn sâu → ghi "họp sau" (parking lot), hẹn đúng người liên quan.</li>
+          <li>Do <b>Dev Team</b> chủ trì; Scrum Master đảm bảo họp đúng khuôn khổ.</li>
         </ul>
       </div>
 
-      <h3>5. Cuối sprint</h3>
-      <ol>
-        <li><b>Review</b>: xem lại các Story đã <b>Hoàn thành</b> so với Sprint Goal (dùng tab <b>Summary</b>).</li>
-        <li>Story chưa xong: kéo trả về Backlog hoặc sang sprint kế tiếp.</li>
-        <li><b>Retrospective</b>: đội bàn nhau <i>cái gì tốt / cái gì cần cải thiện / hành động lần sau</i>.</li>
-        <li>Xem lại <b>Sprint History</b> để theo dõi tốc độ (velocity) qua các kỳ.</li>
-      </ol>
+      <h4 class="evt">4. Sprint Review — họp rà kết quả (cuối Sprint)</h4>
+      <ul>
+        <li><b>Ai:</b> cả đội + người liên quan (khách hàng/stakeholder nếu có). <b>Thời lượng:</b> ~1 giờ.</li>
+        <li>Đội <b>demo phần đã hoàn thành</b> (Increment), so với Sprint Goal.</li>
+        <li>Thu thập phản hồi → điều chỉnh Product Backlog cho phù hợp.</li>
+        <li>Việc chưa xong: đưa lại Backlog hoặc chuyển sang Sprint sau.</li>
+      </ul>
+
+      <h4 class="evt">5. Sprint Retrospective — họp cải tiến (sau Review)</h4>
+      <ul>
+        <li><b>Ai:</b> nội bộ đội (PO + SM + Dev). <b>Thời lượng:</b> ~45 phút.</li>
+        <li>Đội bàn 3 điều: <i>Cái gì tốt (giữ lại) · Cái gì chưa tốt (cần sửa) · Hành động cải thiện cho Sprint sau</i>.</li>
+        <li>Chốt <b>1–2 hành động cụ thể</b> để làm ngay kỳ tới — tránh bàn suông.</li>
+      </ul>
+
+      <h4 class="evt">+ Backlog Refinement — chải chuốt Backlog (làm liên tục)</h4>
+      <p class="lead">Không phải sự kiện cố định, nhưng nên làm đều đặn giữa Sprint: PO + đội cùng làm rõ, chia nhỏ, ước lượng và sắp lại ưu tiên các Story sắp tới — để buổi Planning kỳ sau diễn ra nhanh gọn.</p>
 
       <div class="callout">
-        <b>Quy tắc vàng cho cả đội:</b>
+        <b>Quy tắc vàng cho cả đội (khi dùng Kazuo):</b>
         <ol>
-          <li>Mọi Story vào sprint <b>phải có người thực hiện + estimate</b>.</li>
+          <li>Mọi Story vào Sprint <b>phải có người thực hiện + estimate</b>.</li>
           <li>Trạng thái trên Board phải <b>khớp thực tế</b> — cập nhật ngay khi có thay đổi.</li>
-          <li>Nộp <b>daily report</b> mỗi ngày, nêu rõ vướng mắc để được hỗ trợ sớm.</li>
-          <li>Story chưa xong trong sprint <b>được phép cross (chuyển tiếp) sang sprint sau</b> — cứ kéo sang sprint kế để làm tiếp.</li>
+          <li>Nộp <b>daily report</b> mỗi ngày (nội dung trùng 3 câu hỏi Daily Scrum), nêu rõ vướng mắc.</li>
+          <li>Story chưa xong <b>được phép cross sang Sprint sau</b> — kéo sang Sprint kế để làm tiếp.</li>
         </ol>
       </div>
     </section>`;
@@ -270,7 +265,7 @@ const html = `<!DOCTYPE html>
     --ok:#22c55e; --warn:#f59e0b;
     --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-6:24px; --sp-8:32px; --sp-12:48px;
     --radius:12px; --radius-sm:8px;
-    --nav-w:264px; --header-h:76px;
+    --nav-w:264px; --header-h:76px; --topnav-h:52px; --stick:128px; /* header + topnav */
     --dur:200ms;
   }
   * { box-sizing:border-box; }
@@ -301,8 +296,8 @@ const html = `<!DOCTYPE html>
   .layout { display:grid; grid-template-columns:var(--nav-w) 1fr; max-width:1560px; margin:0 auto; }
 
   /* Sidebar nav */
-  nav { position:sticky; top:var(--header-h); align-self:start;
-    height:calc(100dvh - var(--header-h)); overflow-y:auto;
+  nav { position:sticky; top:var(--stick); align-self:start;
+    height:calc(100dvh - var(--stick)); overflow-y:auto;
     padding:var(--sp-6) var(--sp-3); border-right:1px solid var(--line); }
   .nav-search { width:100%; margin-bottom:var(--sp-4); padding:9px 12px;
     background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm);
@@ -319,16 +314,30 @@ const html = `<!DOCTYPE html>
   nav a.active { background:var(--accent-soft); color:#cdddfd; border-left-color:var(--accent); font-weight:500; }
   nav a[hidden] { display:none; }
 
+  /* Top navbar — primary section switcher, sticky under the header */
+  .topnav { position:sticky; top:var(--stick); z-index:19;
+    display:flex; gap:var(--sp-1); align-items:center; overflow-x:auto;
+    height:var(--topnav-h); padding:0 var(--sp-6);
+    background:rgba(15,20,25,.92); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line); }
+  .topnav a { flex-shrink:0; padding:7px 14px; border-radius:8px;
+    font-size:14px; font-weight:500; color:var(--muted); text-decoration:none;
+    transition:background var(--dur),color var(--dur); }
+  .topnav a:hover { background:var(--surface); color:var(--text); }
+  .topnav a.top-active { background:var(--accent-soft); color:#cdddfd; }
+
   /* Main */
   main { padding:var(--sp-8) var(--sp-8); min-width:0; }
 
   /* Guide sections (intro cards) */
   .intro { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
-    padding:var(--sp-6) var(--sp-8); margin-bottom:var(--sp-6); scroll-margin-top:calc(var(--header-h) + 16px); }
+    padding:var(--sp-6) var(--sp-8); margin-bottom:var(--sp-6); scroll-margin-top:calc(var(--stick) + 16px); }
   .intro > h2 { margin:0 0 var(--sp-2); font-size:22px; font-weight:700; letter-spacing:-.02em;
     display:flex; align-items:center; gap:var(--sp-3); }
   .intro > h2 .ic { color:var(--accent); }
-  .intro h3 { margin:var(--sp-6) 0 var(--sp-2); font-size:15px; font-weight:600; color:#a9c7ff;
+  .intro h3 { margin:var(--sp-8) 0 var(--sp-3); font-size:17px; font-weight:700; color:var(--text);
+    padding-bottom:8px; border-bottom:1px solid var(--line); }
+  .intro h4.evt { margin:var(--sp-6) 0 var(--sp-2); font-size:15px; font-weight:600; color:#a9c7ff;
     padding-left:10px; border-left:3px solid var(--accent); }
   .intro ol, .intro ul { margin:0; padding-left:22px; }
   .intro li { margin:5px 0; }
@@ -344,14 +353,14 @@ const html = `<!DOCTYPE html>
   /* Gallery */
   .section-title { margin:var(--sp-12) 0 var(--sp-4); font-size:16px; font-weight:600;
     text-transform:uppercase; letter-spacing:.06em; color:var(--muted);
-    display:flex; align-items:center; gap:var(--sp-3); scroll-margin-top:calc(var(--header-h) + 16px); }
+    display:flex; align-items:center; gap:var(--sp-3); scroll-margin-top:calc(var(--stick) + 16px); }
   .section-title .count { font-size:12px; font-weight:600; color:var(--faint);
     background:var(--surface-2); border:1px solid var(--line); border-radius:20px; padding:2px 9px;
     text-transform:none; letter-spacing:0; }
   /* One card per row: info block on top, large uncropped screenshot below. */
   .grid { display:flex; flex-direction:column; gap:var(--sp-6); }
   .card { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
-    overflow:hidden; scroll-margin-top:calc(var(--header-h) + 16px);
+    overflow:hidden; scroll-margin-top:calc(var(--stick) + 16px);
     transition:border-color var(--dur); }
   .card:hover { border-color:#3a4756; }
   .card-info { padding:var(--sp-6) var(--sp-6) var(--sp-4); }
@@ -403,12 +412,19 @@ const html = `<!DOCTYPE html>
     <span>Nguồn: <b>${esc(data.baseUrl.replace('https://', ''))}</b></span>
   </div>
 </header>
+<div class="topnav" role="navigation" aria-label="Điều hướng chính">
+  <a href="#quickstart" data-top>Tổng quan</a>
+  <a href="#scrum" data-top>Nghi thức Scrum</a>
+  <a href="#tool" data-top>Hướng dẫn Tool Kazuo</a>
+</div>
 <div class="layout">
   <nav aria-label="Mục lục">
     <input class="nav-search" type="search" placeholder="Lọc màn hình..." aria-label="Lọc màn hình" oninput="filterNav(this.value)">
-    <strong>Bắt đầu</strong>
+    <strong>Tổng quan</strong>
       <a href="#quickstart" data-link>Cách sử dụng nhanh</a>
-      <a href="#scrum" data-link>Hướng dẫn Scrum</a>
+      <a href="#scrum" data-link>Nghi thức Scrum</a>
+    <strong>Hướng dẫn Tool Kazuo</strong>
+      <a href="#tool" data-link>Giới thiệu</a>
 ${navScreens}
   </nav>
   <main>
@@ -423,7 +439,10 @@ ${navScreens}
       </ol>
     </section>
 ${scrumGuide}
-    <h2 class="section-title" id="screens">Chi tiết từng màn hình &amp; thao tác</h2>
+    <section class="intro" id="tool">
+      <h2><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h16M4 19h10"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg></span> Hướng dẫn Tool Kazuo</h2>
+      <p class="lead">Phần này hướng dẫn <b>thao tác trên phần mềm Kazuo (SMIT Work)</b>: mỗi màn hình kèm ảnh chụp thật và các bước bấm cụ thể. Ánh xạ nghi thức Scrum ở trên vào đúng nút bấm trong tool.</p>
+    </section>
 ${galleryHtml}
   </main>
 </div>
@@ -446,6 +465,22 @@ ${galleryHtml}
     const s = q.trim().toLowerCase();
     links.forEach(a => { a.hidden = s && !a.textContent.toLowerCase().includes(s); });
   }
+
+  // Top navbar: highlight the primary section the reader is currently in.
+  // Everything from #tool onward counts as the "Tool Kazuo" section.
+  const topLinks = [...document.querySelectorAll('.topnav a[data-top]')];
+  const order = ['quickstart', 'scrum', 'tool'];
+  function syncTop() {
+    const y = window.scrollY + 140;
+    let current = 'quickstart';
+    for (const id of order) {
+      const el = document.getElementById(id);
+      if (el && el.offsetTop <= y) current = id;
+    }
+    topLinks.forEach(a => a.classList.toggle('top-active', a.getAttribute('href') === '#' + current));
+  }
+  window.addEventListener('scroll', syncTop, { passive: true });
+  syncTop();
 </script>
 </body>
 </html>`;

@@ -1,0 +1,91 @@
+{
+  "baseUrl": "https://kazuotask.allbase.in",
+  "capturedAt": "2026-08-03T04:43:57.824Z",
+  "screens": [
+    {
+      "path": "/w/kazuo/projects",
+      "label": "Tất cả Projects (3)",
+      "file": "tat-ca-projects-3.png"
+    },
+    {
+      "path": "/w/kazuo/members",
+      "label": "Thành viên",
+      "file": "thanh-vien.png"
+    },
+    {
+      "path": "/w/kazuo/departments",
+      "label": "Phòng ban",
+      "file": "phong-ban.png"
+    },
+    {
+      "path": "/w/kazuo/daily-reports",
+      "label": "Báo cáo công việc",
+      "file": "bao-cao-cong-viec.png"
+    },
+    {
+      "path": "/w/kazuo/settings/profile",
+      "label": "Hồ sơ cá nhân",
+      "file": "ho-so-ca-nhan.png"
+    },
+    {
+      "path": "/w/kazuo/settings/mcp",
+      "label": "Mã kết nối MCP",
+      "file": "ma-ket-noi-mcp.png"
+    },
+    {
+      "path": "/roadmap",
+      "label": "Dự án · Roadmap (Product Team)",
+      "file": "project-roadmap.png"
+    },
+    {
+      "path": "/summary",
+      "label": "Dự án · Summary (Product Team)",
+      "file": "project-summary.png"
+    },
+    {
+      "path": "/epic",
+      "label": "Dự án · Epic (Product Team)",
+      "file": "project-epic.png"
+    },
+    {
+      "path": "/backlog",
+      "label": "Dự án · Backlog (Product Team)",
+      "file": "project-backlog.png"
+    },
+    {
+      "path": "/board",
+      "label": "Dự án · Board (Product Team)",
+      "file": "project-board.png"
+    },
+    {
+      "path": "/list",
+      "label": "Dự án · List (Product Team)",
+      "file": "project-list.png"
+    },
+    {
+      "path": "/archived",
+      "label": "Dự án · Archived (Product Team)",
+      "file": "project-archived.png"
+    },
+    {
+      "path": "/sprint-history",
+      "label": "Dự án · Sprint History (Product Team)",
+      "file": "project-sprint-history.png"
+    },
+    {
+      "path": "(story detail)",
+      "label": "Dự án · Chi tiết Story",
+      "file": "story-detail.png"
+    },
+    {
+      "path": "(dialog) Tạo Issue",
+      "label": "Thao tác · Tạo Issue",
+      "file": "dialog-create-issue.png"
+    },
+    {
+      "path": "/my-work",
+      "label": "Personal · My Work",
+      "file": "personal-my-work.png"
+    }
+  ]
+}

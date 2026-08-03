@@ -1,0 +1,8 @@
+# Dependencies
+node_modules/
+
+# Secrets — NEVER commit (contains real login credentials)
+.env
+
+# Keep committed so the docs are viewable straight from the repo:
+#   shots/, screens.json, gallery.html

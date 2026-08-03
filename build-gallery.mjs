@@ -314,8 +314,8 @@ const html = `<!DOCTYPE html>
   nav a.active { background:var(--accent-soft); color:#cdddfd; border-left-color:var(--accent); font-weight:500; }
   nav a[hidden] { display:none; }
 
-  /* Top navbar — primary section switcher, sticky under the header */
-  .topnav { position:sticky; top:var(--stick); z-index:19;
+  /* Top navbar — primary section switcher, sticky directly under the header */
+  .topnav { position:sticky; top:var(--header-h); z-index:19;
     display:flex; gap:var(--sp-1); align-items:center; overflow-x:auto;
     height:var(--topnav-h); padding:0 var(--sp-6);
     background:rgba(15,20,25,.92); backdrop-filter:blur(10px);

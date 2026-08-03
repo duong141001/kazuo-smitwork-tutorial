@@ -174,6 +174,24 @@ async function captureCreateDialog(page, projectId, dept) {
   }
 }
 
+// Open the "Hoàn thành Sprint" dialog to show the unfinished-story options.
+async function captureCompleteSprintDialog(page, projectId, dept) {
+  try {
+    await page.goto(tabUrl(projectId, dept.id, 'backlog'), { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await page.waitForTimeout(5000);
+    // The sprint header exposes a "Hoàn thành" button; open its dialog.
+    await page.getByRole('button', { name: 'Hoàn thành', exact: true }).first().click({ timeout: 10000 });
+    await page.waitForTimeout(2500);
+    const file = 'dialog-complete-sprint.png';
+    await page.screenshot({ path: path.join(SHOTS_DIR, file), fullPage: true });
+    console.log(`✓ [Thao tác] Hộp thoại Hoàn thành Sprint -> ${file}`);
+    return [{ path: '(dialog) Hoàn thành Sprint', label: 'Thao tác · Hoàn thành Sprint', file }];
+  } catch (err) {
+    console.warn(`✗ Hộp thoại Hoàn thành Sprint: ${err.message}`);
+    return [];
+  }
+}
+
 async function main() {
   await mkdir(SHOTS_DIR, { recursive: true });
   const browser = await chromium.launch();
@@ -209,6 +227,9 @@ async function main() {
 
   console.log('→ Capturing create-issue dialog...');
   captured.push(...await captureCreateDialog(page, projectId, dept));
+
+  console.log('→ Capturing complete-sprint dialog...');
+  captured.push(...await captureCompleteSprintDialog(page, projectId, dept));
 
   console.log('→ Capturing personal My Work...');
   captured.push(...await captureMyWork(page));

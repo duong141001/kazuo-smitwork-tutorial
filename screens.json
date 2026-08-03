@@ -83,6 +83,11 @@
       "file": "dialog-create-issue.png"
     },
     {
+      "path": "(dialog) Hoàn thành Sprint",
+      "label": "Thao tác · Hoàn thành Sprint",
+      "file": "dialog-complete-sprint.png"
+    },
+    {
       "path": "/my-work",
       "label": "Personal · My Work",
       "file": "personal-my-work.png"

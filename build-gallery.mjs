@@ -16,6 +16,7 @@ const GUIDE = [
   { match: 'sprint history', text: 'Sprint History: lịch sử các sprint đã chạy để nhìn lại tiến độ và velocity.' },
   { match: 'roadmap', text: 'Roadmap: lộ trình tính năng theo thời gian, nhìn tổng thể kế hoạch dài hạn của dự án.' },
   { match: 'tạo issue', text: 'Hộp thoại Tạo Issue: chọn loại (Cross Story / Story / Subtask / Epic), điền phòng ban, trạng thái, ưu tiên, ngày, estimate, người thực hiện rồi bấm Tạo.' },
+  { match: 'hoàn thành sprint', text: 'Hộp thoại Hoàn thành Sprint: khi đóng sprint, các story chưa Done được chọn để "Chuyển về Backlog" hoặc "Chuyển sang Sprint khác" — không lo mất việc dang dở.' },
   { match: 'my work', text: 'My Work (Công việc của tôi): xem việc của chính bạn (Hôm nay / Quá hạn / Tuần này / Đang làm) và tải công việc của từng đồng đội.' },
   { match: 'epic', text: 'Epic: nhóm nhiều story lớn theo tính năng, để tổ chức backlog rõ ràng.' },
   { match: 'projects', text: 'Danh sách dự án: chọn dự án để vào backlog, board, sprint bên trong.' },
@@ -42,7 +43,14 @@ const ACTIONS = [
     'Chọn loại: Cross Story / Story / Subtask / Epic.',
     'Chọn Phòng ban, đặt tên việc.',
     'Chọn Trạng thái, Ưu tiên, Ngày bắt đầu, Estimate, Người thực hiện.',
+    'Gắn Story vào Epic bằng ô "Epic" trong hộp thoại (chọn epic có sẵn).',
     'Viết mô tả rồi bấm "Tạo" (hoặc "Hủy" để bỏ).' ] },
+  { match: 'hoàn thành sprint', steps: [
+    'Ở tab Backlog, bấm "Hoàn thành" trên thẻ sprint đang chạy.',
+    'Hộp thoại báo số issue chưa Done và cho 2 lựa chọn:',
+    '• "Chuyển về Backlog" — story chưa xong quay về backlog để lên kế hoạch lại.',
+    '• "Chuyển sang Sprint khác" — story chưa xong dồn sang sprint đã tạo.',
+    'Chọn 1 phương án rồi bấm "Hoàn thành Sprint".' ] },
   { match: 'backlog', steps: [
     'Bấm "Tạo Issue" (góc phải) → chọn Story/Epic... để tạo việc mới.',
     'Bấm "Create epic" (cột trái) để tạo nhóm tính năng lớn.',
@@ -58,12 +66,15 @@ const ACTIONS = [
     'Bấm một dòng để mở chi tiết story.' ] },
   { match: 'epic', steps: [
     'Bấm "Create epic" để tạo epic mới.',
-    'Bấm vào một epic để xem các story bên trong.' ] },
+    'Bấm vào một epic để xem các story bên trong.',
+    'Gắn Story vào Epic: mở Story → chọn Epic ở ô "Epic"; hoặc khi tạo Story mới thì chọn Epic ngay trong hộp thoại.',
+    'Ở Backlog, cột trái liệt kê các Epic — bấm để lọc story theo từng Epic.' ] },
   { match: 'summary', steps: [
     'Xem tiến độ sprint và số story theo trạng thái.',
     'Theo dõi hoạt động gần đây của dự án.' ] },
   { match: 'roadmap', steps: [
-    'Xem lộ trình tính năng theo thời gian.',
+    'Xem lộ trình theo năm; lọc theo quý (Q1–Q4), phòng ban, trạng thái.',
+    'Bấm "Tạo Roadmap" để thêm mốc/kế hoạch mới.',
     'Dùng để nhìn tổng thể kế hoạch dài hạn của dự án.' ] },
   { match: 'archived', steps: [
     'Xem các story đã lưu trữ (ẩn khỏi backlog).',

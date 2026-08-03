@@ -145,7 +145,7 @@
     </div>
   </div>
   <div class="header-meta">
-    <span><b>17</b> màn hình</span>
+    <span><b>18</b> màn hình</span>
     <span>Nguồn: <b>kazuotask.allbase.in</b></span>
   </div>
 </header>
@@ -177,6 +177,7 @@
 
       <span class="nav-group">Thao tác</span>
       <a href="#-dialog-T-o-Issue" data-link>Tạo Issue</a>
+      <a href="#-dialog-Ho-n-th-nh-Sprint" data-link>Hoàn thành Sprint</a>
 
       <span class="nav-group">Cá nhân</span>
       <a href="#-my-work" data-link>My Work</a>
@@ -334,7 +335,7 @@
         <div class="card-info">
           <h3>Roadmap (Product Team)</h3>
           <p class="guide">Roadmap: lộ trình tính năng theo thời gian, nhìn tổng thể kế hoạch dài hạn của dự án.</p>
-          <div class="steps"><h4>Thao tác</h4><ol><li>Xem lộ trình tính năng theo thời gian.</li><li>Dùng để nhìn tổng thể kế hoạch dài hạn của dự án.</li></ol></div>
+          <div class="steps"><h4>Thao tác</h4><ol><li>Xem lộ trình theo năm; lọc theo quý (Q1–Q4), phòng ban, trạng thái.</li><li>Bấm &quot;Tạo Roadmap&quot; để thêm mốc/kế hoạch mới.</li><li>Dùng để nhìn tổng thể kế hoạch dài hạn của dự án.</li></ol></div>
         </div>
         <div class="shot">
           <img loading="lazy" src="shots/project-roadmap.png" alt="Ảnh màn Roadmap (Product Team)">
@@ -354,7 +355,7 @@
         <div class="card-info">
           <h3>Epic (Product Team)</h3>
           <p class="guide">Epic: nhóm nhiều story lớn theo tính năng, để tổ chức backlog rõ ràng.</p>
-          <div class="steps"><h4>Thao tác</h4><ol><li>Bấm &quot;Create epic&quot; để tạo epic mới.</li><li>Bấm vào một epic để xem các story bên trong.</li></ol></div>
+          <div class="steps"><h4>Thao tác</h4><ol><li>Bấm &quot;Create epic&quot; để tạo epic mới.</li><li>Bấm vào một epic để xem các story bên trong.</li><li>Gắn Story vào Epic: mở Story → chọn Epic ở ô &quot;Epic&quot;; hoặc khi tạo Story mới thì chọn Epic ngay trong hộp thoại.</li><li>Ở Backlog, cột trái liệt kê các Epic — bấm để lọc story theo từng Epic.</li></ol></div>
         </div>
         <div class="shot">
           <img loading="lazy" src="shots/project-epic.png" alt="Ảnh màn Epic (Product Team)">
@@ -423,16 +424,26 @@
     </section>
 
     <section class="cat" id="cat-action" data-cat>
-      <h2 class="section-title">Thao tác <span class="count">1</span></h2>
+      <h2 class="section-title">Thao tác <span class="count">2</span></h2>
       <div class="grid">
       <article class="card" id="-dialog-T-o-Issue">
         <div class="card-info">
           <h3>Tạo Issue</h3>
           <p class="guide">Hộp thoại Tạo Issue: chọn loại (Cross Story / Story / Subtask / Epic), điền phòng ban, trạng thái, ưu tiên, ngày, estimate, người thực hiện rồi bấm Tạo.</p>
-          <div class="steps"><h4>Thao tác</h4><ol><li>Chọn loại: Cross Story / Story / Subtask / Epic.</li><li>Chọn Phòng ban, đặt tên việc.</li><li>Chọn Trạng thái, Ưu tiên, Ngày bắt đầu, Estimate, Người thực hiện.</li><li>Viết mô tả rồi bấm &quot;Tạo&quot; (hoặc &quot;Hủy&quot; để bỏ).</li></ol></div>
+          <div class="steps"><h4>Thao tác</h4><ol><li>Chọn loại: Cross Story / Story / Subtask / Epic.</li><li>Chọn Phòng ban, đặt tên việc.</li><li>Chọn Trạng thái, Ưu tiên, Ngày bắt đầu, Estimate, Người thực hiện.</li><li>Gắn Story vào Epic bằng ô &quot;Epic&quot; trong hộp thoại (chọn epic có sẵn).</li><li>Viết mô tả rồi bấm &quot;Tạo&quot; (hoặc &quot;Hủy&quot; để bỏ).</li></ol></div>
         </div>
         <div class="shot">
           <img loading="lazy" src="shots/dialog-create-issue.png" alt="Ảnh màn Tạo Issue">
+        </div>
+      </article>
+      <article class="card" id="-dialog-Ho-n-th-nh-Sprint">
+        <div class="card-info">
+          <h3>Hoàn thành Sprint</h3>
+          <p class="guide">Hộp thoại Hoàn thành Sprint: khi đóng sprint, các story chưa Done được chọn để &quot;Chuyển về Backlog&quot; hoặc &quot;Chuyển sang Sprint khác&quot; — không lo mất việc dang dở.</p>
+          <div class="steps"><h4>Thao tác</h4><ol><li>Ở tab Backlog, bấm &quot;Hoàn thành&quot; trên thẻ sprint đang chạy.</li><li>Hộp thoại báo số issue chưa Done và cho 2 lựa chọn:</li><li>• &quot;Chuyển về Backlog&quot; — story chưa xong quay về backlog để lên kế hoạch lại.</li><li>• &quot;Chuyển sang Sprint khác&quot; — story chưa xong dồn sang sprint đã tạo.</li><li>Chọn 1 phương án rồi bấm &quot;Hoàn thành Sprint&quot;.</li></ol></div>
+        </div>
+        <div class="shot">
+          <img loading="lazy" src="shots/dialog-complete-sprint.png" alt="Ảnh màn Hoàn thành Sprint">
         </div>
       </article></div>
     </section>

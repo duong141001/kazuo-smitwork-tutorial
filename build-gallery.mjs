@@ -421,5 +421,6 @@ ${galleryHtml}
 </body>
 </html>`;
 
-await writeFile('gallery.html', html);
-console.log(`✓ gallery.html built with ${data.screens.length} screens.`);
+// Output as index.html so GitHub Pages serves it at the site root.
+await writeFile('index.html', html);
+console.log(`✓ index.html built with ${data.screens.length} screens.`);

@@ -247,6 +247,105 @@ const scrumGuide = `
       </div>
     </section>`;
 
+// MCP connection guide: how to plug an AI tool (Claude / ChatGPT) into Kazuo.
+const MCP_URL = `${data.baseUrl}/mcp`;
+const mcpGuide = `
+    <section class="intro" id="mcp">
+      <h2><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="3"/></svg></span> Kết nối MCP — cho AI (Claude/ChatGPT) đọc dữ liệu Kazuo</h2>
+      <p class="lead"><b>MCP</b> (Model Context Protocol) là cách để công cụ AI như <b>Claude</b> hay <b>ChatGPT</b> kết nối thẳng vào Kazuo, đọc dữ liệu công việc của bạn bằng lời nói tự nhiên — ví dụ "việc của tôi tuần này", "sprint còn task nào chưa xong". Bạn không cần mở web bấm tay nữa. <b>Mã kết nối chỉ có quyền ĐỌC, không sửa được dữ liệu</b> — nên an toàn.</p>
+
+      <h3>Bước 1 — Tạo mã kết nối (token) của bạn</h3>
+      <ol>
+        <li>Vào <b>Hồ sơ cá nhân</b> (menu trái, mục Cài đặt) — hoặc mở <code>${esc(data.baseUrl)}/w/kazuo/settings/profile</code>.</li>
+        <li>Kéo xuống cuối trang, tới mục <b>"Mã kết nối MCP (Claude / ChatGPT)"</b>.</li>
+        <li>Bấm nút <b>"Tạo mã mới"</b> (góc phải).</li>
+        <li>Đặt <b>Tên gợi nhớ</b> (vd: <i>"Claude máy làm việc"</i>) rồi bấm <b>"Tạo mã"</b>.</li>
+        <li><b>Copy ngay chuỗi token hiện ra</b> và lưu chỗ an toàn — token đầy đủ chỉ hiện <b>một lần</b>, sau đó chỉ xem được vài ký tự đầu.</li>
+      </ol>
+      <div class="mcp-shots">
+        <figure><img loading="lazy" src="shots/mcp-create-token.png" alt="Nút Tạo mã mới ở trang Hồ sơ cá nhân"><figcaption>Mục "Mã kết nối MCP" ở cuối trang Hồ sơ cá nhân — bấm "Tạo mã mới".</figcaption></figure>
+        <figure><img loading="lazy" src="shots/mcp-token-dialog.png" alt="Hộp thoại đặt tên gợi nhớ cho mã"><figcaption>Đặt tên gợi nhớ rồi bấm "Tạo mã".</figcaption></figure>
+      </div>
+      <div class="callout">
+        <b>Lưu ý bảo mật:</b>
+        <ul>
+          <li>Token = chìa khóa vào tài khoản bạn. <b>Không chia sẻ, không commit lên Git.</b></li>
+          <li>Mỗi thiết bị/công cụ nên tạo <b>một mã riêng</b> (dễ thu hồi khi cần).</li>
+          <li>Nghi ngờ lộ mã → vào lại trang trên bấm <b>"Thu hồi"</b> để vô hiệu hóa ngay.</li>
+        </ul>
+      </div>
+
+      <h3>Bước 2 — Thông tin cần để kết nối</h3>
+      <ul class="terms">
+        <li><b>URL máy chủ MCP:</b> <code>${esc(MCP_URL)}</code></li>
+        <li><b>Giao thức:</b> HTTP (Streamable HTTP)</li>
+        <li><b>Xác thực:</b> Header <code>Authorization: Bearer &lt;token của bạn&gt;</code></li>
+      </ul>
+
+      <h3>Bước 3 — Cấu hình theo từng công cụ</h3>
+
+      <h4 class="evt">A. Claude Code (dòng lệnh CLI)</h4>
+      <p class="lead" style="margin:0 0 8px">Chạy 1 lệnh trong terminal (thay <code>&lt;TOKEN&gt;</code> bằng mã của bạn):</p>
+      <pre class="code-block">claude mcp add --scope user --transport http kazuotask \\
+  ${esc(MCP_URL)} \\
+  --header "Authorization: Bearer &lt;TOKEN&gt;"</pre>
+      <p class="lead" style="margin:8px 0 0">Kiểm tra: <code>claude mcp list</code> → thấy <b>kazuotask ✔ Connected</b> là xong.</p>
+
+      <h4 class="evt">B. Claude Desktop (ứng dụng máy tính)</h4>
+      <p class="lead" style="margin:0 0 8px">Mở <b>Settings → Developer → Edit Config</b>, thêm vào file <code>claude_desktop_config.json</code>:</p>
+      <pre class="code-block">{
+  "mcpServers": {
+    "kazuotask": {
+      "type": "http",
+      "url": "${esc(MCP_URL)}",
+      "headers": {
+        "Authorization": "Bearer &lt;TOKEN&gt;"
+      }
+    }
+  }
+}</pre>
+      <p class="lead" style="margin:8px 0 0">Lưu file rồi <b>khởi động lại Claude Desktop</b>. Kazuotask sẽ hiện trong danh sách công cụ.</p>
+
+      <h4 class="evt">C. Cursor / VS Code (và IDE hỗ trợ MCP)</h4>
+      <p class="lead" style="margin:0 0 8px">Tạo/sửa file <code>.cursor/mcp.json</code> (Cursor) hoặc <code>.vscode/mcp.json</code> (VS Code) trong dự án:</p>
+      <pre class="code-block">{
+  "mcpServers": {
+    "kazuotask": {
+      "url": "${esc(MCP_URL)}",
+      "headers": {
+        "Authorization": "Bearer &lt;TOKEN&gt;"
+      }
+    }
+  }
+}</pre>
+      <p class="lead" style="margin:8px 0 0">Mở lại IDE, bật server <b>kazuotask</b> trong phần cài đặt MCP.</p>
+
+      <h4 class="evt">D. ChatGPT</h4>
+      <p class="lead" style="margin:0 0 8px">Với bản ChatGPT hỗ trợ <b>Connectors / MCP</b> (thường là gói trả phí):</p>
+      <ol>
+        <li>Vào <b>Settings → Connectors</b> (hoặc mục MCP) → <b>Add / New connector</b>.</li>
+        <li>Dán <b>URL:</b> <code>${esc(MCP_URL)}</code>.</li>
+        <li>Phần xác thực chọn <b>Bearer token</b> và dán mã của bạn.</li>
+        <li>Lưu và bật connector <b>kazuotask</b>.</li>
+      </ol>
+
+      <h3>Bước 4 — Dùng thử</h3>
+      <p class="lead">Sau khi kết nối, thử hỏi AI bằng lời tự nhiên:</p>
+      <ul>
+        <li><i>"Xem việc của tôi tuần này trên Kazuo"</i></li>
+        <li><i>"Sprint hiện tại của dự án Thiên Long Mobile còn task nào chưa xong?"</i></li>
+        <li><i>"Tổng hợp tình hình dự án giúp tôi"</i></li>
+      </ul>
+      <div class="callout">
+        <b>Không kết nối được?</b>
+        <ul>
+          <li>Sai token → tạo lại mã mới, copy đúng cả chuỗi (không dư dấu cách).</li>
+          <li>Kiểm tra URL đúng <code>${esc(MCP_URL)}</code> (có <code>/mcp</code> ở cuối).</li>
+          <li>Mã đã bị <b>Thu hồi</b> hoặc admin tắt quyền ở mục Thành viên → tạo mã mới / liên hệ admin.</li>
+        </ul>
+      </div>
+    </section>`;
+
 const html = `<!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -350,6 +449,17 @@ const html = `<!DOCTYPE html>
     border-radius:var(--radius-sm); }
   .callout ol { margin:var(--sp-2) 0 0; }
 
+  /* MCP code blocks + screenshots */
+  .code-block { margin:var(--sp-2) 0 0; padding:var(--sp-4) var(--sp-6);
+    background:#0b0f14; border:1px solid var(--line); border-radius:var(--radius-sm);
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px; line-height:1.6;
+    color:#c9d5e5; white-space:pre; overflow-x:auto; }
+  .mcp-shots { display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-4); margin-top:var(--sp-4); }
+  .mcp-shots figure { margin:0; }
+  .mcp-shots img { width:100%; height:auto; display:block; border:1px solid var(--line); border-radius:var(--radius-sm); }
+  .mcp-shots figcaption { margin-top:6px; font-size:12.5px; color:var(--faint); line-height:1.4; }
+  @media (max-width:700px) { .mcp-shots { grid-template-columns:1fr; } }
+
   /* Gallery */
   .section-title { margin:var(--sp-12) 0 var(--sp-4); font-size:16px; font-weight:600;
     text-transform:uppercase; letter-spacing:.06em; color:var(--muted);
@@ -416,6 +526,7 @@ const html = `<!DOCTYPE html>
   <a href="#quickstart" data-top>Tổng quan</a>
   <a href="#scrum" data-top>Nghi thức Scrum</a>
   <a href="#tool" data-top>Hướng dẫn Tool Kazuo</a>
+  <a href="#mcp" data-top>Kết nối MCP</a>
 </div>
 <div class="layout">
   <nav aria-label="Mục lục">
@@ -423,6 +534,7 @@ const html = `<!DOCTYPE html>
     <strong>Tổng quan</strong>
       <a href="#quickstart" data-link>Cách sử dụng nhanh</a>
       <a href="#scrum" data-link>Nghi thức Scrum</a>
+      <a href="#mcp" data-link>Kết nối MCP (AI)</a>
     <strong>Hướng dẫn Tool Kazuo</strong>
       <a href="#tool" data-link>Giới thiệu</a>
 ${navScreens}
@@ -439,6 +551,7 @@ ${navScreens}
       </ol>
     </section>
 ${scrumGuide}
+${mcpGuide}
     <section class="intro" id="tool">
       <h2><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h16M4 19h10"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg></span> Hướng dẫn Tool Kazuo</h2>
       <p class="lead">Phần này hướng dẫn <b>thao tác trên phần mềm Kazuo (SMIT Work)</b>: mỗi màn hình kèm ảnh chụp thật và các bước bấm cụ thể. Ánh xạ nghi thức Scrum ở trên vào đúng nút bấm trong tool.</p>
@@ -469,7 +582,7 @@ ${galleryHtml}
   // Top navbar: highlight the primary section the reader is currently in.
   // Everything from #tool onward counts as the "Tool Kazuo" section.
   const topLinks = [...document.querySelectorAll('.topnav a[data-top]')];
-  const order = ['quickstart', 'scrum', 'tool'];
+  const order = ['quickstart', 'scrum', 'mcp', 'tool'];
   function syncTop() {
     const y = window.scrollY + 140;
     let current = 'quickstart';

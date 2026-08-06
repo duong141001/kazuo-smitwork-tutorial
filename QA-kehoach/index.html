@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đề xuất bổ sung nhân sự QA — Thiên Long Mobile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0f1419; --surface:#171c23; --surface-2:#1e242d; --line:#2a323d;
+    --text:#e8eaed; --muted:#9aa4b2; --faint:#6b7480;
+    --accent:#3b82f6; --accent-soft:#1d3355;
+    --ok:#22c55e; --warn:#f59e0b; --danger:#ef4444;
+    --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-6:24px; --sp-8:32px; --sp-12:48px;
+    --radius:14px; --radius-sm:8px;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+    font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.65;
+    -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:1080px; margin:0 auto; padding:var(--sp-12) var(--sp-6); }
+  header.doc { border-bottom:1px solid var(--line); padding-bottom:var(--sp-6); margin-bottom:var(--sp-8); }
+  .eyebrow { display:inline-block; font-size:12px; font-weight:600; letter-spacing:.08em;
+    text-transform:uppercase; color:#a9c7ff; background:var(--accent-soft);
+    padding:4px 12px; border-radius:20px; margin-bottom:var(--sp-4); }
+  h1 { margin:0 0 var(--sp-3); font-size:32px; font-weight:800; letter-spacing:-.02em; line-height:1.2; }
+  .doc-meta { color:var(--muted); font-size:14px; display:flex; gap:var(--sp-4); flex-wrap:wrap; }
+  h2 { margin:var(--sp-12) 0 var(--sp-4); font-size:22px; font-weight:700; letter-spacing:-.01em;
+    display:flex; align-items:center; gap:10px; }
+  h2 .num { display:grid; place-items:center; width:30px; height:30px; border-radius:8px;
+    background:var(--accent); color:#fff; font-size:15px; font-weight:700; flex-shrink:0; }
+  h3 { margin:var(--sp-6) 0 var(--sp-3); font-size:16px; font-weight:600; color:#a9c7ff; }
+  p { margin:0 0 var(--sp-4); }
+  .lead { color:var(--muted); }
+
+  /* KPI cards */
+  .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:var(--sp-4); margin:var(--sp-6) 0; }
+  .kpi { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:var(--sp-6); }
+  .kpi .val { font-size:30px; font-weight:800; letter-spacing:-.02em; line-height:1; }
+  .kpi .val.danger { color:var(--danger); }
+  .kpi .val.ok { color:var(--ok); }
+  .kpi .label { margin-top:8px; font-size:13px; color:var(--muted); line-height:1.4; }
+
+  /* callout */
+  .callout { padding:var(--sp-4) var(--sp-6); border-radius:var(--radius-sm); margin:var(--sp-6) 0;
+    border:1px solid var(--line); border-left:3px solid var(--accent); background:var(--surface); }
+  .callout.danger { border-left-color:var(--danger); background:#2a1618; }
+  .callout.ok { border-left-color:var(--ok); background:#14231a; }
+  .callout b { color:var(--text); }
+
+  /* table */
+  table { width:100%; border-collapse:collapse; margin:var(--sp-4) 0; font-size:14.5px; }
+  th,td { text-align:left; padding:10px 14px; border-bottom:1px solid var(--line); }
+  th { color:var(--faint); font-size:12px; text-transform:uppercase; letter-spacing:.04em; font-weight:600; }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
+  tbody tr:hover { background:var(--surface); }
+  tr.total td { font-weight:700; border-top:2px solid var(--line); border-bottom:0; }
+
+  /* bar chart */
+  .bars { margin:var(--sp-4) 0; }
+  .bar-row { display:grid; grid-template-columns:180px 1fr 70px; align-items:center; gap:var(--sp-4);
+    margin:8px 0; font-size:14px; }
+  .bar-track { background:var(--surface-2); border-radius:6px; height:26px; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:6px; background:linear-gradient(90deg,#3b82f6,#60a5fa);
+    display:flex; align-items:center; }
+  .bar-row .hrs { text-align:right; color:var(--muted); font-variant-numeric:tabular-nums; }
+
+  /* capacity comparison */
+  .cap { display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-4); margin:var(--sp-6) 0; }
+  .cap-card { border:1px solid var(--line); border-radius:var(--radius); padding:var(--sp-6); }
+  .cap-card.before { background:#2a1618; border-color:#5b2b2f; }
+  .cap-card.after { background:#14231a; border-color:#2f5b3f; }
+  .cap-card h4 { margin:0 0 var(--sp-3); font-size:15px; }
+  .cap-num { font-size:26px; font-weight:800; }
+
+  /* timeline */
+  .tl { position:relative; margin:var(--sp-6) 0; padding-left:28px; }
+  .tl::before { content:''; position:absolute; left:9px; top:6px; bottom:6px; width:2px; background:var(--line); }
+  .tl-item { position:relative; margin-bottom:var(--sp-6); }
+  .tl-item::before { content:''; position:absolute; left:-24px; top:5px; width:14px; height:14px;
+    border-radius:50%; background:var(--accent); border:3px solid var(--bg); }
+  .tl-item.hire::before { background:var(--ok); }
+  .tl-item .when { font-size:12px; font-weight:600; color:#a9c7ff; text-transform:uppercase; letter-spacing:.04em; }
+  .tl-item .what { font-weight:600; margin:2px 0; }
+  .tl-item .desc { font-size:14px; color:var(--muted); }
+
+  .tag { display:inline-block; font-size:12px; font-weight:600; padding:2px 8px; border-radius:6px; }
+  .tag.now { background:#3a1e1e; color:#ffb4b4; }
+  .tag.p2 { background:#1e2f3a; color:#a9d5ff; }
+
+  ul.clean { margin:0 0 var(--sp-4); padding-left:20px; }
+  ul.clean li { margin:6px 0; }
+  footer.doc { margin-top:var(--sp-12); padding-top:var(--sp-6); border-top:1px solid var(--line);
+    color:var(--faint); font-size:13px; }
+
+  @media (max-width:720px) {
+    .kpis { grid-template-columns:1fr 1fr; }
+    .cap { grid-template-columns:1fr; }
+    .bar-row { grid-template-columns:120px 1fr 56px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="doc">
+    <span class="eyebrow">Đề xuất nhân sự · QA</span>
+    <h1>Bổ sung 2 QA cho dự án Thiên Long Mobile</h1>
+    <div class="doc-meta">
+      <span>Người đề xuất: <b>Dương Nguyễn</b></span>
+      <span>·</span>
+      <span>Vai trò: QA / Scrum Master</span>
+      <span>·</span>
+      <span>Trình: Team Lead</span>
+    </div>
+  </header>
+
+  <div class="callout danger">
+    <b>TL;DR —</b> Khối lượng test cả dự án là <b>286 đầu việc QA (~1.161 giờ)</b> trên <b>69 tính năng</b>, hiện dồn lên <b>1 QA duy nhất</b>. Riêng Sprint 2 đã cần <b>~288 giờ</b> (sau khi thêm bước test staging theo yêu cầu Dev) trong khi 1 người chỉ làm được <b>~130 giờ</b>/sprint — <b>quá tải 2,2 lần</b>. Đề xuất bổ sung <b>2 QA theo lộ trình</b> để đảm bảo chất lượng và tiến độ.
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="val">286</div><div class="label">Đầu việc QA cả dự án</div></div>
+    <div class="kpi"><div class="val">69</div><div class="label">Tính năng cần test</div></div>
+    <div class="kpi"><div class="val">~1.161h</div><div class="label">Tổng công QA (≈145 ngày công)</div></div>
+    <div class="kpi"><div class="val danger">2,2×</div><div class="label">Mức quá tải QA ở Sprint 2</div></div>
+  </div>
+
+  <h2><span class="num">1</span> Vấn đề: 1 QA không kham nổi</h2>
+  <p class="lead">Sprint 2 (2 tuần) đã được nhập kế hoạch QA chi tiết trên SMIT Work — mỗi tính năng gồm chuỗi: <b>test staging</b> (chốt tính năng đủ chưa) → viết test case → test chức năng/regression → mobile → 3D/animation → hiệu năng. Đối chiếu với năng lực thực tế của 1 người:</p>
+
+  <div class="cap">
+    <div class="cap-card before">
+      <h4>Hiện trạng — 1 QA</h4>
+      <div class="cap-num" style="color:var(--danger)">288h cần / 130h làm được</div>
+      <p class="lead" style="margin:8px 0 0">Thiếu <b>158 giờ</b> ngay trong Sprint 2. Hệ quả: test bị cắt bớt, bỏ sót lỗi, hoặc dời tính năng — nợ chất lượng dồn về cuối.</p>
+    </div>
+    <div class="cap-card after">
+      <h4>Đề xuất — 3 QA (thêm 2)</h4>
+      <div class="cap-num" style="color:var(--ok)">~96h/người · trong ngưỡng an toàn</div>
+      <p class="lead" style="margin:8px 0 0">Chia đều tải, còn dư biên độ cho retest &amp; regression. Kịp tiến độ, giữ chất lượng.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <b>Cách tính năng lực 1 QA/sprint:</b> 10 ngày làm việc × 8h = 80h thô. Trừ họp, daily, viết báo cáo, retest lỗi (~20%) → <b>~130h hữu dụng cho 2 tuần</b> đã tính cả tăng ca nhẹ. Con số 288h của Sprint 2 lấy trực tiếp từ estimate đã nhập trên Kazuo (loại test × độ phức tạp tính năng), <b>đã bao gồm bước "test staging"</b> mà Dev yêu cầu bổ sung để chốt tính năng đã đủ trước khi test sâu.
+  </div>
+
+  <h2><span class="num">2</span> Khối lượng QA cả dự án (4 Phase)</h2>
+  <p class="lead">Dữ liệu từ QA Timeline — 286 đầu việc, ước lượng theo loại test (viết testcase, chức năng, regression, mobile, 3D/animation, hiệu năng):</p>
+
+  <div class="bars">
+    <div class="bar-row"><span>Phase 1</span><div class="bar-track"><div class="bar-fill" style="width:100%">&nbsp;107 task</div></div><span class="hrs">447h</span></div>
+    <div class="bar-row"><span>Phase 2</span><div class="bar-track"><div class="bar-fill" style="width:68%">&nbsp;73 task</div></div><span class="hrs">303h</span></div>
+    <div class="bar-row"><span>Phase 4</span><div class="bar-track"><div class="bar-fill" style="width:48%">&nbsp;54 task</div></div><span class="hrs">214h</span></div>
+    <div class="bar-row"><span>Phase 3</span><div class="bar-track"><div class="bar-fill" style="width:44%">&nbsp;52 task</div></div><span class="hrs">197h</span></div>
+  </div>
+
+  <table>
+    <thead><tr><th>Nhóm hệ thống</th><th class="num">Đầu việc</th><th class="num">Giờ ước lượng</th></tr></thead>
+    <tbody>
+      <tr><td>C. Trang bị &amp; Cường hóa</td><td class="num">32</td><td class="num">132h</td></tr>
+      <tr><td>B. Chiến đấu &amp; Võ công</td><td class="num">30</td><td class="num">130h</td></tr>
+      <tr><td>F. PvP &amp; Đấu trường</td><td class="num">30</td><td class="num">130h</td></tr>
+      <tr><td>D. Nhiệm vụ &amp; PvE</td><td class="num">29</td><td class="num">129h</td></tr>
+      <tr><td>E. Bang hội &amp; Xã hội</td><td class="num">28</td><td class="num">103h</td></tr>
+      <tr><td>A. Nhân vật &amp; Môn phái</td><td class="num">25</td><td class="num">90h</td></tr>
+      <tr><td>L. UI/UX &amp; Onboarding</td><td class="num">20</td><td class="num">95h</td></tr>
+      <tr><td>I. Nạp thẻ &amp; Thương mại hóa</td><td class="num">24</td><td class="num">94h</td></tr>
+      <tr><td>G. Đồng hành</td><td class="num">24</td><td class="num">94h</td></tr>
+      <tr><td>J. Hoạt động &amp; Sự kiện</td><td class="num">24</td><td class="num">84h</td></tr>
+      <tr><td>H. Kinh tế &amp; Giao dịch</td><td class="num">20</td><td class="num">80h</td></tr>
+      <tr class="total"><td>TỔNG</td><td class="num">286</td><td class="num">~1.161h</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">3</span> Đề xuất: 2 QA theo lộ trình</h2>
+  <p class="lead">Không tuyển ồ ạt — chia 2 đợt bám theo đường cong khối lượng (Phase 1 &amp; 2 nặng nhất):</p>
+
+  <div class="tl">
+    <div class="tl-item hire">
+      <div class="when">Ngay lập tức <span class="tag now">GẤP</span></div>
+      <div class="what">QA #1 — vào Sprint 2 / Phase 1</div>
+      <div class="desc">Phase 1 nặng nhất (447h). QA #1 cùng gánh Sprint 2 đang quá tải 2,1×, tập trung mảng Nhân vật, Chiến đấu, Trang bị.</div>
+    </div>
+    <div class="tl-item hire">
+      <div class="when">Đầu Phase 2 <span class="tag p2">~4–6 tuần tới</span></div>
+      <div class="what">QA #2 — vào đầu Phase 2</div>
+      <div class="desc">Phase 2 mở thêm Nhiệm vụ/PvE, Kinh tế, Nạp thẻ (303h) song song đuôi Phase 1. QA #2 vào đúng lúc tải tăng, tránh tuyển sớm khi chưa cần.</div>
+    </div>
+    <div class="tl-item">
+      <div class="when">Phase 3–4</div>
+      <div class="what">3 QA chạy ổn định</div>
+      <div class="desc">Bang hội, Đồng hành, PvP, Sự kiện (~411h). 3 QA chia tải ~137h/người/phase — bền vững, đủ biên độ regression cuối dự án.</div>
+    </div>
+  </div>
+
+  <h3>Vì sao chia lộ trình thay vì tuyển cả 2 ngay?</h3>
+  <ul class="clean">
+    <li><b>Tiết kiệm chi phí sớm:</b> QA #2 chỉ thực sự cần khi Phase 2 mở — tránh trả lương chờ việc.</li>
+    <li><b>Onboard mượt:</b> QA #1 vào trước, quen quy trình &amp; test case chuẩn, sau đó kèm QA #2 — giảm rủi ro đào tạo dồn.</li>
+    <li><b>Linh hoạt:</b> nếu tiến độ dev chậm, có thể lùi QA #2; nếu gấp, kéo sớm.</li>
+  </ul>
+
+  <h2><span class="num">4</span> Lợi ích &amp; Rủi ro nếu KHÔNG thêm người</h2>
+  <div class="cap">
+    <div class="cap-card after">
+      <h4 style="color:var(--ok)">Nếu thêm 2 QA</h4>
+      <ul class="clean" style="margin:0">
+        <li>Test đủ độ phủ (chức năng + mobile + 3D + hiệu năng)</li>
+        <li>Regression đều đặn, bắt lỗi sớm khi còn rẻ</li>
+        <li>Không nghẽn QA cuối mỗi sprint</li>
+        <li>Kịp mốc release từng Phase</li>
+      </ul>
+    </div>
+    <div class="cap-card before">
+      <h4 style="color:var(--danger)">Nếu giữ 1 QA</h4>
+      <ul class="clean" style="margin:0">
+        <li>Quá tải 2,1× ngay Sprint 2 → cắt bớt test</li>
+        <li>Bỏ sót lỗi, nợ chất lượng dồn về cuối</li>
+        <li>QA thành nút thắt cổ chai, chặn cả team dev</li>
+        <li>Rủi ro trượt tiến độ release &amp; burnout</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout ok">
+    <b>Đề nghị lead phê duyệt:</b> Mở tuyển <b>QA #1 ngay</b>, và <b>QA #2 vào đầu Phase 2</b>. Toàn bộ estimate &amp; đầu việc đã được nhập minh bạch trên SMIT Work để lead kiểm tra và theo dõi tải thực tế theo từng sprint.
+  </div>
+
+  <footer class="doc">
+    Số liệu trích từ QA Timeline dự kiến (286 đầu việc) và estimate đã nhập trên SMIT Work (Sprint 2, dự án Thiên Long Mobile). Ước lượng giờ theo loại test × độ phức tạp tính năng.
+  </footer>
+
+</div>
+</body>
+</html>

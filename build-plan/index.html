@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kế hoạch Build & Release — Thiên Long Mobile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0f1419; --surface:#171c23; --surface-2:#1e242d; --line:#2a323d;
+    --text:#e8eaed; --muted:#9aa4b2; --faint:#6b7480;
+    --accent:#3b82f6; --accent-soft:#1d3355;
+    --ok:#22c55e; --warn:#f59e0b; --danger:#ef4444;
+    --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-6:24px; --sp-8:32px; --sp-12:48px;
+    --radius:14px; --radius-sm:8px; --header-h:60px;
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--text);
+    font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.65;
+    -webkit-font-smoothing:antialiased; }
+  a { color:inherit; }
+  code { font-family:ui-monospace,Menlo,monospace; font-size:.85em; background:var(--bg);
+    border:1px solid var(--line); padding:1px 6px; border-radius:5px; color:#a9c7ff; }
+
+  /* Shared top navbar linking the 3 sites */
+  .sitenav { position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:var(--sp-2);
+    height:var(--header-h); padding:0 var(--sp-6); background:rgba(15,20,25,.92);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--line); overflow-x:auto; }
+  .sitenav .brand { font-weight:700; font-size:15px; margin-right:var(--sp-4); white-space:nowrap;
+    display:flex; align-items:center; gap:8px; }
+  .sitenav .brand .dot { width:22px; height:22px; border-radius:6px;
+    background:linear-gradient(135deg,#3b82f6,#8b5cf6); display:grid; place-items:center; }
+  .sitenav a { flex-shrink:0; padding:7px 14px; border-radius:8px; font-size:14px; font-weight:500;
+    color:var(--muted); text-decoration:none; transition:background .2s,color .2s; }
+  .sitenav a:hover { background:var(--surface); color:var(--text); }
+  .sitenav a.active { background:var(--accent-soft); color:#cdddfd; }
+
+  .wrap { max-width:1080px; margin:0 auto; padding:var(--sp-12) var(--sp-6); }
+  .eyebrow { display:inline-block; font-size:12px; font-weight:600; letter-spacing:.08em;
+    text-transform:uppercase; color:#a9c7ff; background:var(--accent-soft);
+    padding:4px 12px; border-radius:20px; margin-bottom:var(--sp-4); }
+  h1 { margin:0 0 var(--sp-3); font-size:32px; font-weight:800; letter-spacing:-.02em; line-height:1.2; }
+  .doc-meta { color:var(--muted); font-size:14px; display:flex; gap:var(--sp-4); flex-wrap:wrap; }
+  h2 { margin:var(--sp-12) 0 var(--sp-4); font-size:22px; font-weight:700; letter-spacing:-.01em;
+    display:flex; align-items:center; gap:10px; scroll-margin-top:calc(var(--header-h) + 12px); }
+  h2 .num { display:grid; place-items:center; width:30px; height:30px; border-radius:8px;
+    background:var(--accent); color:#fff; font-size:15px; font-weight:700; flex-shrink:0; }
+  h3 { margin:var(--sp-6) 0 var(--sp-3); font-size:16px; font-weight:600; color:#a9c7ff; }
+  p { margin:0 0 var(--sp-4); } .lead { color:var(--muted); }
+
+  .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:var(--sp-4); margin:var(--sp-6) 0; }
+  .kpi { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:var(--sp-6); }
+  .kpi .val { font-size:26px; font-weight:800; letter-spacing:-.02em; line-height:1; }
+  .kpi .val.ok { color:var(--ok); } .kpi .val.warn { color:var(--warn); }
+  .kpi .label { margin-top:8px; font-size:13px; color:var(--muted); line-height:1.4; }
+
+  .callout { padding:var(--sp-4) var(--sp-6); border-radius:var(--radius-sm); margin:var(--sp-6) 0;
+    border:1px solid var(--line); border-left:3px solid var(--accent); background:var(--surface); }
+  .callout.warn { border-left-color:var(--warn); background:#241d12; }
+  .callout.ok { border-left-color:var(--ok); background:#14231a; }
+
+  /* Timeline */
+  .tl { position:relative; margin:var(--sp-6) 0; padding-left:28px; }
+  .tl::before { content:''; position:absolute; left:9px; top:6px; bottom:6px; width:2px; background:var(--line); }
+  .tl-item { position:relative; margin-bottom:var(--sp-8); }
+  .tl-item::before { content:''; position:absolute; left:-24px; top:5px; width:14px; height:14px;
+    border-radius:50%; background:var(--accent); border:3px solid var(--bg); }
+  .tl-item.done::before { background:var(--ok); }
+  .tl-item.milestone::before { background:var(--warn); width:16px; height:16px; left:-25px; }
+  .tl-item .when { font-size:12px; font-weight:700; color:#a9c7ff; text-transform:uppercase; letter-spacing:.04em; }
+  .tl-item .what { font-weight:700; font-size:17px; margin:2px 0 4px; }
+  .tl-item .desc { font-size:14.5px; color:var(--muted); }
+  .tl-item ul { margin:8px 0 0; padding-left:18px; } .tl-item li { margin:3px 0; font-size:14px; }
+
+  /* table */
+  table { width:100%; border-collapse:collapse; margin:var(--sp-4) 0; font-size:14.5px; }
+  th,td { text-align:left; padding:10px 14px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--faint); font-size:12px; text-transform:uppercase; letter-spacing:.04em; font-weight:600; }
+  tbody tr:hover { background:var(--surface); }
+  .pill { display:inline-block; font-size:12px; font-weight:600; padding:2px 9px; border-radius:20px; }
+  .pill.dev { background:#1e2f3a; color:#a9d5ff; }
+  .pill.qa { background:#2a2036; color:#d6b4ff; }
+  .pill.rel { background:#14231a; color:#8ce6a8; }
+
+  ul.clean { margin:0 0 var(--sp-4); padding-left:20px; } ul.clean li { margin:6px 0; }
+  .check { list-style:none; padding-left:0; } .check li { padding:8px 0; border-bottom:1px solid var(--line);
+    display:flex; gap:10px; align-items:flex-start; } .check li:last-child { border-bottom:0; }
+  .check .box { flex-shrink:0; width:18px; height:18px; border:2px solid var(--faint); border-radius:5px; margin-top:2px; }
+
+  footer.doc { margin-top:var(--sp-12); padding-top:var(--sp-6); border-top:1px solid var(--line);
+    color:var(--faint); font-size:13px; }
+  @media (max-width:720px){ .kpis{grid-template-columns:1fr 1fr;} }
+</style>
+</head>
+<body>
+
+<nav class="sitenav" aria-label="Điều hướng site">
+  <span class="brand"><span class="dot"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>SMIT Work</span>
+  <a href="/">Tài liệu hướng dẫn</a>
+  <a href="/build-plan/" class="active">Kế hoạch Build</a>
+  <a href="/QA-kehoach/">Đề xuất nhân sự QA</a>
+</nav>
+
+<div class="wrap">
+
+  <header class="doc">
+    <span class="eyebrow">Kế hoạch · Release</span>
+    <h1>Kế hoạch Build &amp; Release — Bản build kế tiếp</h1>
+    <div class="doc-meta">
+      <span>Dự án: <b>Thiên Long Mobile</b></span><span>·</span>
+      <span>Mục tiêu bàn giao build: <b>~16/08/2026</b></span><span>·</span>
+      <span>Sprint 2: 27/07 → 10/08</span>
+    </div>
+  </header>
+
+  <div class="callout warn">
+    <b>Bối cảnh —</b> Sprint 2 kết thúc <b>10/08</b>. Dự kiến có <b>bản build đầu tiên trong ~10 ngày tới (khoảng 16/08)</b> để QA kiểm thử tập trung. Trang này là lộ trình từ nay đến khi bàn giao build, ai làm gì và tiêu chí pass.
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="val">~16/08</div><div class="label">Mốc bàn giao build</div></div>
+    <div class="kpi"><div class="val warn">10 ngày</div><div class="label">Đếm ngược tới build</div></div>
+    <div class="kpi"><div class="val">13</div><div class="label">Tính năng vào diện QA</div></div>
+    <div class="kpi"><div class="val">67</div><div class="label">Đầu việc QA đã plan</div></div>
+  </div>
+
+  <h2><span class="num">1</span> Lộ trình đến bản build</h2>
+  <div class="tl">
+    <div class="tl-item done">
+      <div class="when">Đến 10/08 · Đang chạy</div>
+      <div class="what">Sprint 2 — Dev hoàn thiện tính năng <span class="pill dev">DEV</span></div>
+      <div class="desc">Hoàn thành code các tính năng Sprint 2 (Nhân vật, Môn phái, Kỹ năng, Túi đồ, Social…), tự kiểm tra nội bộ, chuẩn bị đưa lên staging.</div>
+    </div>
+    <div class="tl-item">
+      <div class="when">11/08 – 13/08</div>
+      <div class="what">Ráp build &amp; đưa lên Staging <span class="pill dev">DEV</span></div>
+      <div class="desc">Tích hợp các tính năng vào 1 bản build, deploy lên môi trường staging cho QA truy cập.</div>
+    </div>
+    <div class="tl-item milestone">
+      <div class="when">~14/08 – 15/08</div>
+      <div class="what">QA — Test Staging (cửa ải) <span class="pill qa">QA</span></div>
+      <div class="desc">Bước mới theo yêu cầu Dev: smoke test nhanh trên staging để xác nhận <b>tính năng đã đủ điều kiện</b> test sâu hay chưa.</div>
+      <ul>
+        <li>Tính năng <b>đủ</b> → chuyển sang test chi tiết.</li>
+        <li>Tính năng <b>thiếu/lỗi chặn</b> → trả lại Dev kèm ghi chú, không tốn công test sâu.</li>
+      </ul>
+    </div>
+    <div class="tl-item milestone">
+      <div class="when">~16/08 🎯</div>
+      <div class="what">BÀN GIAO BUILD — QA nhận test chính thức <span class="pill rel">RELEASE</span></div>
+      <div class="desc">Build đạt cửa ải staging được coi là "sẵn sàng QA". Bắt đầu chuỗi test đầy đủ: chức năng → mobile → 3D/animation → hiệu năng.</div>
+    </div>
+    <div class="tl-item">
+      <div class="when">16/08 trở đi</div>
+      <div class="what">QA test sâu &amp; báo lỗi <span class="pill qa">QA</span></div>
+      <div class="desc">Chạy test case chi tiết, log bug lên SMIT Work, retest sau khi Dev fix. Vòng lặp đến khi đạt tiêu chí release.</div>
+    </div>
+  </div>
+
+  <h2><span class="num">2</span> Phân vai — ai làm gì</h2>
+  <table>
+    <thead><tr><th>Giai đoạn</th><th>Dev</th><th>QA</th></tr></thead>
+    <tbody>
+      <tr><td>Trước build (đến 13/08)</td><td>Hoàn thiện tính năng, ráp build, deploy staging</td><td>Chuẩn bị test case, dựng checklist "đủ điều kiện"</td></tr>
+      <tr><td>Test staging (14–15/08)</td><td>Trực fix nhanh lỗi chặn khi QA trả về</td><td>Smoke test, chốt tính năng đủ/chưa đủ</td></tr>
+      <tr><td>Sau bàn giao (16/08+)</td><td>Fix bug theo severity, retest cùng QA</td><td>Test sâu, log bug, retest, xác nhận đạt</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">3</span> Tiêu chí "đủ điều kiện" (Definition of Ready cho QA)</h2>
+  <p class="lead">Build/tính năng phải đạt các mục sau ở bước staging thì QA mới nhận test sâu:</p>
+  <ul class="check">
+    <li><span class="box"></span> Tính năng chạy được trên staging, không crash khi mở.</li>
+    <li><span class="box"></span> Luồng chính (happy path) đi hết được từ đầu tới cuối.</li>
+    <li><span class="box"></span> Không có lỗi chặn (blocker) khiến không test tiếp được.</li>
+    <li><span class="box"></span> Có mô tả tính năng / GDD để QA biết "đúng" là thế nào.</li>
+    <li><span class="box"></span> Dev đã tự test qua và ghi chú phần chưa hoàn thiện (nếu có).</li>
+  </ul>
+
+  <h2><span class="num">4</span> Rủi ro &amp; phương án</h2>
+  <table>
+    <thead><tr><th>Rủi ro</th><th>Ảnh hưởng</th><th>Phương án</th></tr></thead>
+    <tbody>
+      <tr><td>Build trễ so với 16/08</td><td>QA dồn việc, lùi tiến độ test</td><td>Ưu tiên tính năng lõi lên staging trước, test cuốn chiếu</td></tr>
+      <tr><td>Nhiều tính năng rớt cửa ải staging</td><td>Dev phải fix gấp, mất thời gian 2 chiều</td><td>Áp checklist "đủ điều kiện" từ sớm; Dev tự soát trước khi đẩy</td></tr>
+      <tr><td>1 QA quá tải (288h Sprint 2)</td><td>Test bị cắt, sót lỗi</td><td>Xem <a href="/QA-kehoach/" style="color:#a9c7ff">đề xuất bổ sung 2 QA</a></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout ok">
+    <b>Tóm tắt:</b> Dev đưa build lên staging ~13/08 → QA lọc cửa ải staging 14–15/08 → bàn giao chính thức ~16/08 → QA test sâu. Bước staging giúp QA không tốn công với tính năng chưa xong, còn Dev nhận phản hồi "đủ/chưa" sớm.
+  </div>
+
+  <footer class="doc">
+    Mốc thời gian là dự kiến, điều chỉnh theo tiến độ Dev thực tế. Đầu việc &amp; estimate QA quản lý trên SMIT Work (dự án Thiên Long Mobile, Sprint 2).
+  </footer>
+
+</div>
+</body>
+</html>

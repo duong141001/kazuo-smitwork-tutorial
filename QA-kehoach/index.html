@@ -196,7 +196,50 @@
     </tbody>
   </table>
 
-  <h2><span class="num">3</span> Đề xuất: 2 QA theo lộ trình</h2>
+  <h3>Chia theo loại test</h3>
+  <p class="lead">Hiện toàn bộ timeline mới ở giai đoạn <b>Test Planning</b> (lập kế hoạch). Phân theo 6 loại test để thấy đâu là việc lặp lại (máy làm được) và đâu cần cảm quan con người:</p>
+  <table>
+    <thead><tr><th>Loại test</th><th class="num">Đầu việc</th><th class="num">Giờ</th><th>Tính chất</th></tr></thead>
+    <tbody>
+      <tr><td>Viết test case (chuẩn bị)</td><td class="num">69</td><td class="num">276h</td><td>Soạn kịch bản, sinh edge case</td></tr>
+      <tr><td>Chức năng + edge case</td><td class="num">27</td><td class="num">216h</td><td>Kiểm logic tính năng</td></tr>
+      <tr><td>Mobile &amp; cảm ứng</td><td class="num">69</td><td class="num">276h</td><td>Chạm/vuốt trên máy thật</td></tr>
+      <tr><td>3D / Animation &amp; hiển thị</td><td class="num">69</td><td class="num">207h</td><td>Cảm quan hình ảnh</td></tr>
+      <tr><td>Regression logic</td><td class="num">42</td><td class="num">126h</td><td>Test lại, lặp lại</td></tr>
+      <tr><td>Hiệu năng / tải</td><td class="num">10</td><td class="num">60h</td><td>Đo FPS, bộ nhớ, tải</td></tr>
+      <tr class="total"><td>TỔNG</td><td class="num">286</td><td class="num">~1.161h</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">3</span> Nếu có AI hỗ trợ — giảm được bao nhiêu?</h2>
+  <p class="lead">AI hỗ trợ theo 2 hướng: <b>viết/phân tích</b> (sinh test case, edge case, đối chiếu GDD, đọc log/bug) và <b>auto-test</b> (chạy regression, kiểm chức năng lặp lại). AI mạnh ở việc lặp lại &amp; văn bản, yếu ở phần cần <b>máy thật + mắt người</b> (cảm ứng, 3D, cảm quan chơi game).</p>
+
+  <div class="kpis">
+    <div class="kpi"><div class="val ok">~404h</div><div class="label">AI có thể gánh (~35% khối lượng)</div></div>
+    <div class="kpi"><div class="val">757h</div><div class="label">Còn lại cần người (~95 ngày công)</div></div>
+    <div class="kpi"><div class="val">6</div><div class="label">Loại test được phân tích</div></div>
+    <div class="kpi"><div class="val">50 ngày</div><div class="label">Ngày công AI tiết kiệm (÷8h)</div></div>
+  </div>
+
+  <table>
+    <thead><tr><th>Loại test</th><th class="num">Giờ</th><th class="num">AI hỗ trợ</th><th class="num">AI gánh</th><th class="num">Người còn lại</th></tr></thead>
+    <tbody>
+      <tr><td>Viết test case</td><td class="num">276h</td><td class="num">60%</td><td class="num">166h</td><td class="num">110h</td></tr>
+      <tr><td>Regression logic</td><td class="num">126h</td><td class="num">55%</td><td class="num">69h</td><td class="num">57h</td></tr>
+      <tr><td>Chức năng + edge</td><td class="num">216h</td><td class="num">40%</td><td class="num">86h</td><td class="num">130h</td></tr>
+      <tr><td>Hiệu năng / tải</td><td class="num">60h</td><td class="num">35%</td><td class="num">21h</td><td class="num">39h</td></tr>
+      <tr><td>Mobile &amp; cảm ứng</td><td class="num">276h</td><td class="num">15%</td><td class="num">41h</td><td class="num">235h</td></tr>
+      <tr><td>3D / Animation</td><td class="num">207h</td><td class="num">10%</td><td class="num">21h</td><td class="num">186h</td></tr>
+      <tr class="total"><td>TỔNG</td><td class="num">1.161h</td><td class="num">35%</td><td class="num">~404h</td><td class="num">757h</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout ok">
+    <b>Kết luận:</b> AI kéo khối lượng QA từ <b>1.161h → ~757h việc người</b> (giảm ~35%, tiết kiệm ~50 ngày công). Nhưng <b>AI không thay được QA</b>: phần nặng nhất là <b>Mobile &amp; cảm ứng (235h)</b> và <b>3D/Animation (186h)</b> vẫn cần người test trên máy thật. AI giúp giảm tải để cùng lượng người làm được nhiều hơn, <b>không phải để cắt người</b>.
+  </div>
+  <p class="lead" style="font-size:13px;color:var(--faint)">Ghi chú: % AI hỗ trợ là ước lượng theo bản chất từng loại test (việc lặp lại/văn bản → AI cao; cảm quan/thiết bị thật → AI thấp). Con số thực tế phụ thuộc công cụ automation &amp; mức tích hợp AI của đội.</p>
+
+  <h2><span class="num">4</span> Đề xuất: 2 QA theo lộ trình</h2>
   <p class="lead">Không tuyển ồ ạt — chia 2 đợt bám theo đường cong khối lượng (Phase 1 &amp; 2 nặng nhất):</p>
 
   <div class="tl">
@@ -224,7 +267,7 @@
     <li><b>Linh hoạt:</b> nếu tiến độ dev chậm, có thể lùi QA #2; nếu gấp, kéo sớm.</li>
   </ul>
 
-  <h2><span class="num">4</span> Lợi ích &amp; Rủi ro nếu KHÔNG thêm người</h2>
+  <h2><span class="num">5</span> Lợi ích &amp; Rủi ro nếu KHÔNG thêm người</h2>
   <div class="cap">
     <div class="cap-card after">
       <h4 style="color:var(--ok)">Nếu thêm 2 QA</h4>

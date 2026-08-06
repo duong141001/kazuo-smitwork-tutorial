@@ -141,11 +141,12 @@
     </div>
     <div class="tl-item milestone">
       <div class="when">~14/08 – 15/08</div>
-      <div class="what">QA — Test Staging (cửa ải) <span class="pill qa">QA</span></div>
-      <div class="desc">Bước mới theo yêu cầu Dev: smoke test nhanh trên staging để xác nhận <b>tính năng đã đủ điều kiện</b> test sâu hay chưa.</div>
+      <div class="what">QA — Test Staging: đối chiếu module với game gốc <span class="pill qa">QA</span></div>
+      <div class="desc">Bước mới theo yêu cầu Dev. Không chỉ smoke test "chạy được", mà QA <b>đối chiếu tính năng với game gốc</b>: tính năng đó đã có <b>đủ các module/thành phần như bản gốc</b> chưa?</div>
       <ul>
-        <li>Tính năng <b>đủ</b> → chuyển sang test chi tiết.</li>
-        <li>Tính năng <b>thiếu/lỗi chặn</b> → trả lại Dev kèm ghi chú, không tốn công test sâu.</li>
+        <li><b>Đủ module như game gốc</b> → tính năng đạt "đủ điều kiện" → chuyển sang test chi tiết.</li>
+        <li><b>Thiếu module</b> (vd Túi đồ thiếu khóa an toàn / phân loại...) → ghi rõ module còn thiếu, trả lại Dev, chưa test sâu.</li>
+        <li>Cần <b>bảng đối chiếu module gốc</b> làm chuẩn so sánh cho từng tính năng.</li>
       </ul>
     </div>
     <div class="tl-item milestone">
@@ -164,21 +165,26 @@
   <table>
     <thead><tr><th>Giai đoạn</th><th>Dev</th><th>QA</th></tr></thead>
     <tbody>
-      <tr><td>Trước build (đến 13/08)</td><td>Hoàn thiện tính năng, ráp build, deploy staging</td><td>Chuẩn bị test case, dựng checklist "đủ điều kiện"</td></tr>
-      <tr><td>Test staging (14–15/08)</td><td>Trực fix nhanh lỗi chặn khi QA trả về</td><td>Smoke test, chốt tính năng đủ/chưa đủ</td></tr>
+      <tr><td>Trước build (đến 13/08)</td><td>Hoàn thiện tính năng, ráp build, deploy staging</td><td>Chuẩn bị test case + <b>dựng bảng đối chiếu module game gốc</b> cho từng tính năng</td></tr>
+      <tr><td>Test staging (14–15/08)</td><td>Trực bổ sung module còn thiếu / fix lỗi chặn khi QA trả về</td><td><b>Đối chiếu module với game gốc</b>, chốt tính năng đủ/chưa đủ</td></tr>
       <tr><td>Sau bàn giao (16/08+)</td><td>Fix bug theo severity, retest cùng QA</td><td>Test sâu, log bug, retest, xác nhận đạt</td></tr>
     </tbody>
   </table>
 
   <h2><span class="num">3</span> Tiêu chí "đủ điều kiện" (Definition of Ready cho QA)</h2>
-  <p class="lead">Build/tính năng phải đạt các mục sau ở bước staging thì QA mới nhận test sâu:</p>
+  <p class="lead">Build/tính năng phải đạt các mục sau ở bước staging thì QA mới nhận test sâu. Tiêu chí cốt lõi là <b>đủ module như game gốc</b>:</p>
   <ul class="check">
+    <li><span class="box"></span> <b>Đủ module như game gốc</b> — đối chiếu từng thành phần của tính năng với bản gốc, không thiếu module nào (vd Túi đồ: xếp/gộp đồ, khóa an toàn, phân loại, mở rộng ô, tooltip item...).</li>
+    <li><span class="box"></span> Có <b>bảng đối chiếu module gốc</b> (checklist các module bản gốc) để QA so từng mục.</li>
     <li><span class="box"></span> Tính năng chạy được trên staging, không crash khi mở.</li>
     <li><span class="box"></span> Luồng chính (happy path) đi hết được từ đầu tới cuối.</li>
     <li><span class="box"></span> Không có lỗi chặn (blocker) khiến không test tiếp được.</li>
     <li><span class="box"></span> Có mô tả tính năng / GDD để QA biết "đúng" là thế nào.</li>
     <li><span class="box"></span> Dev đã tự test qua và ghi chú phần chưa hoàn thiện (nếu có).</li>
   </ul>
+  <div class="callout warn">
+    <b>Lưu ý quan trọng —</b> "Đủ" ở đây nghĩa là <b>đủ so với game gốc</b>, không phải "chạy là được". Một tính năng có thể mở lên không crash nhưng vẫn <b>thiếu module</b> so với bản gốc — trường hợp này QA đánh dấu <b>chưa đủ</b> và ghi rõ module còn thiếu để Dev bổ sung.
+  </div>
 
   <h2><span class="num">4</span> Rủi ro &amp; phương án</h2>
   <table>
@@ -191,7 +197,7 @@
   </table>
 
   <div class="callout ok">
-    <b>Tóm tắt:</b> Dev đưa build lên staging ~13/08 → QA lọc cửa ải staging 14–15/08 → bàn giao chính thức ~16/08 → QA test sâu. Bước staging giúp QA không tốn công với tính năng chưa xong, còn Dev nhận phản hồi "đủ/chưa" sớm.
+    <b>Tóm tắt:</b> Dev đưa build lên staging ~13/08 → QA <b>đối chiếu module với game gốc</b> ở cửa ải staging 14–15/08 → tính năng đủ module mới bàn giao chính thức ~16/08 → QA test sâu. Bước staging đảm bảo tính năng <b>đủ so với game gốc</b> trước khi test, tránh tốn công với tính năng còn thiếu module.
   </div>
 
   <footer class="doc">

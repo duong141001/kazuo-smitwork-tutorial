@@ -239,7 +239,45 @@
   </div>
   <p class="lead" style="font-size:13px;color:var(--faint)">Ghi chú: % AI hỗ trợ là ước lượng theo bản chất từng loại test (việc lặp lại/văn bản → AI cao; cảm quan/thiết bị thật → AI thấp). Con số thực tế phụ thuộc công cụ automation &amp; mức tích hợp AI của đội.</p>
 
-  <h2><span class="num">4</span> Đề xuất: 2 QA theo lộ trình</h2>
+  <h2><span class="num">4</span> Giải pháp áp dụng vào thực tế</h2>
+  <p class="lead">Con số 35% ở trên chỉ đạt được khi có <b>công cụ cụ thể</b>. Game làm bằng <b>Unity</b> nên automation đi theo Unity, còn AI tập trung khâu <b>sinh test case từ GDD</b>. Hai hướng bổ trợ nhau:</p>
+
+  <h3>Hướng 1 — AI sinh test case từ GDD</h3>
+  <p class="lead">Đây là khâu AI mạnh nhất (chiếm 276h "viết test case"). Thay vì QA đọc GDD rồi gõ tay từng ca, AI đọc GDD sinh sẵn bộ test case + edge case, QA chỉ rà soát và bổ sung.</p>
+  <table>
+    <thead><tr><th>Bước</th><th>Cách làm</th></tr></thead>
+    <tbody>
+      <tr><td>1. Đưa GDD vào AI</td><td>Dán nội dung GDD/tính năng cho AI (Claude, ChatGPT) kèm mẫu test case chuẩn của đội</td></tr>
+      <tr><td>2. AI sinh test case</td><td>AI liệt kê các ca test: luồng chính, edge case, input sai, ranh giới — theo format bảng của đội</td></tr>
+      <tr><td>3. QA rà soát</td><td>QA kiểm lại, bỏ ca thừa, thêm ca AI bỏ sót (kiến thức game gốc), chốt bộ test case</td></tr>
+      <tr><td>4. Đối chiếu module gốc</td><td>AI so GDD với mô tả game gốc → gợi ý module còn thiếu cho bước test staging</td></tr>
+    </tbody>
+  </table>
+  <div class="callout ok"><b>Lợi ích:</b> khâu viết test case từ <b>276h → ~110h</b> (AI gánh ~60%). Test case ra nhanh &amp; đồng đều format, QA tập trung vào phần cần tư duy.</div>
+
+  <h3>Hướng 2 — Automation test bằng Unity</h3>
+  <p class="lead">Với logic lặp lại (regression, chức năng), viết script test tự chạy trong Unity thay vì bấm tay mỗi lần.</p>
+  <table>
+    <thead><tr><th>Công cụ</th><th>Dùng cho</th></tr></thead>
+    <tbody>
+      <tr><td><b>Unity Test Framework</b> (UTF)</td><td>Test logic game: công thức sát thương, buff/debuff, lên cấp, chỉ số nhân vật — chạy tự động mỗi build (chính là các tính năng "Cao" trong Sprint 2)</td></tr>
+      <tr><td><b>Play Mode Tests</b></td><td>Test luồng trong game runtime: dùng kỹ năng, nhặt đồ, giao dịch — mô phỏng thao tác</td></tr>
+      <tr><td><b>AltTester / Appium</b> (tùy chọn)</td><td>Automation UI trên thiết bị thật cho một phần test mobile (bấm nút, điều hướng menu)</td></tr>
+      <tr><td><b>AI viết script test</b></td><td>AI sinh sẵn khung script UTF từ test case → dev/QA chỉ chỉnh, không viết từ đầu</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn"><b>Lưu ý:</b> automation cần <b>đầu tư ban đầu</b> (dev/QA viết script, dựng CI chạy test). Đáng làm cho <b>regression &amp; logic lặp lại</b>; KHÔNG áp cho test cảm quan (3D, animation, cảm giác chơi) — phần đó vẫn cần mắt người.</div>
+
+  <h3>Việc AI/automation KHÔNG làm được</h3>
+  <ul class="clean">
+    <li><b>Cảm quan hình ảnh 3D/animation</b> (186h) — đẹp/mượt/đúng phong cách cần mắt người đánh giá.</li>
+    <li><b>Trải nghiệm chạm &amp; cảm giác chơi mobile</b> (235h) — độ nhạy, thao tác thật trên máy.</li>
+    <li><b>Phán đoán "vui/không vui", cân bằng game</b> — thuộc về con người &amp; game design.</li>
+  </ul>
+
+  <div class="callout"><b>Lộ trình áp dụng đề xuất:</b> (1) Làm ngay hướng AI sinh test case từ GDD — rẻ, hiệu quả liền. (2) Thí điểm Unity Test Framework cho 2–3 tính năng logic (công thức sát thương, buff/debuff). (3) Đánh giá kết quả rồi mở rộng automation cho regression toàn dự án.</div>
+
+  <h2><span class="num">5</span> Đề xuất: 2 QA theo lộ trình</h2>
   <p class="lead">Không tuyển ồ ạt — chia 2 đợt bám theo đường cong khối lượng (Phase 1 &amp; 2 nặng nhất):</p>
 
   <div class="tl">
@@ -267,7 +305,7 @@
     <li><b>Linh hoạt:</b> nếu tiến độ dev chậm, có thể lùi QA #2; nếu gấp, kéo sớm.</li>
   </ul>
 
-  <h2><span class="num">5</span> Lợi ích &amp; Rủi ro nếu KHÔNG thêm người</h2>
+  <h2><span class="num">6</span> Lợi ích &amp; Rủi ro nếu KHÔNG thêm người</h2>
   <div class="cap">
     <div class="cap-card after">
       <h4 style="color:var(--ok)">Nếu thêm 2 QA</h4>

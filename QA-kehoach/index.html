@@ -138,7 +138,7 @@
   </header>
 
   <div class="callout danger">
-    <b>TL;DR —</b> Khối lượng test cả dự án là <b>286 đầu việc QA (~1.161 giờ)</b> trên <b>69 tính năng</b>, hiện dồn lên <b>1 QA duy nhất</b>. Riêng Sprint 2 đã cần <b>~288 giờ</b> (sau khi thêm bước test staging theo yêu cầu Dev) trong khi 1 người chỉ làm được <b>~130 giờ</b>/sprint — <b>quá tải 2,2 lần</b>. Đề xuất bổ sung <b>2 QA theo lộ trình</b> để đảm bảo chất lượng và tiến độ.
+    <b>TL;DR —</b> Khối lượng test cả dự án là <b>286 đầu việc QA (~1.161 giờ)</b> trên <b>69 tính năng</b>, hiện dồn lên <b>1 QA duy nhất</b>. Riêng Sprint 2 đã cần <b>~288 giờ</b> (đã gồm bước test staging Dev yêu cầu) trong khi 1 người chỉ làm được <b>~90 giờ</b>/sprint (7.5h × 6 ngày × 2 tuần) — <b>quá tải hơn 3 lần</b>. Kể cả khi có <b>AI + tool</b> (gánh ~48%), vẫn cần <b>2 QA theo lộ trình</b> để đảm bảo chất lượng và tiến độ.
   </div>
 
   <div class="kpis">
@@ -154,18 +154,18 @@
   <div class="cap">
     <div class="cap-card before">
       <h4>Hiện trạng — 1 QA</h4>
-      <div class="cap-num" style="color:var(--danger)">288h cần / 130h làm được</div>
-      <p class="lead" style="margin:8px 0 0">Thiếu <b>158 giờ</b> ngay trong Sprint 2. Hệ quả: test bị cắt bớt, bỏ sót lỗi, hoặc dời tính năng — nợ chất lượng dồn về cuối.</p>
+      <div class="cap-num" style="color:var(--danger)">288h cần / 90h làm được</div>
+      <p class="lead" style="margin:8px 0 0">Thiếu <b>~198 giờ</b> ngay trong Sprint 2. Hệ quả: test bị cắt bớt, bỏ sót lỗi, hoặc dời tính năng — nợ chất lượng dồn về cuối.</p>
     </div>
     <div class="cap-card after">
-      <h4>Đề xuất — 3 QA (thêm 2)</h4>
-      <div class="cap-num" style="color:var(--ok)">~96h/người · trong ngưỡng an toàn</div>
-      <p class="lead" style="margin:8px 0 0">Chia đều tải, còn dư biên độ cho retest &amp; regression. Kịp tiến độ, giữ chất lượng.</p>
+      <h4>Đề xuất — 2 QA + AI/tool</h4>
+      <div class="cap-num" style="color:var(--ok)">AI gánh ~48% · 2 người kham được</div>
+      <p class="lead" style="margin:8px 0 0">AI/tool cắt phần dồn cục đầu sprint, 2 QA chia phần còn lại + retest. Kịp tiến độ, giữ chất lượng.</p>
     </div>
   </div>
 
   <div class="callout">
-    <b>Cách tính năng lực 1 QA/sprint:</b> 10 ngày làm việc × 8h = 80h thô. Trừ họp, daily, viết báo cáo, retest lỗi (~20%) → <b>~130h hữu dụng cho 2 tuần</b> đã tính cả tăng ca nhẹ. Con số 288h của Sprint 2 lấy trực tiếp từ estimate đã nhập trên Kazuo (loại test × độ phức tạp tính năng), <b>đã bao gồm bước "test staging"</b> mà Dev yêu cầu bổ sung để chốt tính năng đã đủ trước khi test sâu.
+    <b>Cách tính năng lực 1 QA/sprint:</b> <b>7.5h/ngày × 6 ngày (T2–T7) = 45h/tuần</b> → <b>90h cho 1 sprint 2 tuần</b> (đã trừ họp, daily, retest). Con số 288h của Sprint 2 lấy trực tiếp từ estimate đã nhập trên Kazuo (loại test × độ phức tạp tính năng), <b>đã gồm bước "test staging"</b> Dev yêu cầu.
   </div>
 
   <h2><span class="num">2</span> Khối lượng QA cả dự án (4 Phase)</h2>
@@ -215,29 +215,29 @@
   <p class="lead">AI hỗ trợ theo 2 hướng: <b>viết/phân tích</b> (sinh test case, edge case, đối chiếu GDD, đọc log/bug) và <b>auto-test</b> (chạy regression, kiểm chức năng lặp lại). AI mạnh ở việc lặp lại &amp; văn bản, yếu ở phần cần <b>máy thật + mắt người</b> (cảm ứng, 3D, cảm quan chơi game).</p>
 
   <div class="kpis">
-    <div class="kpi"><div class="val ok">~404h</div><div class="label">AI có thể gánh (~35% khối lượng)</div></div>
-    <div class="kpi"><div class="val">757h</div><div class="label">Còn lại cần người (~95 ngày công)</div></div>
+    <div class="kpi"><div class="val ok">~556h</div><div class="label">AI + tool có thể gánh (~48% khối lượng)</div></div>
+    <div class="kpi"><div class="val">605h</div><div class="label">Còn lại cần người (~80 ngày công)</div></div>
     <div class="kpi"><div class="val">6</div><div class="label">Loại test được phân tích</div></div>
-    <div class="kpi"><div class="val">50 ngày</div><div class="label">Ngày công AI tiết kiệm (÷8h)</div></div>
+    <div class="kpi"><div class="val">74 ngày</div><div class="label">Ngày công AI tiết kiệm (÷7.5h)</div></div>
   </div>
 
   <table>
     <thead><tr><th>Loại test</th><th class="num">Giờ</th><th class="num">AI hỗ trợ</th><th class="num">AI gánh</th><th class="num">Người còn lại</th></tr></thead>
     <tbody>
+      <tr><td>Mobile &amp; cảm ứng <span style="color:var(--faint);font-size:12px">(UI test bằng tool)</span></td><td class="num">276h</td><td class="num">70%</td><td class="num">193h</td><td class="num">83h</td></tr>
       <tr><td>Viết test case</td><td class="num">276h</td><td class="num">60%</td><td class="num">166h</td><td class="num">110h</td></tr>
       <tr><td>Regression logic</td><td class="num">126h</td><td class="num">55%</td><td class="num">69h</td><td class="num">57h</td></tr>
       <tr><td>Chức năng + edge</td><td class="num">216h</td><td class="num">40%</td><td class="num">86h</td><td class="num">130h</td></tr>
       <tr><td>Hiệu năng / tải</td><td class="num">60h</td><td class="num">35%</td><td class="num">21h</td><td class="num">39h</td></tr>
-      <tr><td>Mobile &amp; cảm ứng</td><td class="num">276h</td><td class="num">15%</td><td class="num">41h</td><td class="num">235h</td></tr>
       <tr><td>3D / Animation</td><td class="num">207h</td><td class="num">10%</td><td class="num">21h</td><td class="num">186h</td></tr>
-      <tr class="total"><td>TỔNG</td><td class="num">1.161h</td><td class="num">35%</td><td class="num">~404h</td><td class="num">757h</td></tr>
+      <tr class="total"><td>TỔNG</td><td class="num">1.161h</td><td class="num">48%</td><td class="num">~556h</td><td class="num">605h</td></tr>
     </tbody>
   </table>
 
   <div class="callout ok">
-    <b>Kết luận:</b> AI kéo khối lượng QA từ <b>1.161h → ~757h việc người</b> (giảm ~35%, tiết kiệm ~50 ngày công). Nhưng <b>AI không thay được QA</b>: phần nặng nhất là <b>Mobile &amp; cảm ứng (235h)</b> và <b>3D/Animation (186h)</b> vẫn cần người test trên máy thật. AI giúp giảm tải để cùng lượng người làm được nhiều hơn, <b>không phải để cắt người</b>.
+    <b>Kết luận:</b> Với tool AI test <b>UI (dev xác nhận "test được gần hết")</b>, AI kéo khối lượng QA từ <b>1.161h → ~605h việc người</b> (giảm ~48%, tiết kiệm ~74 ngày công). Nhưng <b>AI không thay được QA</b>: phần nặng nhất còn lại là <b>3D/Animation (186h)</b> và <b>chức năng + edge (130h)</b> vẫn cần người. AI giúp giảm tải để cùng lượng người làm được nhiều hơn, <b>không phải để cắt người</b>.
   </div>
-  <p class="lead" style="font-size:13px;color:var(--faint)">Ghi chú: % AI hỗ trợ là ước lượng theo bản chất từng loại test (việc lặp lại/văn bản → AI cao; cảm quan/thiết bị thật → AI thấp). Con số thực tế phụ thuộc công cụ automation &amp; mức tích hợp AI của đội.</p>
+  <p class="lead" style="font-size:13px;color:var(--faint)">Ghi chú: % AI hỗ trợ dựa trên trao đổi với Dev (UI test bằng tool ~70%, logic game test bằng Unity Test Framework). Con số thực tế phụ thuộc chất lượng tool sau khi dựng.</p>
 
   <h2><span class="num">4</span> Giải pháp áp dụng vào thực tế</h2>
   <p class="lead">Con số 35% ở trên chỉ đạt được khi có <b>công cụ cụ thể</b>. Game làm bằng <b>Unity</b> nên automation đi theo Unity, còn AI tập trung khâu <b>sinh test case từ GDD</b>. Hai hướng bổ trợ nhau:</p>
@@ -255,29 +255,52 @@
   </table>
   <div class="callout ok"><b>Lợi ích:</b> khâu viết test case từ <b>276h → ~110h</b> (AI gánh ~60%). Test case ra nhanh &amp; đồng đều format, QA tập trung vào phần cần tư duy.</div>
 
-  <h3>Hướng 2 — Automation test bằng Unity</h3>
-  <p class="lead">Với logic lặp lại (regression, chức năng), viết script test tự chạy trong Unity thay vì bấm tay mỗi lần.</p>
+  <h3>Hướng 2 — Tool test bằng AI (dev trao đổi)</h3>
+  <p class="lead">Theo Dev: đây là <b>"tool test bằng AI"</b> — dựng một công cụ để AI tự chạy test, <b>không phải cắm AI thủ công vào từng ca</b>. Dev đánh giá <b>UI test được gần hết</b> bằng tool này.</p>
   <table>
-    <thead><tr><th>Công cụ</th><th>Dùng cho</th></tr></thead>
+    <thead><tr><th>Hạng mục</th><th>Dev đánh giá</th></tr></thead>
     <tbody>
-      <tr><td><b>Unity Test Framework</b> (UTF)</td><td>Test logic game: công thức sát thương, buff/debuff, lên cấp, chỉ số nhân vật — chạy tự động mỗi build (chính là các tính năng "Cao" trong Sprint 2)</td></tr>
-      <tr><td><b>Play Mode Tests</b></td><td>Test luồng trong game runtime: dùng kỹ năng, nhặt đồ, giao dịch — mô phỏng thao tác</td></tr>
-      <tr><td><b>AltTester / Appium</b> (tùy chọn)</td><td>Automation UI trên thiết bị thật cho một phần test mobile (bấm nút, điều hướng menu)</td></tr>
-      <tr><td><b>AI viết script test</b></td><td>AI sinh sẵn khung script UTF từ test case → dev/QA chỉ chỉnh, không viết từ đầu</td></tr>
+      <tr><td><b>UI test</b> (mobile, menu, luồng bấm)</td><td><b>Test được gần hết</b> bằng tool AI — đây là phần tool gánh nhiều nhất</td></tr>
+      <tr><td><b>Logic game</b> (sát thương, buff/debuff, lên cấp, chỉ số nhân vật)</td><td>Test tự động trong <b>Unity</b> (Unity Test Framework) — dev đang cân nhắc khả thi</td></tr>
+      <tr><td><b>Chi phí dựng tool</b></td><td><b>~nửa tháng (2 tuần) làm liên tục</b> — đầu tư 1 lần</td></tr>
     </tbody>
   </table>
-  <div class="callout warn"><b>Lưu ý:</b> automation cần <b>đầu tư ban đầu</b> (dev/QA viết script, dựng CI chạy test). Đáng làm cho <b>regression &amp; logic lặp lại</b>; KHÔNG áp cho test cảm quan (3D, animation, cảm giác chơi) — phần đó vẫn cần mắt người.</div>
 
-  <h3>Việc AI/automation KHÔNG làm được</h3>
+  <div class="callout warn">
+    <b>Chi phí &amp; ROI dựng tool:</b>
+    <ul>
+      <li><b>Đầu tư:</b> ~2 tuần công dựng tool (1 lần, đầu dự án).</li>
+      <li><b>Thu về:</b> tool chạy lại mọi build/sprint → tiết kiệm ~556h test (48% khối lượng cả dự án).</li>
+      <li><b>Hòa vốn nhanh:</b> 2 tuần dựng ≈ 90h, trong khi tool gánh ~556h — <b>hoàn vốn ngay trong Phase 1</b>, càng về sau càng lời.</li>
+    </ul>
+  </div>
+
+  <h3>Việc AI/tool KHÔNG làm được</h3>
   <ul class="clean">
     <li><b>Cảm quan hình ảnh 3D/animation</b> (186h) — đẹp/mượt/đúng phong cách cần mắt người đánh giá.</li>
-    <li><b>Trải nghiệm chạm &amp; cảm giác chơi mobile</b> (235h) — độ nhạy, thao tác thật trên máy.</li>
-    <li><b>Phán đoán "vui/không vui", cân bằng game</b> — thuộc về con người &amp; game design.</li>
+    <li><b>Cảm giác chơi &amp; cân bằng game</b> — "vui/không vui" thuộc về con người &amp; game design.</li>
+    <li><b>Edge case tư duy sâu</b> — AI sinh ca cơ bản, ca hiểm cần kinh nghiệm game gốc của QA.</li>
   </ul>
 
-  <div class="callout"><b>Lộ trình áp dụng đề xuất:</b> (1) Làm ngay hướng AI sinh test case từ GDD — rẻ, hiệu quả liền. (2) Thí điểm Unity Test Framework cho 2–3 tính năng logic (công thức sát thương, buff/debuff). (3) Đánh giá kết quả rồi mở rộng automation cho regression toàn dự án.</div>
+  <div class="callout"><b>Lộ trình áp dụng đề xuất:</b> (1) Làm ngay <b>AI sinh test case từ GDD</b> — không cần dựng tool, hiệu quả liền. (2) Dev dựng <b>tool test UI bằng AI</b> (~2 tuần). (3) Thí điểm <b>Unity Test Framework</b> cho logic game (sát thương, buff/debuff). (4) Đánh giá rồi mở rộng cho regression toàn dự án.</div>
 
-  <h2><span class="num">5</span> Đề xuất: 2 QA theo lộ trình</h2>
+  <h2><span class="num">5</span> Đề xuất: cần mấy QA?</h2>
+
+  <h3>Có AI/tool thì cần bao nhiêu người?</h3>
+  <p class="lead">Năng lực 1 QA: <b>7.5h/ngày × 6 ngày (T2–T7) = 45h/tuần ≈ 195h/tháng</b>. Sau khi AI gánh, còn <b>605h việc người</b>:</p>
+  <table>
+    <thead><tr><th>Phương án</th><th class="num">Số QA</th><th>Thời gian làm hết phần người (605h)</th></tr></thead>
+    <tbody>
+      <tr><td>Không có AI</td><td class="num">3 QA</td><td>1.161h — cần 3 người để kịp đỉnh tải</td></tr>
+      <tr><td><b>Có AI + tool</b></td><td class="num"><b>2 QA</b></td><td><b>~1,6 tháng</b> (2 người) — đủ cho đỉnh tải &amp; sprint song song</td></tr>
+      <tr><td>Tối thiểu (chấp nhận chậm)</td><td class="num">1 QA</td><td>~3,1 tháng (1 người) — nhưng nghẽn ở Phase 1 &amp; khi 2 sprint chạy song song</td></tr>
+    </tbody>
+  </table>
+  <div class="callout ok">
+    <b>Với AI + tool, cần 2 QA thay vì 3.</b> AI cắt đúng phần dồn cục đầu sprint (viết test case + UI test), làm phẳng đỉnh tải nên bớt được 1 người. 1 QA về lý thuyết đủ nếu timeline thả lỏng, nhưng rủi ro nghẽn cao — <b>2 QA là mức an toàn</b>.
+  </div>
+
+  <h3>Lộ trình tuyển 2 QA</h3>
   <p class="lead">Không tuyển ồ ạt — chia 2 đợt bám theo đường cong khối lượng (Phase 1 &amp; 2 nặng nhất):</p>
 
   <div class="tl">

@@ -148,7 +148,7 @@ const cardFor = (s) => {
           ${stepsHtml}
         </div>
         <div class="shot">
-          <img loading="lazy" src="shots/${esc(s.file)}" alt="Ảnh màn ${esc(shortTitle(s.label))}">
+          <img loading="lazy" src="/shots/${esc(s.file)}" alt="Ảnh màn ${esc(shortTitle(s.label))}">
         </div>
       </article>`;
 };
@@ -263,8 +263,8 @@ const mcpGuide = `
         <li><b>Copy ngay chuỗi token hiện ra</b> và lưu chỗ an toàn — token đầy đủ chỉ hiện <b>một lần</b>, sau đó chỉ xem được vài ký tự đầu.</li>
       </ol>
       <div class="mcp-shots">
-        <figure><img loading="lazy" src="shots/mcp-create-token.png" alt="Nút Tạo mã mới ở trang Hồ sơ cá nhân"><figcaption>Mục "Mã kết nối MCP" ở cuối trang Hồ sơ cá nhân — bấm "Tạo mã mới".</figcaption></figure>
-        <figure><img loading="lazy" src="shots/mcp-token-dialog.png" alt="Hộp thoại đặt tên gợi nhớ cho mã"><figcaption>Đặt tên gợi nhớ rồi bấm "Tạo mã".</figcaption></figure>
+        <figure><img loading="lazy" src="/shots/mcp-create-token.png" alt="Nút Tạo mã mới ở trang Hồ sơ cá nhân"><figcaption>Mục "Mã kết nối MCP" ở cuối trang Hồ sơ cá nhân — bấm "Tạo mã mới".</figcaption></figure>
+        <figure><img loading="lazy" src="/shots/mcp-token-dialog.png" alt="Hộp thoại đặt tên gợi nhớ cho mã"><figcaption>Đặt tên gợi nhớ rồi bấm "Tạo mã".</figcaption></figure>
       </div>
       <div class="callout">
         <b>Lưu ý bảo mật:</b>
@@ -599,5 +599,5 @@ ${galleryHtml}
 </html>`;
 
 // Output as index.html so GitHub Pages serves it at the site root.
-await writeFile('index.html', html);
-console.log(`✓ index.html built with ${data.screens.length} screens.`);
+await writeFile('huong-dan/index.html', html);
+console.log(`✓ huong-dan/index.html built with ${data.screens.length} screens.`);

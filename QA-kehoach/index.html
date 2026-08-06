@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Đề xuất bổ sung nhân sự QA — Thiên Long Mobile</title>
+<title>Kế hoạch phòng QA — Thiên Long Mobile</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,16 +14,20 @@
     --accent:#3b82f6; --accent-soft:#1d3355;
     --ok:#22c55e; --warn:#f59e0b; --danger:#ef4444;
     --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-6:24px; --sp-8:32px; --sp-12:48px;
-    --radius:14px; --radius-sm:8px;
+    --radius:14px; --radius-sm:8px; --header-h:60px;
   }
   * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
   body { margin:0; background:var(--bg); color:var(--text);
     font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.65;
     -webkit-font-smoothing:antialiased; }
   a { color:inherit; }
-  /* Shared top navbar linking the 3 sites */
-  .sitenav { position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:8px;
-    height:60px; padding:0 var(--sp-6); background:rgba(15,20,25,.92);
+  code { font-family:ui-monospace,Menlo,monospace; font-size:.85em; background:var(--bg);
+    border:1px solid var(--line); padding:1px 6px; border-radius:5px; color:#a9c7ff; }
+
+  /* Top navbar */
+  .sitenav { position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:var(--sp-2);
+    height:var(--header-h); padding:0 var(--sp-6); background:rgba(15,20,25,.92);
     backdrop-filter:blur(10px); border-bottom:1px solid var(--line); overflow-x:auto; }
   .sitenav .brand { font-weight:700; font-size:15px; margin-right:var(--sp-4); white-space:nowrap;
     display:flex; align-items:center; gap:8px; }
@@ -33,177 +37,256 @@
     color:var(--muted); text-decoration:none; transition:background .2s,color .2s; }
   .sitenav a:hover { background:var(--surface); color:var(--text); }
   .sitenav a.active { background:var(--accent-soft); color:#cdddfd; }
+  .present-btn { margin-left:auto; flex-shrink:0; display:inline-flex; align-items:center; gap:7px;
+    padding:8px 16px; border-radius:8px; border:0; cursor:pointer; font-family:inherit;
+    font-size:14px; font-weight:600; color:#fff; background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+    transition:filter .2s; }
+  .present-btn:hover { filter:brightness(1.12); }
+
+  /* Slides */
+  .slides { position:fixed; inset:0; z-index:100; background:#0b0f14; display:none; flex-direction:column; }
+  .slides.on { display:flex; }
+  .slide { flex:1; display:none; flex-direction:column; justify-content:center;
+    max-width:1000px; width:100%; margin:0 auto; padding:6vh 6vw; }
+  .slide.show { display:flex; animation:sfade .35s ease; }
+  @keyframes sfade { from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:none;} }
+  .slide .kicker { font-size:15px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+    color:#60a5fa; margin-bottom:20px; }
+  .slide h2 { font-size:clamp(28px,4.5vw,52px); font-weight:800; letter-spacing:-.02em;
+    line-height:1.15; margin:0 0 28px; border:0; padding:0; display:block; }
+  .slide ul { margin:0; padding-left:26px; }
+  .slide li { font-size:clamp(17px,2.2vw,24px); line-height:1.7; margin:10px 0; color:#d4dae2; }
+  .slide li b { color:#fff; }
+  .slide .sub { font-size:clamp(18px,2.4vw,26px); color:var(--muted); margin-top:16px; }
+  .slide .row { display:flex; gap:28px; flex-wrap:wrap; margin-top:20px; }
+  .slide .stat { background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px 28px; }
+  .slide .stat .n { font-size:clamp(28px,4vw,44px); font-weight:800; }
+  .slide .stat .n.warn { color:var(--warn); } .slide .stat .n.danger { color:var(--danger); } .slide .stat .n.ok { color:var(--ok); }
+  .slide .stat .l { font-size:15px; color:var(--muted); margin-top:4px; }
+  .slides .bar { display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px; border-top:1px solid var(--line); background:rgba(255,255,255,.02); }
+  .slides .bar .dots { display:flex; gap:7px; }
+  .slides .bar .dot { width:8px; height:8px; border-radius:50%; background:var(--line); cursor:pointer; }
+  .slides .bar .dot.on { background:var(--accent); width:22px; border-radius:5px; }
+  .slides .bar button { background:var(--surface); border:1px solid var(--line); color:var(--text);
+    border-radius:8px; padding:7px 14px; cursor:pointer; font-family:inherit; font-size:14px; }
+  .slides .bar button:hover { background:var(--surface-2); }
+  .slides .bar .idx { color:var(--faint); font-size:13px; font-variant-numeric:tabular-nums; }
+  .slides .close { position:absolute; top:16px; right:20px; z-index:2; background:transparent;
+    border:0; color:var(--muted); cursor:pointer; font-size:26px; line-height:1; padding:6px; }
+  .slides .close:hover { color:#fff; }
+
   .wrap { max-width:1080px; margin:0 auto; padding:var(--sp-12) var(--sp-6); }
-  header.doc { border-bottom:1px solid var(--line); padding-bottom:var(--sp-6); margin-bottom:var(--sp-8); }
   .eyebrow { display:inline-block; font-size:12px; font-weight:600; letter-spacing:.08em;
     text-transform:uppercase; color:#a9c7ff; background:var(--accent-soft);
     padding:4px 12px; border-radius:20px; margin-bottom:var(--sp-4); }
   h1 { margin:0 0 var(--sp-3); font-size:32px; font-weight:800; letter-spacing:-.02em; line-height:1.2; }
   .doc-meta { color:var(--muted); font-size:14px; display:flex; gap:var(--sp-4); flex-wrap:wrap; }
   h2 { margin:var(--sp-12) 0 var(--sp-4); font-size:22px; font-weight:700; letter-spacing:-.01em;
-    display:flex; align-items:center; gap:10px; }
+    display:flex; align-items:center; gap:10px; scroll-margin-top:calc(var(--header-h) + 12px); }
   h2 .num { display:grid; place-items:center; width:30px; height:30px; border-radius:8px;
     background:var(--accent); color:#fff; font-size:15px; font-weight:700; flex-shrink:0; }
   h3 { margin:var(--sp-6) 0 var(--sp-3); font-size:16px; font-weight:600; color:#a9c7ff; }
-  p { margin:0 0 var(--sp-4); }
-  .lead { color:var(--muted); }
+  p { margin:0 0 var(--sp-4); } .lead { color:var(--muted); }
 
-  /* KPI cards */
   .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:var(--sp-4); margin:var(--sp-6) 0; }
-  .kpi { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
-    padding:var(--sp-6); }
-  .kpi .val { font-size:30px; font-weight:800; letter-spacing:-.02em; line-height:1; }
-  .kpi .val.danger { color:var(--danger); }
-  .kpi .val.ok { color:var(--ok); }
+  .kpi { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:var(--sp-6); }
+  .kpi .val { font-size:26px; font-weight:800; letter-spacing:-.02em; line-height:1; }
+  .kpi .val.ok { color:var(--ok); } .kpi .val.warn { color:var(--warn); } .kpi .val.danger { color:var(--danger); }
   .kpi .label { margin-top:8px; font-size:13px; color:var(--muted); line-height:1.4; }
 
-  /* callout */
   .callout { padding:var(--sp-4) var(--sp-6); border-radius:var(--radius-sm); margin:var(--sp-6) 0;
     border:1px solid var(--line); border-left:3px solid var(--accent); background:var(--surface); }
-  .callout.danger { border-left-color:var(--danger); background:#2a1618; }
+  .callout.warn { border-left-color:var(--warn); background:#241d12; }
   .callout.ok { border-left-color:var(--ok); background:#14231a; }
-  .callout b { color:var(--text); }
+  .callout.danger { border-left-color:var(--danger); background:#2a1618; }
+  .callout ul, .callout ol { margin:var(--sp-2) 0 0; }
+
+  /* Timeline */
+  .tl { position:relative; margin:var(--sp-6) 0; padding-left:28px; }
+  .tl::before { content:''; position:absolute; left:9px; top:6px; bottom:6px; width:2px; background:var(--line); }
+  .tl-item { position:relative; margin-bottom:var(--sp-8); }
+  .tl-item::before { content:''; position:absolute; left:-24px; top:5px; width:14px; height:14px;
+    border-radius:50%; background:var(--accent); border:3px solid var(--bg); }
+  .tl-item.done::before { background:var(--ok); }
+  .tl-item.hire::before { background:var(--ok); }
+  .tl-item.milestone::before { background:var(--warn); width:16px; height:16px; left:-25px; }
+  .tl-item .when { font-size:12px; font-weight:700; color:#a9c7ff; text-transform:uppercase; letter-spacing:.04em; }
+  .tl-item .what { font-weight:700; font-size:17px; margin:2px 0 4px; }
+  .tl-item .desc { font-size:14.5px; color:var(--muted); }
+  .tl-item ul { margin:8px 0 0; padding-left:18px; } .tl-item li { margin:3px 0; font-size:14px; }
 
   /* table */
   table { width:100%; border-collapse:collapse; margin:var(--sp-4) 0; font-size:14.5px; }
-  th,td { text-align:left; padding:10px 14px; border-bottom:1px solid var(--line); }
+  th,td { text-align:left; padding:10px 14px; border-bottom:1px solid var(--line); vertical-align:top; }
   th { color:var(--faint); font-size:12px; text-transform:uppercase; letter-spacing:.04em; font-weight:600; }
   td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
   tbody tr:hover { background:var(--surface); }
   tr.total td { font-weight:700; border-top:2px solid var(--line); border-bottom:0; }
+  .pill { display:inline-block; font-size:12px; font-weight:600; padding:2px 9px; border-radius:20px; }
+  .pill.dev { background:#1e2f3a; color:#a9d5ff; }
+  .pill.qa { background:#2a2036; color:#d6b4ff; }
+  .pill.rel { background:#14231a; color:#8ce6a8; }
+  .tag { display:inline-block; font-size:12px; font-weight:600; padding:2px 8px; border-radius:6px; }
+  .tag.now { background:#3a1e1e; color:#ffb4b4; }
+  .tag.p2 { background:#1e2f3a; color:#a9d5ff; }
 
-  /* bar chart */
+  /* bars */
   .bars { margin:var(--sp-4) 0; }
-  .bar-row { display:grid; grid-template-columns:180px 1fr 70px; align-items:center; gap:var(--sp-4);
-    margin:8px 0; font-size:14px; }
+  .bar-row { display:grid; grid-template-columns:180px 1fr 70px; align-items:center; gap:var(--sp-4); margin:8px 0; font-size:14px; }
   .bar-track { background:var(--surface-2); border-radius:6px; height:26px; overflow:hidden; }
-  .bar-fill { height:100%; border-radius:6px; background:linear-gradient(90deg,#3b82f6,#60a5fa);
-    display:flex; align-items:center; }
+  .bar-fill { height:100%; border-radius:6px; background:linear-gradient(90deg,#3b82f6,#60a5fa); display:flex; align-items:center; }
   .bar-row .hrs { text-align:right; color:var(--muted); font-variant-numeric:tabular-nums; }
 
-  /* capacity comparison */
+  /* comparison cards */
   .cap { display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-4); margin:var(--sp-6) 0; }
   .cap-card { border:1px solid var(--line); border-radius:var(--radius); padding:var(--sp-6); }
   .cap-card.before { background:#2a1618; border-color:#5b2b2f; }
   .cap-card.after { background:#14231a; border-color:#2f5b3f; }
   .cap-card h4 { margin:0 0 var(--sp-3); font-size:15px; }
-  .cap-num { font-size:26px; font-weight:800; }
+  .cap-num { font-size:24px; font-weight:800; }
 
-  /* timeline */
-  .tl { position:relative; margin:var(--sp-6) 0; padding-left:28px; }
-  .tl::before { content:''; position:absolute; left:9px; top:6px; bottom:6px; width:2px; background:var(--line); }
-  .tl-item { position:relative; margin-bottom:var(--sp-6); }
-  .tl-item::before { content:''; position:absolute; left:-24px; top:5px; width:14px; height:14px;
-    border-radius:50%; background:var(--accent); border:3px solid var(--bg); }
-  .tl-item.hire::before { background:var(--ok); }
-  .tl-item .when { font-size:12px; font-weight:600; color:#a9c7ff; text-transform:uppercase; letter-spacing:.04em; }
-  .tl-item .what { font-weight:600; margin:2px 0; }
-  .tl-item .desc { font-size:14px; color:var(--muted); }
+  ul.clean { margin:0 0 var(--sp-4); padding-left:20px; } ul.clean li { margin:6px 0; }
+  .check { list-style:none; padding-left:0; } .check li { padding:8px 0; border-bottom:1px solid var(--line);
+    display:flex; gap:10px; align-items:flex-start; } .check li:last-child { border-bottom:0; }
+  .check .box { flex-shrink:0; width:18px; height:18px; border:2px solid var(--faint); border-radius:5px; margin-top:2px; }
 
-  .tag { display:inline-block; font-size:12px; font-weight:600; padding:2px 8px; border-radius:6px; }
-  .tag.now { background:#3a1e1e; color:#ffb4b4; }
-  .tag.p2 { background:#1e2f3a; color:#a9d5ff; }
-
-  ul.clean { margin:0 0 var(--sp-4); padding-left:20px; }
-  ul.clean li { margin:6px 0; }
   footer.doc { margin-top:var(--sp-12); padding-top:var(--sp-6); border-top:1px solid var(--line);
     color:var(--faint); font-size:13px; }
-
-  @media (max-width:720px) {
-    .kpis { grid-template-columns:1fr 1fr; }
-    .cap { grid-template-columns:1fr; }
-    .bar-row { grid-template-columns:120px 1fr 56px; }
-  }
+  @media (max-width:720px){ .kpis{grid-template-columns:1fr 1fr;} .cap{grid-template-columns:1fr;} .bar-row{grid-template-columns:120px 1fr 56px;} }
 </style>
 </head>
 <body>
+
 <nav class="sitenav" aria-label="Điều hướng site">
   <span class="brand"><span class="dot"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span></span>
   <a href="/huong-dan/">Tài liệu hướng dẫn</a>
-  <a href="/build-plan/">Kế hoạch Build</a>
-  <a href="/QA-kehoach/" class="active">Đề xuất nhân sự QA</a>
+  <a href="/QA-kehoach/" class="active">Kế hoạch phòng QA</a>
+  <button class="present-btn" onclick="openSlides()" aria-label="Trình chiếu">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    Trình chiếu
+  </button>
 </nav>
+
 <div class="wrap">
 
   <header class="doc">
-    <span class="eyebrow">Đề xuất nhân sự · QA</span>
-    <h1>Bổ sung 2 QA cho dự án Thiên Long Mobile</h1>
+    <span class="eyebrow">Phòng QA · Thiên Long Mobile</span>
+    <h1>Kế hoạch phòng QA</h1>
     <div class="doc-meta">
-      <span>Người đề xuất: <b>Dương Nguyễn</b></span>
-      <span>·</span>
-      <span>Vai trò: QA / Scrum Master</span>
-      <span>·</span>
-      <span>Trình: Team Lead</span>
+      <span>Dự án: <b>Thiên Long Mobile</b></span><span>·</span>
+      <span>Sprint 2: 27/07 → 10/08</span><span>·</span>
+      <span>Bàn giao build ~16/08</span>
     </div>
   </header>
 
-  <div class="callout danger">
-    <b>TL;DR —</b> Khối lượng test cả dự án là <b>286 đầu việc QA (~1.161 giờ)</b> trên <b>69 tính năng</b>, hiện dồn lên <b>1 QA duy nhất</b>. Riêng Sprint 2 đã cần <b>~288 giờ</b> (đã gồm bước test staging Dev yêu cầu) trong khi 1 người chỉ làm được <b>~90 giờ</b>/sprint (7.5h × 6 ngày × 2 tuần) — <b>quá tải hơn 3 lần</b>. Kể cả khi có <b>AI + tool</b> (gánh ~48%), vẫn cần <b>2 QA theo lộ trình</b> để đảm bảo chất lượng và tiến độ.
-  </div>
+  <p class="lead">Bản kế hoạch tổng thể của phòng QA: lộ trình test theo build, quy trình &amp; tiêu chí, phối hợp với các team, khối lượng cả dự án, mức AI/tool hỗ trợ và kế hoạch nhân sự.</p>
 
   <div class="kpis">
     <div class="kpi"><div class="val">286</div><div class="label">Đầu việc QA cả dự án</div></div>
-    <div class="kpi"><div class="val">69</div><div class="label">Tính năng cần test</div></div>
-    <div class="kpi"><div class="val">~1.161h</div><div class="label">Tổng công QA (≈145 ngày công)</div></div>
-    <div class="kpi"><div class="val danger">2,2×</div><div class="label">Mức quá tải QA ở Sprint 2</div></div>
+    <div class="kpi"><div class="val">~1.161h</div><div class="label">Tổng công QA</div></div>
+    <div class="kpi"><div class="val ok">~48%</div><div class="label">AI + tool có thể gánh</div></div>
+    <div class="kpi"><div class="val">2 QA</div><div class="label">Nhân sự cần (có AI)</div></div>
   </div>
 
-  <h2><span class="num">1</span> Vấn đề: 1 QA không kham nổi</h2>
-  <p class="lead">Sprint 2 (2 tuần) đã được nhập kế hoạch QA chi tiết trên Kazuo — mỗi tính năng gồm chuỗi: <b>test staging</b> (chốt tính năng đủ chưa) → viết test case → test chức năng/regression → mobile → 3D/animation → hiệu năng. Đối chiếu với năng lực thực tế của 1 người:</p>
-
-  <div class="cap">
-    <div class="cap-card before">
-      <h4>Hiện trạng — 1 QA</h4>
-      <div class="cap-num" style="color:var(--danger)">288h cần / 90h làm được</div>
-      <p class="lead" style="margin:8px 0 0">Thiếu <b>~198 giờ</b> ngay trong Sprint 2. Hệ quả: test bị cắt bớt, bỏ sót lỗi, hoặc dời tính năng — nợ chất lượng dồn về cuối.</p>
+  <h2><span class="num">1</span> Lộ trình đến bản build</h2>
+  <div class="callout warn">
+    <b>Bối cảnh —</b> Sprint 2 kết thúc <b>10/08</b>. Dự kiến có bản build đầu tiên khoảng <b>16/08</b> để QA kiểm thử tập trung. Dưới đây là lộ trình từ nay đến khi bàn giao build.
+  </div>
+  <div class="tl">
+    <div class="tl-item done">
+      <div class="when">Đến 10/08 · Đang chạy</div>
+      <div class="what">Sprint 2 — hoàn thiện tính năng <span class="pill dev">DEV</span></div>
+      <div class="desc">Hoàn thành code các tính năng Sprint 2 (Nhân vật, Môn phái, Kỹ năng, Túi đồ, Social…), tự kiểm tra nội bộ, chuẩn bị đưa lên staging.</div>
     </div>
-    <div class="cap-card after">
-      <h4>Đề xuất — 2 QA + AI/tool</h4>
-      <div class="cap-num" style="color:var(--ok)">AI gánh ~48% · 2 người kham được</div>
-      <p class="lead" style="margin:8px 0 0">AI/tool cắt phần dồn cục đầu sprint, 2 QA chia phần còn lại + retest. Kịp tiến độ, giữ chất lượng.</p>
+    <div class="tl-item">
+      <div class="when">11/08 – 13/08</div>
+      <div class="what">Ráp build &amp; đưa lên Staging <span class="pill dev">DEV</span></div>
+      <div class="desc">Tích hợp các tính năng vào 1 bản build, deploy lên môi trường staging cho QA truy cập.</div>
+    </div>
+    <div class="tl-item milestone">
+      <div class="when">~14/08 – 15/08</div>
+      <div class="what">Test Staging: đối chiếu module với game gốc <span class="pill qa">QA</span></div>
+      <div class="desc">Không chỉ smoke test "chạy được", mà QA <b>đối chiếu tính năng với game gốc</b>: tính năng đã có <b>đủ các module như bản gốc</b> chưa?</div>
+      <ul>
+        <li><b>Đủ module như game gốc</b> → tính năng đạt "đủ điều kiện" → chuyển test chi tiết.</li>
+        <li><b>Thiếu module</b> (vd Túi đồ thiếu khóa an toàn / phân loại...) → ghi rõ module còn thiếu, trả về Dev, chưa test sâu.</li>
+      </ul>
+    </div>
+    <div class="tl-item milestone">
+      <div class="when">~16/08 🎯</div>
+      <div class="what">BÀN GIAO BUILD — nhận test chính thức <span class="pill rel">RELEASE</span></div>
+      <div class="desc">Build đạt cửa ải staging được coi là "sẵn sàng QA". Bắt đầu chuỗi test đầy đủ: chức năng → mobile → 3D/animation → hiệu năng.</div>
+    </div>
+    <div class="tl-item">
+      <div class="when">16/08 trở đi</div>
+      <div class="what">Test sâu &amp; báo lỗi <span class="pill qa">QA</span></div>
+      <div class="desc">Chạy test case chi tiết, log bug lên Kazuo, retest sau khi Dev fix. Vòng lặp đến khi đạt tiêu chí release.</div>
     </div>
   </div>
 
+  <h2><span class="num">2</span> Quy trình &amp; tiêu chí "đủ điều kiện"</h2>
+  <p class="lead">Build/tính năng phải đạt các mục sau ở bước staging thì mới nhận test sâu. Tiêu chí cốt lõi là <b>đủ module như game gốc</b>:</p>
+  <ul class="check">
+    <li><span class="box"></span> <b>Đủ module như game gốc</b> — đối chiếu từng thành phần với bản gốc, không thiếu module nào (vd Túi đồ: xếp/gộp đồ, khóa an toàn, phân loại, mở rộng ô, tooltip item...).</li>
+    <li><span class="box"></span> Có <b>bảng đối chiếu module gốc</b> (checklist module bản gốc) để so từng mục.</li>
+    <li><span class="box"></span> Tính năng chạy được trên staging, không crash khi mở.</li>
+    <li><span class="box"></span> Luồng chính (happy path) đi hết được từ đầu tới cuối.</li>
+    <li><span class="box"></span> Không có lỗi chặn (blocker) khiến không test tiếp được.</li>
+    <li><span class="box"></span> Có mô tả tính năng / GDD để biết "đúng" là thế nào.</li>
+  </ul>
+  <div class="callout warn">
+    <b>Lưu ý —</b> "Đủ" nghĩa là <b>đủ so với game gốc</b>, không phải "chạy là được". Một tính năng có thể mở lên không crash nhưng vẫn <b>thiếu module</b> so với bản gốc — trường hợp này đánh dấu <b>chưa đủ</b> và ghi rõ module còn thiếu để Dev bổ sung.
+  </div>
+
+  <h2><span class="num">3</span> Phối hợp với các team (đầu vào / đầu ra)</h2>
+  <p class="lead">QA không làm việc một mình. Để test được, mỗi team bàn giao "đầu vào"; test xong, QA trả "đầu ra" về đúng team đó.</p>
+  <h3>QA cần gì từ các team (đầu vào)</h3>
+  <table>
+    <thead><tr><th>Team</th><th>Cung cấp cho QA</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill qa">Game Design</span></td><td><b>Tài liệu GDD</b> (mô tả tính năng, luật chơi) + <b>Figma</b> (thiết kế UI/UX) + bảng đối chiếu module game gốc</td></tr>
+      <tr><td><span class="pill dev">Dev</span></td><td><b>Bản build</b> chạy được trên staging + ghi chú tính năng đã xong/chưa xong + môi trường/tài khoản test</td></tr>
+      <tr><td><span class="pill" style="background:#2f2a1a;color:#e6cf8c">Art / Asset</span></td><td>Bộ <b>asset chuẩn</b> (icon, hiệu ứng, model 3D) để đối chiếu hiển thị</td></tr>
+      <tr><td><span class="pill" style="background:#1a2f2a;color:#8ce6c8">PM / PO</span></td><td><b>Độ ưu tiên</b> + tiêu chí nghiệm thu (Definition of Done) cho từng story</td></tr>
+    </tbody>
+  </table>
+  <h3>QA trả gì về các team (đầu ra)</h3>
+  <table>
+    <thead><tr><th>Gửi cho team</th><th>QA bàn giao</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill dev">Dev</span></td><td><b>Bug report</b> (mô tả lỗi, bước tái hiện, severity) trên Kazuo + danh sách module còn thiếu + xác nhận retest đạt</td></tr>
+      <tr><td><span class="pill qa">Game Design</span></td><td><b>Đối chiếu GDD ↔ thực tế</b>: chỗ nào game làm khác/thiếu so với thiết kế; phản hồi tính hợp lý khi chơi thật</td></tr>
+      <tr><td><span class="pill" style="background:#2f2a1a;color:#e6cf8c">Art / Asset</span></td><td>Lỗi hiển thị: asset sai, vỡ hình, hiệu ứng/animation lệch so với bản chuẩn</td></tr>
+      <tr><td><span class="pill" style="background:#1a2f2a;color:#8ce6c8">PM / PO</span></td><td><b>Báo cáo chất lượng</b>: tỉ lệ pass/fail, tính năng nào đạt release, rủi ro còn lại</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">4</span> Sprint 3 — chạy song song</h2>
   <div class="callout">
-    <b>Cách tính năng lực 1 QA/sprint:</b> <b>7.5h/ngày × 6 ngày (T2–T7) = 45h/tuần</b> → <b>90h cho 1 sprint 2 tuần</b> (đã trừ họp, daily, retest). Con số 288h của Sprint 2 lấy trực tiếp từ estimate đã nhập trên Kazuo (loại test × độ phức tạp tính năng), <b>đã gồm bước "test staging"</b> Dev yêu cầu.
+    <b>Sprint 3:</b> <b>10/08 → 22/08</b> (đang planning). Trong khi QA test build Sprint 2, Dev đã bắt tay <b>build tính năng Sprint 3</b> — chạy song song. QA chuẩn bị test case sớm để không nghẽn khi Sprint 3 lên build.
   </div>
+  <ul class="clean">
+    <li><b>Nhân vật sử dụng được kỹ năng</b> — hoàn thiện luồng cast skill trong game <span class="pill dev">DEV</span></li>
+    <li><b>Thiết kế UI kỹ năng</b> — màn hình kỹ năng bản chơi <span class="pill qa">GD</span></li>
+  </ul>
+  <p class="lead">Danh sách mở rộng khi chốt planning Sprint 3. QA dựng test case + bảng đối chiếu module ngay khi story được thêm vào sprint.</p>
 
-  <h2><span class="num">2</span> Khối lượng QA cả dự án (4 Phase)</h2>
-  <p class="lead">Dữ liệu từ QA Timeline — 286 đầu việc, ước lượng theo loại test (viết testcase, chức năng, regression, mobile, 3D/animation, hiệu năng):</p>
-
+  <h2><span class="num">5</span> Khối lượng QA cả dự án (4 Phase)</h2>
+  <p class="lead">Dữ liệu từ QA Timeline — 286 đầu việc, ước lượng theo loại test. Hiện toàn bộ đang ở giai đoạn <b>Test Planning</b> (lập kế hoạch).</p>
   <div class="bars">
     <div class="bar-row"><span>Phase 1</span><div class="bar-track"><div class="bar-fill" style="width:100%">&nbsp;107 task</div></div><span class="hrs">447h</span></div>
     <div class="bar-row"><span>Phase 2</span><div class="bar-track"><div class="bar-fill" style="width:68%">&nbsp;73 task</div></div><span class="hrs">303h</span></div>
     <div class="bar-row"><span>Phase 4</span><div class="bar-track"><div class="bar-fill" style="width:48%">&nbsp;54 task</div></div><span class="hrs">214h</span></div>
     <div class="bar-row"><span>Phase 3</span><div class="bar-track"><div class="bar-fill" style="width:44%">&nbsp;52 task</div></div><span class="hrs">197h</span></div>
   </div>
-
-  <table>
-    <thead><tr><th>Nhóm hệ thống</th><th class="num">Đầu việc</th><th class="num">Giờ ước lượng</th></tr></thead>
-    <tbody>
-      <tr><td>C. Trang bị &amp; Cường hóa</td><td class="num">32</td><td class="num">132h</td></tr>
-      <tr><td>B. Chiến đấu &amp; Võ công</td><td class="num">30</td><td class="num">130h</td></tr>
-      <tr><td>F. PvP &amp; Đấu trường</td><td class="num">30</td><td class="num">130h</td></tr>
-      <tr><td>D. Nhiệm vụ &amp; PvE</td><td class="num">29</td><td class="num">129h</td></tr>
-      <tr><td>E. Bang hội &amp; Xã hội</td><td class="num">28</td><td class="num">103h</td></tr>
-      <tr><td>A. Nhân vật &amp; Môn phái</td><td class="num">25</td><td class="num">90h</td></tr>
-      <tr><td>L. UI/UX &amp; Onboarding</td><td class="num">20</td><td class="num">95h</td></tr>
-      <tr><td>I. Nạp thẻ &amp; Thương mại hóa</td><td class="num">24</td><td class="num">94h</td></tr>
-      <tr><td>G. Đồng hành</td><td class="num">24</td><td class="num">94h</td></tr>
-      <tr><td>J. Hoạt động &amp; Sự kiện</td><td class="num">24</td><td class="num">84h</td></tr>
-      <tr><td>H. Kinh tế &amp; Giao dịch</td><td class="num">20</td><td class="num">80h</td></tr>
-      <tr class="total"><td>TỔNG</td><td class="num">286</td><td class="num">~1.161h</td></tr>
-    </tbody>
-  </table>
-
   <h3>Chia theo loại test</h3>
-  <p class="lead">Hiện toàn bộ timeline mới ở giai đoạn <b>Test Planning</b> (lập kế hoạch). Phân theo 6 loại test để thấy đâu là việc lặp lại (máy làm được) và đâu cần cảm quan con người:</p>
   <table>
     <thead><tr><th>Loại test</th><th class="num">Đầu việc</th><th class="num">Giờ</th><th>Tính chất</th></tr></thead>
     <tbody>
       <tr><td>Viết test case (chuẩn bị)</td><td class="num">69</td><td class="num">276h</td><td>Soạn kịch bản, sinh edge case</td></tr>
-      <tr><td>Chức năng + edge case</td><td class="num">27</td><td class="num">216h</td><td>Kiểm logic tính năng</td></tr>
       <tr><td>Mobile &amp; cảm ứng</td><td class="num">69</td><td class="num">276h</td><td>Chạm/vuốt trên máy thật</td></tr>
+      <tr><td>Chức năng + edge case</td><td class="num">27</td><td class="num">216h</td><td>Kiểm logic tính năng</td></tr>
       <tr><td>3D / Animation &amp; hiển thị</td><td class="num">69</td><td class="num">207h</td><td>Cảm quan hình ảnh</td></tr>
       <tr><td>Regression logic</td><td class="num">42</td><td class="num">126h</td><td>Test lại, lặp lại</td></tr>
       <tr><td>Hiệu năng / tải</td><td class="num">10</td><td class="num">60h</td><td>Đo FPS, bộ nhớ, tải</td></tr>
@@ -211,16 +294,14 @@
     </tbody>
   </table>
 
-  <h2><span class="num">3</span> Nếu có AI hỗ trợ — giảm được bao nhiêu?</h2>
-  <p class="lead">AI hỗ trợ theo 2 hướng: <b>viết/phân tích</b> (sinh test case, edge case, đối chiếu GDD, đọc log/bug) và <b>auto-test</b> (chạy regression, kiểm chức năng lặp lại). AI mạnh ở việc lặp lại &amp; văn bản, yếu ở phần cần <b>máy thật + mắt người</b> (cảm ứng, 3D, cảm quan chơi game).</p>
-
+  <h2><span class="num">6</span> Mức AI / tool hỗ trợ</h2>
+  <p class="lead">AI/tool hỗ trợ 2 hướng: <b>sinh test case &amp; phân tích</b> từ GDD, và <b>tool test UI tự động</b>. Mạnh ở việc lặp lại &amp; văn bản, yếu ở phần cần <b>máy thật + mắt người</b> (3D, cảm quan chơi game).</p>
   <div class="kpis">
-    <div class="kpi"><div class="val ok">~556h</div><div class="label">AI + tool có thể gánh (~48% khối lượng)</div></div>
+    <div class="kpi"><div class="val ok">~556h</div><div class="label">AI + tool có thể gánh (~48%)</div></div>
     <div class="kpi"><div class="val">605h</div><div class="label">Còn lại cần người (~80 ngày công)</div></div>
-    <div class="kpi"><div class="val">6</div><div class="label">Loại test được phân tích</div></div>
     <div class="kpi"><div class="val">74 ngày</div><div class="label">Ngày công AI tiết kiệm (÷7.5h)</div></div>
+    <div class="kpi"><div class="val">6</div><div class="label">Loại test được phân tích</div></div>
   </div>
-
   <table>
     <thead><tr><th>Loại test</th><th class="num">Giờ</th><th class="num">AI hỗ trợ</th><th class="num">AI gánh</th><th class="num">Người còn lại</th></tr></thead>
     <tbody>
@@ -233,131 +314,231 @@
       <tr class="total"><td>TỔNG</td><td class="num">1.161h</td><td class="num">48%</td><td class="num">~556h</td><td class="num">605h</td></tr>
     </tbody>
   </table>
-
   <div class="callout ok">
-    <b>Kết luận:</b> Với tool AI test <b>UI (dev xác nhận "test được gần hết")</b>, AI kéo khối lượng QA từ <b>1.161h → ~605h việc người</b> (giảm ~48%, tiết kiệm ~74 ngày công). Nhưng <b>AI không thay được QA</b>: phần nặng nhất còn lại là <b>3D/Animation (186h)</b> và <b>chức năng + edge (130h)</b> vẫn cần người. AI giúp giảm tải để cùng lượng người làm được nhiều hơn, <b>không phải để cắt người</b>.
+    <b>Kết luận:</b> AI + tool test UI kéo khối lượng QA từ <b>1.161h → ~605h việc người</b> (giảm ~48%, tiết kiệm ~74 ngày công). Phần nặng nhất còn lại là <b>3D/Animation (186h)</b> và <b>chức năng + edge (130h)</b> vẫn cần người — AI giảm tải chứ không thay QA.
   </div>
-  <p class="lead" style="font-size:13px;color:var(--faint)">Ghi chú: % AI hỗ trợ dựa trên trao đổi với Dev (UI test bằng tool ~70%, logic game test bằng Unity Test Framework). Con số thực tế phụ thuộc chất lượng tool sau khi dựng.</p>
 
-  <h2><span class="num">4</span> Giải pháp áp dụng vào thực tế</h2>
-  <p class="lead">Con số 35% ở trên chỉ đạt được khi có <b>công cụ cụ thể</b>. Game làm bằng <b>Unity</b> nên automation đi theo Unity, còn AI tập trung khâu <b>sinh test case từ GDD</b>. Hai hướng bổ trợ nhau:</p>
+  <h2><span class="num">7</span> Giải pháp áp dụng</h2>
+  <p class="lead">Game làm bằng <b>Unity</b> nên automation đi theo Unity, còn AI tập trung khâu <b>sinh test case từ GDD</b>. Hai hướng bổ trợ nhau:</p>
 
   <h3>Hướng 1 — AI sinh test case từ GDD</h3>
-  <p class="lead">Đây là khâu AI mạnh nhất (chiếm 276h "viết test case"). Thay vì QA đọc GDD rồi gõ tay từng ca, AI đọc GDD sinh sẵn bộ test case + edge case, QA chỉ rà soát và bổ sung.</p>
   <table>
     <thead><tr><th>Bước</th><th>Cách làm</th></tr></thead>
     <tbody>
-      <tr><td>1. Đưa GDD vào AI</td><td>Dán nội dung GDD/tính năng cho AI (Claude, ChatGPT) kèm mẫu test case chuẩn của đội</td></tr>
-      <tr><td>2. AI sinh test case</td><td>AI liệt kê các ca test: luồng chính, edge case, input sai, ranh giới — theo format bảng của đội</td></tr>
-      <tr><td>3. QA rà soát</td><td>QA kiểm lại, bỏ ca thừa, thêm ca AI bỏ sót (kiến thức game gốc), chốt bộ test case</td></tr>
+      <tr><td>1. Đưa GDD vào AI</td><td>Dán nội dung GDD/tính năng cho AI kèm mẫu test case chuẩn của phòng</td></tr>
+      <tr><td>2. AI sinh test case</td><td>AI liệt kê các ca: luồng chính, edge case, input sai, ranh giới — theo format bảng</td></tr>
+      <tr><td>3. QA rà soát</td><td>Kiểm lại, bỏ ca thừa, thêm ca AI bỏ sót (kiến thức game gốc), chốt bộ test case</td></tr>
       <tr><td>4. Đối chiếu module gốc</td><td>AI so GDD với mô tả game gốc → gợi ý module còn thiếu cho bước test staging</td></tr>
     </tbody>
   </table>
-  <div class="callout ok"><b>Lợi ích:</b> khâu viết test case từ <b>276h → ~110h</b> (AI gánh ~60%). Test case ra nhanh &amp; đồng đều format, QA tập trung vào phần cần tư duy.</div>
+  <div class="callout ok"><b>Lợi ích:</b> khâu viết test case từ <b>276h → ~110h</b> (AI gánh ~60%). Test case ra nhanh &amp; đồng đều format.</div>
 
-  <h3>Hướng 2 — Tool test bằng AI (dev trao đổi)</h3>
-  <p class="lead">Theo Dev: đây là <b>"tool test bằng AI"</b> — dựng một công cụ để AI tự chạy test, <b>không phải cắm AI thủ công vào từng ca</b>. Dev đánh giá <b>UI test được gần hết</b> bằng tool này.</p>
+  <h3>Hướng 2 — Tool test UI bằng AI + Unity</h3>
+  <p class="lead">Dựng một công cụ để AI tự chạy test UI (không cắm AI thủ công vào từng ca). Đánh giá: <b>UI test được gần hết</b> bằng tool này.</p>
   <table>
-    <thead><tr><th>Hạng mục</th><th>Dev đánh giá</th></tr></thead>
+    <thead><tr><th>Hạng mục</th><th>Đánh giá</th></tr></thead>
     <tbody>
-      <tr><td><b>UI test</b> (mobile, menu, luồng bấm)</td><td><b>Test được gần hết</b> bằng tool AI — đây là phần tool gánh nhiều nhất</td></tr>
-      <tr><td><b>Logic game</b> (sát thương, buff/debuff, lên cấp, chỉ số nhân vật)</td><td>Test tự động trong <b>Unity</b> (Unity Test Framework) — dev đang cân nhắc khả thi</td></tr>
-      <tr><td><b>Chi phí dựng tool</b></td><td><b>~nửa tháng (2 tuần) làm liên tục</b> — đầu tư 1 lần</td></tr>
+      <tr><td><b>UI test</b> (mobile, menu, luồng bấm)</td><td><b>Test được gần hết</b> bằng tool AI — phần tool gánh nhiều nhất</td></tr>
+      <tr><td><b>Logic game</b> (sát thương, buff/debuff, lên cấp, chỉ số)</td><td>Test tự động trong <b>Unity Test Framework</b> — chạy lại mỗi build</td></tr>
+      <tr><td><b>Chi phí dựng tool</b></td><td><b>~2 tuần làm liên tục</b> — đầu tư 1 lần</td></tr>
     </tbody>
   </table>
-
   <div class="callout warn">
     <b>Chi phí &amp; ROI dựng tool:</b>
     <ul>
-      <li><b>Đầu tư:</b> ~2 tuần công dựng tool (1 lần, đầu dự án).</li>
-      <li><b>Thu về:</b> tool chạy lại mọi build/sprint → tiết kiệm ~556h test (48% khối lượng cả dự án).</li>
-      <li><b>Hòa vốn nhanh:</b> 2 tuần dựng ≈ 90h, trong khi tool gánh ~556h — <b>hoàn vốn ngay trong Phase 1</b>, càng về sau càng lời.</li>
+      <li><b>Đầu tư:</b> ~2 tuần công dựng tool (1 lần, đầu dự án ≈ 90h).</li>
+      <li><b>Thu về:</b> tool chạy lại mọi build/sprint → gánh ~556h test (48% cả dự án).</li>
+      <li><b>Hòa vốn ngay trong Phase 1</b>, càng về sau càng lời.</li>
     </ul>
   </div>
+  <div class="callout"><b>Lộ trình áp dụng:</b> (1) Làm ngay <b>AI sinh test case từ GDD</b> — không cần dựng tool, hiệu quả liền. (2) Dựng <b>tool test UI bằng AI</b> (~2 tuần). (3) Thí điểm <b>Unity Test Framework</b> cho logic game. (4) Đánh giá rồi mở rộng cho regression toàn dự án.</div>
 
   <h3>Việc AI/tool KHÔNG làm được</h3>
   <ul class="clean">
-    <li><b>Cảm quan hình ảnh 3D/animation</b> (186h) — đẹp/mượt/đúng phong cách cần mắt người đánh giá.</li>
-    <li><b>Cảm giác chơi &amp; cân bằng game</b> — "vui/không vui" thuộc về con người &amp; game design.</li>
+    <li><b>Cảm quan 3D/animation</b> (186h) — đẹp/mượt/đúng phong cách cần mắt người.</li>
+    <li><b>Cảm giác chơi &amp; cân bằng game</b> — "vui/không vui" thuộc con người &amp; game design.</li>
     <li><b>Edge case tư duy sâu</b> — AI sinh ca cơ bản, ca hiểm cần kinh nghiệm game gốc của QA.</li>
   </ul>
 
-  <div class="callout"><b>Lộ trình áp dụng đề xuất:</b> (1) Làm ngay <b>AI sinh test case từ GDD</b> — không cần dựng tool, hiệu quả liền. (2) Dev dựng <b>tool test UI bằng AI</b> (~2 tuần). (3) Thí điểm <b>Unity Test Framework</b> cho logic game (sát thương, buff/debuff). (4) Đánh giá rồi mở rộng cho regression toàn dự án.</div>
-
-  <h2><span class="num">5</span> Đề xuất: cần mấy QA?</h2>
-
-  <h3>Có AI/tool thì cần bao nhiêu người?</h3>
-  <p class="lead">Năng lực 1 QA: <b>7.5h/ngày × 6 ngày (T2–T7) = 45h/tuần ≈ 195h/tháng</b>. Sau khi AI gánh, còn <b>605h việc người</b>:</p>
+  <h2><span class="num">8</span> Nhân sự — cần mấy QA?</h2>
+  <p class="lead">Năng lực 1 QA: <b>7.5h/ngày × 6 ngày (T2–T7) = 45h/tuần ≈ 195h/tháng</b> (90h/sprint 2 tuần). Riêng Sprint 2 cần 288h → 1 người quá tải hơn 3 lần. Sau khi AI gánh, còn 605h việc người cả dự án:</p>
   <table>
-    <thead><tr><th>Phương án</th><th class="num">Số QA</th><th>Thời gian làm hết phần người (605h)</th></tr></thead>
+    <thead><tr><th>Phương án</th><th class="num">Số QA</th><th>Thời gian &amp; ghi chú</th></tr></thead>
     <tbody>
       <tr><td>Không có AI</td><td class="num">3 QA</td><td>1.161h — cần 3 người để kịp đỉnh tải</td></tr>
       <tr><td><b>Có AI + tool</b></td><td class="num"><b>2 QA</b></td><td><b>~1,6 tháng</b> (2 người) — đủ cho đỉnh tải &amp; sprint song song</td></tr>
-      <tr><td>Tối thiểu (chấp nhận chậm)</td><td class="num">1 QA</td><td>~3,1 tháng (1 người) — nhưng nghẽn ở Phase 1 &amp; khi 2 sprint chạy song song</td></tr>
+      <tr><td>Tối thiểu (chấp nhận chậm)</td><td class="num">1 QA</td><td>~3,1 tháng — nhưng nghẽn ở Phase 1 &amp; khi 2 sprint chạy song song</td></tr>
     </tbody>
   </table>
   <div class="callout ok">
-    <b>Với AI + tool, cần 2 QA thay vì 3.</b> AI cắt đúng phần dồn cục đầu sprint (viết test case + UI test), làm phẳng đỉnh tải nên bớt được 1 người. 1 QA về lý thuyết đủ nếu timeline thả lỏng, nhưng rủi ro nghẽn cao — <b>2 QA là mức an toàn</b>.
+    <b>Kết luận: cần 2 QA (có AI + tool).</b> AI cắt đúng phần dồn cục đầu sprint (viết test case + UI test), làm phẳng đỉnh tải nên bớt được 1 người so với phương án không AI. 1 QA về lý thuyết đủ nếu timeline thả lỏng, nhưng rủi ro nghẽn cao — <b>2 QA là mức an toàn</b>.
   </div>
 
-  <h3>Lộ trình tuyển 2 QA</h3>
-  <p class="lead">Không tuyển ồ ạt — chia 2 đợt bám theo đường cong khối lượng (Phase 1 &amp; 2 nặng nhất):</p>
-
+  <h3>Lộ trình bổ sung 2 QA</h3>
   <div class="tl">
     <div class="tl-item hire">
       <div class="when">Ngay lập tức <span class="tag now">GẤP</span></div>
       <div class="what">QA #1 — vào Sprint 2 / Phase 1</div>
-      <div class="desc">Phase 1 nặng nhất (447h). QA #1 cùng gánh Sprint 2 đang quá tải 2,1×, tập trung mảng Nhân vật, Chiến đấu, Trang bị.</div>
+      <div class="desc">Phase 1 nặng nhất (447h). QA #1 cùng gánh Sprint 2 đang quá tải, tập trung mảng Nhân vật, Chiến đấu, Trang bị.</div>
     </div>
     <div class="tl-item hire">
       <div class="when">Đầu Phase 2 <span class="tag p2">~4–6 tuần tới</span></div>
       <div class="what">QA #2 — vào đầu Phase 2</div>
-      <div class="desc">Phase 2 mở thêm Nhiệm vụ/PvE, Kinh tế, Nạp thẻ (303h) song song đuôi Phase 1. QA #2 vào đúng lúc tải tăng, tránh tuyển sớm khi chưa cần.</div>
+      <div class="desc">Phase 2 mở thêm Nhiệm vụ/PvE, Kinh tế, Nạp thẻ (303h) song song đuôi Phase 1. QA #2 vào đúng lúc tải tăng.</div>
     </div>
     <div class="tl-item">
       <div class="when">Phase 3–4</div>
-      <div class="what">3 QA chạy ổn định</div>
-      <div class="desc">Bang hội, Đồng hành, PvP, Sự kiện (~411h). 3 QA chia tải ~137h/người/phase — bền vững, đủ biên độ regression cuối dự án.</div>
+      <div class="what">2 QA + AI chạy ổn định</div>
+      <div class="desc">Bang hội, Đồng hành, PvP, Sự kiện (~411h). 2 QA + tool chia tải, đủ biên độ regression cuối dự án.</div>
     </div>
   </div>
+  <p class="lead">Chia lộ trình để: tiết kiệm chi phí sớm (QA #2 chỉ cần khi Phase 2 mở), onboard mượt (QA #1 quen quy trình rồi kèm QA #2), linh hoạt theo tiến độ dev.</p>
 
-  <h3>Vì sao chia lộ trình thay vì tuyển cả 2 ngay?</h3>
-  <ul class="clean">
-    <li><b>Tiết kiệm chi phí sớm:</b> QA #2 chỉ thực sự cần khi Phase 2 mở — tránh trả lương chờ việc.</li>
-    <li><b>Onboard mượt:</b> QA #1 vào trước, quen quy trình &amp; test case chuẩn, sau đó kèm QA #2 — giảm rủi ro đào tạo dồn.</li>
-    <li><b>Linh hoạt:</b> nếu tiến độ dev chậm, có thể lùi QA #2; nếu gấp, kéo sớm.</li>
-  </ul>
-
-  <h2><span class="num">6</span> Lợi ích &amp; Rủi ro nếu KHÔNG thêm người</h2>
+  <h2><span class="num">9</span> Rủi ro &amp; phương án</h2>
+  <table>
+    <thead><tr><th>Rủi ro</th><th>Ảnh hưởng</th><th>Phương án</th></tr></thead>
+    <tbody>
+      <tr><td>Build trễ so với 16/08</td><td>QA dồn việc, lùi tiến độ test</td><td>Ưu tiên tính năng lõi lên staging trước, test cuốn chiếu</td></tr>
+      <tr><td>Nhiều tính năng rớt cửa ải staging</td><td>Mất thời gian 2 chiều Dev–QA</td><td>Áp checklist "đủ điều kiện" từ sớm; Dev tự soát trước khi đẩy</td></tr>
+      <tr><td>1 QA quá tải (288h/Sprint 2)</td><td>Test bị cắt, sót lỗi</td><td>Bổ sung 2 QA theo lộ trình + áp dụng AI/tool</td></tr>
+      <tr><td>Sprint 2 &amp; 3 chồng chéo</td><td>QA test S2 và chuẩn bị S3 cùng lúc → nghẽn</td><td>Chuẩn bị test case S3 sớm; ưu tiên test S2 trước, cuốn chiếu S3</td></tr>
+    </tbody>
+  </table>
   <div class="cap">
     <div class="cap-card after">
-      <h4 style="color:var(--ok)">Nếu thêm 2 QA</h4>
+      <h4 style="color:var(--ok)">Nếu đủ 2 QA + AI</h4>
       <ul class="clean" style="margin:0">
         <li>Test đủ độ phủ (chức năng + mobile + 3D + hiệu năng)</li>
         <li>Regression đều đặn, bắt lỗi sớm khi còn rẻ</li>
-        <li>Không nghẽn QA cuối mỗi sprint</li>
-        <li>Kịp mốc release từng Phase</li>
+        <li>Không nghẽn QA cuối mỗi sprint · kịp mốc release từng Phase</li>
       </ul>
     </div>
     <div class="cap-card before">
       <h4 style="color:var(--danger)">Nếu giữ 1 QA</h4>
       <ul class="clean" style="margin:0">
-        <li>Quá tải 2,1× ngay Sprint 2 → cắt bớt test</li>
+        <li>Quá tải ngay Sprint 2 → cắt bớt test</li>
         <li>Bỏ sót lỗi, nợ chất lượng dồn về cuối</li>
-        <li>QA thành nút thắt cổ chai, chặn cả team dev</li>
-        <li>Rủi ro trượt tiến độ release &amp; burnout</li>
+        <li>QA thành nút thắt cổ chai · rủi ro trượt tiến độ &amp; burnout</li>
       </ul>
     </div>
   </div>
 
-  <div class="callout ok">
-    <b>Đề nghị lead phê duyệt:</b> Mở tuyển <b>QA #1 ngay</b>, và <b>QA #2 vào đầu Phase 2</b>. Toàn bộ estimate &amp; đầu việc đã được nhập minh bạch trên Kazuo để lead kiểm tra và theo dõi tải thực tế theo từng sprint.
-  </div>
-
   <footer class="doc">
-    Số liệu trích từ QA Timeline dự kiến (286 đầu việc) và estimate đã nhập trên Kazuo (Sprint 2, dự án Thiên Long Mobile). Ước lượng giờ theo loại test × độ phức tạp tính năng.
+    Số liệu từ QA Timeline dự kiến (286 đầu việc) và estimate đã nhập trên Kazuo (dự án Thiên Long Mobile). Mốc thời gian &amp; % AI hỗ trợ là ước lượng, điều chỉnh theo thực tế tiến độ và chất lượng tool.
   </footer>
 
 </div>
+
+<!-- Presentation mode -->
+<div class="slides" id="slides" role="dialog" aria-label="Chế độ trình chiếu">
+  <button class="close" onclick="closeSlides()" aria-label="Đóng">&times;</button>
+
+  <section class="slide">
+    <div class="kicker">Phòng QA · Thiên Long Mobile</div>
+    <h2>Kế hoạch phòng QA</h2>
+    <div class="sub">Lộ trình build · Khối lượng · AI hỗ trợ · Nhân sự</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Tổng quan</div>
+    <h2>Khối lượng &amp; mục tiêu</h2>
+    <div class="row">
+      <div class="stat"><div class="n">286</div><div class="l">Đầu việc QA</div></div>
+      <div class="stat"><div class="n">~1.161h</div><div class="l">Tổng công cả dự án</div></div>
+      <div class="stat"><div class="n">~16/08</div><div class="l">Bàn giao build</div></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Lộ trình</div>
+    <h2>Từ code đến test</h2>
+    <ul>
+      <li><b>Đến 10/08</b> — Dev hoàn thiện Sprint 2</li>
+      <li><b>11–13/08</b> — Ráp build &amp; lên Staging</li>
+      <li><b>14–15/08</b> — Test staging: đối chiếu module game gốc <b>(cửa ải)</b></li>
+      <li><b>~16/08</b> — 🎯 Bàn giao build, test chính thức</li>
+      <li><b>16/08+</b> — Test sâu &amp; báo lỗi</li>
+    </ul>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Cửa ải Staging</div>
+    <h2>"Đủ" = đủ module như game gốc</h2>
+    <ul>
+      <li>Không chỉ "chạy được" — phải <b>đủ module như bản gốc</b></li>
+      <li>Đủ module → chuyển test chi tiết</li>
+      <li>Thiếu module → trả về Dev, ghi rõ thiếu gì</li>
+    </ul>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Phối hợp team</div>
+    <h2>Đầu vào / Đầu ra của QA</h2>
+    <ul>
+      <li><b>Game Design →</b> cần GDD + Figma · trả đối chiếu thiết kế ↔ thực tế</li>
+      <li><b>Dev →</b> cần bản build · trả bug report + module thiếu</li>
+      <li><b>Art →</b> cần asset chuẩn · trả lỗi hiển thị</li>
+      <li><b>PM/PO →</b> cần ưu tiên + DoD · trả báo cáo chất lượng</li>
+    </ul>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">AI + Tool</div>
+    <h2>Giảm ~48% khối lượng</h2>
+    <div class="row">
+      <div class="stat"><div class="n ok">~556h</div><div class="l">AI + tool gánh</div></div>
+      <div class="stat"><div class="n">605h</div><div class="l">Còn lại cần người</div></div>
+      <div class="stat"><div class="n">74 ngày</div><div class="l">Ngày công tiết kiệm</div></div>
+    </div>
+    <div class="sub">AI sinh test case từ GDD (60%) + tool test UI (~70%) + Unity Test Framework cho logic game.</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Nhân sự</div>
+    <h2>Cần 2 QA (có AI + tool)</h2>
+    <div class="row">
+      <div class="stat"><div class="n danger">288h</div><div class="l">Tải Sprint 2</div></div>
+      <div class="stat"><div class="n">90h</div><div class="l">1 người/sprint</div></div>
+      <div class="stat"><div class="n ok">2 QA</div><div class="l">Thay vì 3 nhờ AI</div></div>
+    </div>
+    <div class="sub">QA #1 vào ngay (Phase 1), QA #2 đầu Phase 2. AI làm phẳng đỉnh tải → bớt 1 người.</div>
+  </section>
+
+  <div class="bar">
+    <button onclick="prevSlide()">← Trước</button>
+    <div class="dots" id="dots"></div>
+    <span class="idx" id="idx"></span>
+    <button onclick="nextSlide()">Sau →</button>
+  </div>
+</div>
+
+<script>
+  const box = document.getElementById('slides');
+  const slides = [...box.querySelectorAll('.slide')];
+  const dotsC = document.getElementById('dots');
+  const idxEl = document.getElementById('idx');
+  let cur = 0;
+  slides.forEach((_, i) => {
+    const d = document.createElement('span'); d.className = 'dot';
+    d.onclick = () => go(i); dotsC.appendChild(d);
+  });
+  const dots = [...dotsC.children];
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('show', i === cur));
+    dots.forEach((d, i) => d.classList.toggle('on', i === cur));
+    idxEl.textContent = (cur + 1) + ' / ' + slides.length;
+  }
+  function go(i){ cur = Math.max(0, Math.min(slides.length - 1, i)); render(); }
+  function nextSlide(){ go(cur + 1); }
+  function prevSlide(){ go(cur - 1); }
+  function openSlides(){ box.classList.add('on'); cur = 0; render(); document.body.style.overflow = 'hidden'; }
+  function closeSlides(){ box.classList.remove('on'); document.body.style.overflow = ''; }
+  document.addEventListener('keydown', (e) => {
+    if (!box.classList.contains('on')) return;
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+    else if (e.key === 'ArrowLeft') prevSlide();
+    else if (e.key === 'Escape') closeSlides();
+  });
+</script>
 </body>
 </html>

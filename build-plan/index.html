@@ -37,6 +37,49 @@
     color:var(--muted); text-decoration:none; transition:background .2s,color .2s; }
   .sitenav a:hover { background:var(--surface); color:var(--text); }
   .sitenav a.active { background:var(--accent-soft); color:#cdddfd; }
+  .present-btn { margin-left:auto; flex-shrink:0; display:inline-flex; align-items:center; gap:7px;
+    padding:8px 16px; border-radius:8px; border:0; cursor:pointer; font-family:inherit;
+    font-size:14px; font-weight:600; color:#fff; background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+    transition:filter .2s; }
+  .present-btn:hover { filter:brightness(1.12); }
+
+  /* Slide / presentation overlay */
+  .slides { position:fixed; inset:0; z-index:100; background:#0b0f14; display:none;
+    flex-direction:column; }
+  .slides.on { display:flex; }
+  .slide { flex:1; display:none; flex-direction:column; justify-content:center;
+    max-width:1000px; width:100%; margin:0 auto; padding:6vh 6vw; }
+  .slide.show { display:flex; animation:sfade .35s ease; }
+  @keyframes sfade { from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:none;} }
+  .slide .kicker { font-size:15px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+    color:#60a5fa; margin-bottom:20px; }
+  .slide h2 { font-size:clamp(28px,4.5vw,52px); font-weight:800; letter-spacing:-.02em;
+    line-height:1.15; margin:0 0 28px; border:0; padding:0; display:block; }
+  .slide ul { margin:0; padding-left:26px; }
+  .slide li { font-size:clamp(17px,2.2vw,24px); line-height:1.7; margin:10px 0; color:#d4dae2; }
+  .slide li b { color:#fff; }
+  .slide .big { font-size:clamp(40px,8vw,90px); font-weight:900;
+    background:linear-gradient(90deg,#60a5fa,#a78bfa); -webkit-background-clip:text;
+    background-clip:text; color:transparent; line-height:1.05; }
+  .slide .sub { font-size:clamp(18px,2.4vw,26px); color:var(--muted); margin-top:16px; }
+  .slide .row { display:flex; gap:28px; flex-wrap:wrap; margin-top:20px; }
+  .slide .stat { background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:22px 28px; }
+  .slide .stat .n { font-size:clamp(28px,4vw,44px); font-weight:800; }
+  .slide .stat .n.warn { color:var(--warn); } .slide .stat .n.danger { color:var(--danger); }
+  .slide .stat .l { font-size:15px; color:var(--muted); margin-top:4px; }
+  .slides .bar { display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px; border-top:1px solid var(--line); background:rgba(255,255,255,.02); }
+  .slides .bar .dots { display:flex; gap:7px; }
+  .slides .bar .dot { width:8px; height:8px; border-radius:50%; background:var(--line); cursor:pointer; }
+  .slides .bar .dot.on { background:var(--accent); width:22px; border-radius:5px; }
+  .slides .bar button { background:var(--surface); border:1px solid var(--line); color:var(--text);
+    border-radius:8px; padding:7px 14px; cursor:pointer; font-family:inherit; font-size:14px; }
+  .slides .bar button:hover { background:var(--surface-2); }
+  .slides .bar .idx { color:var(--faint); font-size:13px; font-variant-numeric:tabular-nums; }
+  .slides .close { position:absolute; top:16px; right:20px; z-index:2; background:transparent;
+    border:0; color:var(--muted); cursor:pointer; font-size:26px; line-height:1; padding:6px; }
+  .slides .close:hover { color:#fff; }
 
   .wrap { max-width:1080px; margin:0 auto; padding:var(--sp-12) var(--sp-6); }
   .eyebrow { display:inline-block; font-size:12px; font-weight:600; letter-spacing:.08em;
@@ -102,6 +145,10 @@
   <a href="/huong-dan/">Tài liệu hướng dẫn</a>
   <a href="/build-plan/" class="active">Kế hoạch Build</a>
   <a href="/QA-kehoach/">Đề xuất nhân sự QA</a>
+  <button class="present-btn" onclick="openSlides()" aria-label="Trình chiếu">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    Trình chiếu
+  </button>
 </nav>
 
 <div class="wrap">
@@ -186,13 +233,55 @@
     <b>Lưu ý quan trọng —</b> "Đủ" ở đây nghĩa là <b>đủ so với game gốc</b>, không phải "chạy là được". Một tính năng có thể mở lên không crash nhưng vẫn <b>thiếu module</b> so với bản gốc — trường hợp này QA đánh dấu <b>chưa đủ</b> và ghi rõ module còn thiếu để Dev bổ sung.
   </div>
 
-  <h2><span class="num">4</span> Rủi ro &amp; phương án</h2>
+  <h2><span class="num">4</span> Đầu vào / Đầu ra của QA với các team</h2>
+  <p class="lead">QA không làm việc một mình. Để test được, mỗi team phải bàn giao "đầu vào"; test xong, QA trả "đầu ra" về đúng team đó.</p>
+
+  <h3>QA cần gì từ các team (đầu vào)</h3>
+  <table>
+    <thead><tr><th>Team</th><th>Phải cung cấp cho QA</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill" style="background:#2a2036;color:#d6b4ff">Game Design</span></td><td><b>Tài liệu GDD</b> (mô tả tính năng, luật chơi) + <b>Figma</b> (thiết kế UI/UX) + bảng đối chiếu module game gốc</td></tr>
+      <tr><td><span class="pill dev">Dev</span></td><td><b>Bản build</b> chạy được trên staging + ghi chú tính năng đã xong / chưa xong + môi trường/tài khoản test</td></tr>
+      <tr><td><span class="pill" style="background:#2f2a1a;color:#e6cf8c">Art / Asset</span></td><td>Bộ <b>asset chuẩn</b> (icon, hiệu ứng, model 3D) để đối chiếu hiển thị trong game</td></tr>
+      <tr><td><span class="pill" style="background:#1a2f2a;color:#8ce6c8">PM / PO</span></td><td><b>Độ ưu tiên</b> tính năng + tiêu chí nghiệm thu (Definition of Done) cho từng story</td></tr>
+    </tbody>
+  </table>
+
+  <h3>QA trả gì về các team (đầu ra)</h3>
+  <table>
+    <thead><tr><th>Gửi cho team</th><th>QA bàn giao</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill dev">Dev</span></td><td><b>Bug report</b> (mô tả lỗi, bước tái hiện, severity) trên Kazuo + danh sách module còn thiếu so với game gốc + xác nhận retest đạt</td></tr>
+      <tr><td><span class="pill" style="background:#2a2036;color:#d6b4ff">Game Design</span></td><td><b>Đối chiếu GDD ↔ thực tế</b>: chỗ nào game làm khác/thiếu so với thiết kế; phản hồi tính hợp lý khi chơi thật</td></tr>
+      <tr><td><span class="pill" style="background:#2f2a1a;color:#e6cf8c">Art / Asset</span></td><td>Lỗi hiển thị: asset sai, vỡ hình, hiệu ứng/animation lệch so với bản chuẩn</td></tr>
+      <tr><td><span class="pill" style="background:#1a2f2a;color:#8ce6c8">PM / PO</span></td><td><b>Báo cáo chất lượng</b>: tỉ lệ pass/fail, tính năng nào đạt release, rủi ro còn lại</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">5</span> Sprint 3 — Dev đang build song song</h2>
+  <div class="callout">
+    <b>Sprint 3:</b> <b>10/08 → 22/08</b> (đang planning). Trong khi QA test build Sprint 2, Dev đã bắt tay <b>build tính năng Sprint 3</b> — chạy song song. QA chuẩn bị test case sớm để không nghẽn khi Sprint 3 lên build.
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="val">10 → 22/08</div><div class="label">Thời gian Sprint 3</div></div>
+    <div class="kpi"><div class="val warn">Planning</div><div class="label">Trạng thái hiện tại</div></div>
+    <div class="kpi"><div class="val">Song song</div><div class="label">Dev build khi QA test S2</div></div>
+  </div>
+  <h3>Trọng tâm Sprint 3 (đang mở)</h3>
+  <ul class="clean">
+    <li><b>Nhân vật sử dụng được kỹ năng</b> — hoàn thiện luồng cast skill trong game <span class="pill dev">DEV</span></li>
+    <li><b>Thiết kế UI kỹ năng</b> — màn hình kỹ năng bản chơi <span class="pill" style="background:#2a2036;color:#d6b4ff">GD</span></li>
+  </ul>
+  <p class="lead">Danh sách sẽ mở rộng khi chốt planning Sprint 3. QA sẽ dựng test case + bảng đối chiếu module cho các tính năng này ngay khi story được thêm vào sprint.</p>
+
+  <h2><span class="num">6</span> Rủi ro &amp; phương án</h2>
   <table>
     <thead><tr><th>Rủi ro</th><th>Ảnh hưởng</th><th>Phương án</th></tr></thead>
     <tbody>
       <tr><td>Build trễ so với 16/08</td><td>QA dồn việc, lùi tiến độ test</td><td>Ưu tiên tính năng lõi lên staging trước, test cuốn chiếu</td></tr>
       <tr><td>Nhiều tính năng rớt cửa ải staging</td><td>Dev phải fix gấp, mất thời gian 2 chiều</td><td>Áp checklist "đủ điều kiện" từ sớm; Dev tự soát trước khi đẩy</td></tr>
       <tr><td>1 QA quá tải (288h Sprint 2)</td><td>Test bị cắt, sót lỗi</td><td>Xem <a href="/QA-kehoach/" style="color:#a9c7ff">đề xuất bổ sung 2 QA</a></td></tr>
+      <tr><td>Sprint 2 &amp; 3 chồng chéo (Dev build S3 khi QA test S2)</td><td>QA phải test S2 và chuẩn bị S3 cùng lúc → nghẽn</td><td>Chuẩn bị test case S3 sớm; ưu tiên test S2 trước, cuốn chiếu S3</td></tr>
     </tbody>
   </table>
 
@@ -205,5 +294,121 @@
   </footer>
 
 </div>
+
+<!-- Presentation mode: condensed slides for meeting room -->
+<div class="slides" id="slides" role="dialog" aria-label="Chế độ trình chiếu">
+  <button class="close" onclick="closeSlides()" aria-label="Đóng">&times;</button>
+
+  <section class="slide">
+    <div class="kicker">Kế hoạch · Release</div>
+    <h2>Kế hoạch Build &amp; Release<br>Thiên Long Mobile</h2>
+    <div class="sub">Sprint 2 (27/07 → 10/08) · Bàn giao build ~16/08 · Dev đã build Sprint 3</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Mốc quan trọng</div>
+    <h2>Bàn giao build kế tiếp</h2>
+    <div class="row">
+      <div class="stat"><div class="n">~16/08</div><div class="l">Mốc bàn giao build</div></div>
+      <div class="stat"><div class="n warn">10 ngày</div><div class="l">Đếm ngược</div></div>
+      <div class="stat"><div class="n">13</div><div class="l">Tính năng vào diện QA</div></div>
+      <div class="stat"><div class="n">67</div><div class="l">Đầu việc QA đã plan</div></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Lộ trình</div>
+    <h2>Từ code đến test</h2>
+    <ul>
+      <li><b>Đến 10/08</b> — Dev hoàn thiện tính năng Sprint 2</li>
+      <li><b>11–13/08</b> — Ráp build &amp; đưa lên Staging</li>
+      <li><b>14–15/08</b> — QA: test staging, đối chiếu module game gốc <b>(cửa ải)</b></li>
+      <li><b>~16/08</b> — 🎯 Bàn giao build, QA nhận test chính thức</li>
+      <li><b>16/08+</b> — QA test sâu &amp; báo lỗi</li>
+    </ul>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Cửa ải Staging</div>
+    <h2>"Đủ" = đủ module như game gốc</h2>
+    <ul>
+      <li>Không chỉ "chạy được" — phải <b>đủ các module như bản gốc</b></li>
+      <li>Đủ module → chuyển test chi tiết</li>
+      <li>Thiếu module → trả lại Dev, ghi rõ thiếu gì</li>
+      <li>Cần <b>bảng đối chiếu module gốc</b> làm chuẩn</li>
+    </ul>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Phối hợp team</div>
+    <h2>Đầu vào / Đầu ra của QA</h2>
+    <ul>
+      <li><b>Game Design →</b> QA cần GDD + Figma · QA trả đối chiếu thiết kế ↔ thực tế</li>
+      <li><b>Dev →</b> QA cần bản build · QA trả bug report + module thiếu</li>
+      <li><b>Art →</b> QA cần asset chuẩn · QA trả lỗi hiển thị</li>
+      <li><b>PM/PO →</b> QA cần ưu tiên + DoD · QA trả báo cáo chất lượng</li>
+    </ul>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Song song</div>
+    <h2>Sprint 3 — Dev đang build</h2>
+    <div class="sub">10/08 → 22/08 · đang planning</div>
+    <ul>
+      <li>Dev build Sprint 3 <b>song song</b> khi QA test build Sprint 2</li>
+      <li>Trọng tâm: Nhân vật dùng kỹ năng · Thiết kế UI kỹ năng</li>
+      <li>QA chuẩn bị test case S3 sớm để không nghẽn</li>
+    </ul>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">Đề xuất</div>
+    <h2>Rủi ro lớn nhất: 1 QA quá tải</h2>
+    <div class="row">
+      <div class="stat"><div class="n danger">288h</div><div class="l">Tải QA Sprint 2</div></div>
+      <div class="stat"><div class="n">130h</div><div class="l">1 người làm được</div></div>
+      <div class="stat"><div class="n danger">2,2×</div><div class="l">Mức quá tải</div></div>
+    </div>
+    <div class="sub">Đề xuất bổ sung <b>2 QA theo lộ trình</b> — chi tiết ở trang Đề xuất nhân sự QA.</div>
+  </section>
+
+  <div class="bar">
+    <button onclick="prevSlide()">← Trước</button>
+    <div class="dots" id="dots"></div>
+    <span class="idx" id="idx"></span>
+    <button onclick="nextSlide()">Sau →</button>
+  </div>
+</div>
+
+<script>
+  const box = document.getElementById('slides');
+  const slides = [...box.querySelectorAll('.slide')];
+  const dotsC = document.getElementById('dots');
+  const idxEl = document.getElementById('idx');
+  let cur = 0;
+  slides.forEach((_, i) => {
+    const d = document.createElement('span'); d.className = 'dot';
+    d.onclick = () => go(i); dotsC.appendChild(d);
+  });
+  const dots = [...dotsC.children];
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('show', i === cur));
+    dots.forEach((d, i) => d.classList.toggle('on', i === cur));
+    idxEl.textContent = (cur + 1) + ' / ' + slides.length;
+  }
+  function go(i){ cur = Math.max(0, Math.min(slides.length - 1, i)); render(); }
+  function nextSlide(){ go(cur + 1); }
+  function prevSlide(){ go(cur - 1); }
+  function openSlides(){ box.classList.add('on'); cur = 0; render();
+    document.body.style.overflow = 'hidden'; }
+  function closeSlides(){ box.classList.remove('on'); document.body.style.overflow = ''; }
+  // Keyboard: arrows / space to move, Esc to exit — handy in meeting room
+  document.addEventListener('keydown', (e) => {
+    if (!box.classList.contains('on')) return;
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+    else if (e.key === 'ArrowLeft') prevSlide();
+    else if (e.key === 'Escape') closeSlides();
+  });
+</script>
 </body>
 </html>

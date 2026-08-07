@@ -69,6 +69,25 @@
 <tr><td>Hiệu năng / tải</td><td class="c">3.0h</td><td class="c">10</td><td class="c">30.0</td></tr>
 </table>
 
+  <h2><span class="num">★</span> Quy đổi sang 4 nhóm test chuẩn (AC)</h2>
+  <p style="color:var(--muted);font-size:13.5px">Ánh xạ 6 loại test trong CSV sang 4 nhóm theo Acceptance Criteria: Functional, Integration, Performance, Edge Cases.</p>
+  <table><tr><th>Loại test (CSV)</th><th>→ Nhóm AC</th></tr>
+  <tr><td>Chuẩn bị (viết test case)</td><td>Functional</td></tr>
+  <tr><td>Chức năng + edge case</td><td>Edge Cases</td></tr>
+  <tr><td>Regression (hồi quy)</td><td>Functional</td></tr>
+  <tr><td>Mobile & cảm ứng</td><td>Functional</td></tr>
+  <tr><td>3D / Animation</td><td>Functional</td></tr>
+  <tr><td>Hiệu năng / tải</td><td>Performance</td></tr>
+  </table>
+  <table><tr><th>Nhóm AC</th><th class="c">Số task</th><th class="c">Tổng EST (h)</th><th class="c">Tỷ trọng</th></tr>
+  <tr><td>Functional</td><td class="c">249</td><td class="c">408.0</td><td class="c">74.7%</td></tr>
+  <tr><td>Integration</td><td class="c">0</td><td class="c">0.0</td><td class="c">0%</td></tr>
+  <tr><td>Performance</td><td class="c">10</td><td class="c">30.0</td><td class="c">5.5%</td></tr>
+  <tr><td>Edge Cases</td><td class="c">27</td><td class="c">108.0</td><td class="c">19.8%</td></tr>
+  <tr class="tot"><td>TỔNG</td><td class="c">286</td><td class="c">546.0</td><td class="c">100%</td></tr>
+  </table>
+  <div class="callout" style="border-left-color:var(--warn)"><b>⚠️ Khoảng trống —</b> CSV nguồn không có loại test nào ánh xạ được sang <b>Integration</b> (test tích hợp giữa các hệ thống) → nhóm này hiện = 0 task. Đây là thiếu sót trong dữ liệu nguồn, cần bổ sung test case Integration cho các tính năng liên module (vd: nhận quà nhiệm vụ → cập nhật túi đồ).</div>
+
   <h2><span class="num">2</span> Tổng hợp theo Phase</h2>
   <table><tr><th>Phase</th><th class="c">Tính năng</th><th class="c">Task</th><th class="c">EST (h)</th><th class="c">Ngày công</th></tr>
   <tr><td>Phase 1</td><td class="c">26</td><td class="c">107</td><td class="c">210.5</td><td class="c">~26.3</td></tr>

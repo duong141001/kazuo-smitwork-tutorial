@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test Plan Phase 1 — Nhóm A & B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1419; --surface:#171c23; --surface-2:#1e242d; --line:#2a323d;
+    --text:#e8eaed; --muted:#9aa4b2; --faint:#6b7480;
+    --accent:#3b82f6; --purple:#8b5cf6; --ok:#22c55e; --warn:#f6b73c;
+    --radius:14px; --header-h:60px; --sp-6:24px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0; background:var(--bg); color:var(--text);
+    font-family:'Inter',system-ui,sans-serif; font-size:16px; line-height:1.65;
+    -webkit-font-smoothing:antialiased;}
+  a{color:var(--accent); text-decoration:none}
+
+  nav.sitenav{position:sticky; top:0; z-index:50; display:flex; align-items:center; gap:18px;
+    height:var(--header-h); padding:0 var(--sp-6); background:rgba(15,20,25,.92);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
+  nav .brand{display:flex; align-items:center; gap:8px}
+  nav .dot{width:24px; height:24px; border-radius:7px; background:var(--accent);
+    display:grid; place-items:center}
+  nav a{color:var(--muted); font-size:14px; font-weight:600}
+  nav a.active{color:var(--text)}
+
+  .wrap{max-width:1000px; margin:0 auto; padding:36px var(--sp-6) 80px}
+  .eyebrow{font-size:12.5px; letter-spacing:.5px; text-transform:uppercase; color:var(--accent); font-weight:700}
+  h1{margin:8px 0 6px; font-size:30px; font-weight:800; letter-spacing:-.02em}
+  .doc-meta{color:var(--muted); font-size:13.5px; display:flex; flex-wrap:wrap; gap:8px}
+  .lead{color:var(--muted); margin:14px 0 24px; max-width:720px}
+
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:14px; margin-bottom:30px}
+  .kpi{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px}
+  .kpi .val{font-size:26px; font-weight:800}
+  .kpi .val.ok{color:var(--ok)}
+  .kpi .label{font-size:12.5px; color:var(--muted); margin-top:2px}
+
+  h2{margin:34px 0 14px; font-size:20px; font-weight:800; display:flex; align-items:center; gap:10px}
+  h2 .num{width:26px; height:26px; flex:none; border-radius:8px; background:var(--surface-2);
+    border:1px solid var(--line); display:grid; place-items:center; font-size:14px; color:var(--accent)}
+  h3{margin:22px 0 10px; font-size:16px; font-weight:700}
+
+  table{width:100%; border-collapse:collapse; margin:10px 0 6px; font-size:13.5px;
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden}
+  th,td{padding:9px 12px; text-align:left; border-bottom:1px solid var(--line)}
+  th{background:var(--surface-2); color:var(--muted); font-weight:600; font-size:12.5px}
+  tr:last-child td{border-bottom:none}
+  td.c,th.c{text-align:center}
+  .tot td{font-weight:800; background:var(--surface-2)}
+
+  .pill{display:inline-block; font-size:11px; font-weight:700; padding:2px 8px; border-radius:6px}
+  .pill.hi{background:rgba(246,183,60,.15); color:var(--warn); border:1px solid rgba(246,183,60,.4)}
+  .pill.tb{background:rgba(154,164,178,.12); color:var(--muted); border:1px solid var(--line)}
+
+  .callout{background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--warn);
+    border-radius:10px; padding:14px 16px; margin:14px 0; color:var(--muted); font-size:14px}
+  ul{color:var(--muted); font-size:14.5px}
+  footer{margin-top:44px; border-top:1px solid var(--line); padding-top:18px; color:var(--faint); font-size:12.5px}
+</style>
+</head>
+<body>
+
+<nav class="sitenav" aria-label="Điều hướng site">
+  <span class="brand"><span class="dot"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span></span>
+  <a href="/huong-dan/">Tài liệu hướng dẫn</a>
+  <a href="/QA-kehoach/">Kế hoạch phòng QA</a>
+  <a href="/test-plan-phase-1/" class="active">Test Plan Phase 1</a>
+</nav>
+
+<div class="wrap">
+
+  <span class="eyebrow">Phòng QA · Phase 1</span>
+  <h1>Test Plan Phase 1 — Nhóm A &amp; B</h1>
+  <div class="doc-meta">
+    <span>Nhân vật &amp; Môn phái (A)</span><span>·</span>
+    <span>Chiến đấu &amp; Võ công (B)</span><span>·</span>
+    <span>Nguồn: QA Timeline (QA001–QA055)</span>
+  </div>
+
+  <p class="lead">Kế hoạch kiểm thử 13 tính năng lõi thuộc nhóm A và B của Phase 1. EST ước lượng theo số task × định mức giờ theo loại test.</p>
+
+  <div class="kpis">
+    <div class="kpi"><div class="val">13</div><div class="label">Tính năng</div></div>
+    <div class="kpi"><div class="val">55</div><div class="label">Task QA</div></div>
+    <div class="kpi"><div class="val">103.5h</div><div class="label">Tổng EST</div></div>
+    <div class="kpi"><div class="val ok">~13</div><div class="label">Ngày công (8h)</div></div>
+  </div>
+
+  <h2><span class="num">1</span> Phạm vi (In-scope)</h2>
+  <table>
+    <tr><th>Nhóm</th><th>Mã</th><th>Tính năng</th><th class="c">Ưu tiên</th></tr>
+    <tr><td rowspan="6">A. Nhân vật &amp; Môn phái</td><td>A1</td><td>Hệ thống môn phái (class)</td><td class="c"><span class="pill hi">Cao</span></td></tr>
+    <tr><td>A2</td><td>Tạo nhân vật</td><td class="c"><span class="pill tb">TB</span></td></tr>
+    <tr><td>A3</td><td>Thuộc tính nhân vật</td><td class="c"><span class="pill tb">TB</span></td></tr>
+    <tr><td>A4</td><td>Cấp độ &amp; EXP</td><td class="c"><span class="pill tb">TB</span></td></tr>
+    <tr><td>A5</td><td>Chuyển/tẩy phái</td><td class="c"><span class="pill tb">TB</span></td></tr>
+    <tr><td>A6</td><td>Ngoại hình &amp; thời trang</td><td class="c"><span class="pill tb">TB</span></td></tr>
+    <tr><td rowspan="7">B. Chiến đấu &amp; Võ công</td><td>B1</td><td>Combat cốt lõi (2 chế độ)</td><td class="c"><span class="pill hi">Cao</span></td></tr>
+    <tr><td>B2</td><td>Cây kỹ năng (9 skill/phái)</td><td class="c"><span class="pill hi">Cao</span></td></tr>
+    <tr><td>B3</td><td>Tuyệt kỹ / Combo</td><td class="c"><span class="pill hi">Cao</span></td></tr>
+    <tr><td>B4</td><td>Buff/Debuff &amp; trạng thái</td><td class="c"><span class="pill tb">TB</span></td></tr>
+    <tr><td>B5</td><td>Auto-combat &amp; AI (PvE)</td><td class="c"><span class="pill hi">Cao</span></td></tr>
+    <tr><td>B6</td><td>Sát thương &amp; công thức</td><td class="c"><span class="pill tb">TB</span></td></tr>
+    <tr><td>B7</td><td>Nội công / tâm pháp</td><td class="c"><span class="pill tb">TB</span></td></tr>
+  </table>
+  <p style="color:var(--muted);font-size:13.5px"><b>Out-of-scope:</b> Nhóm C (Trang bị), L (UI/UX) — Phase 1 nhưng ngoài kế hoạch này; nhóm D/E/F/G/H/I/J thuộc Phase 2–4.</p>
+
+  <h2><span class="num">2</span> Định mức EST theo loại test</h2>
+  <table>
+    <tr><th>Loại test</th><th>Nghĩa</th><th class="c">EST / task</th></tr>
+    <tr><td>Chuẩn bị</td><td>Viết test case</td><td class="c">2h</td></tr>
+    <tr><td>Chức năng</td><td>Test đầy đủ + edge case</td><td class="c">4h</td></tr>
+    <tr><td>Regression</td><td>Kiểm hồi quy logic (nhanh)</td><td class="c">1.5h</td></tr>
+    <tr><td>Mobile</td><td>Luồng mobile &amp; cảm ứng</td><td class="c">1.5h</td></tr>
+    <tr><td>3D/Animation</td><td>Animation 3D &amp; hiển thị</td><td class="c">1.5h</td></tr>
+    <tr><td>Hiệu năng</td><td>Test tải / hiệu năng</td><td class="c">3h</td></tr>
+  </table>
+
+  <h2><span class="num">3</span> Ước lượng EST theo tính năng</h2>
+  <h3>Nhóm A — Nhân vật &amp; Môn phái</h3>
+  <table>
+    <tr><th>Mã</th><th>Tính năng</th><th class="c">Task</th><th class="c">EST (h)</th></tr>
+    <tr><td>A1</td><td>Hệ thống môn phái</td><td class="c">5</td><td class="c">9.5</td></tr>
+    <tr><td>A2</td><td>Tạo nhân vật</td><td class="c">4</td><td class="c">6.5</td></tr>
+    <tr><td>A3</td><td>Thuộc tính nhân vật</td><td class="c">4</td><td class="c">6.5</td></tr>
+    <tr><td>A4</td><td>Cấp độ &amp; EXP</td><td class="c">4</td><td class="c">6.5</td></tr>
+    <tr><td>A5</td><td>Chuyển/tẩy phái</td><td class="c">4</td><td class="c">6.5</td></tr>
+    <tr><td>A6</td><td>Ngoại hình &amp; thời trang</td><td class="c">4</td><td class="c">6.5</td></tr>
+    <tr class="tot"><td colspan="2">Tổng nhóm A</td><td class="c">25</td><td class="c">42.0</td></tr>
+  </table>
+  <h3>Nhóm B — Chiến đấu &amp; Võ công</h3>
+  <table>
+    <tr><th>Mã</th><th>Tính năng</th><th class="c">Task</th><th class="c">EST (h)</th></tr>
+    <tr><td>B1</td><td>Combat cốt lõi (2 chế độ)</td><td class="c">5</td><td class="c">12.0</td></tr>
+    <tr><td>B2</td><td>Cây kỹ năng (9 skill/phái)</td><td class="c">5</td><td class="c">12.0</td></tr>
+    <tr><td>B3</td><td>Tuyệt kỹ / Combo</td><td class="c">4</td><td class="c">9.0</td></tr>
+    <tr><td>B4</td><td>Buff/Debuff &amp; trạng thái</td><td class="c">4</td><td class="c">6.5</td></tr>
+    <tr><td>B5</td><td>Auto-combat &amp; AI (PvE)</td><td class="c">4</td><td class="c">9.0</td></tr>
+    <tr><td>B6</td><td>Sát thương &amp; công thức</td><td class="c">4</td><td class="c">6.5</td></tr>
+    <tr><td>B7</td><td>Nội công / tâm pháp</td><td class="c">4</td><td class="c">6.5</td></tr>
+    <tr class="tot"><td colspan="2">Tổng nhóm B</td><td class="c">30</td><td class="c">61.5</td></tr>
+  </table>
+  <h3>Tổng hợp</h3>
+  <table>
+    <tr><th>Nhóm</th><th class="c">Tính năng</th><th class="c">Task</th><th class="c">EST (h)</th><th class="c">Ngày công</th></tr>
+    <tr><td>A</td><td class="c">6</td><td class="c">25</td><td class="c">42.0</td><td class="c">~5.25</td></tr>
+    <tr><td>B</td><td class="c">7</td><td class="c">30</td><td class="c">61.5</td><td class="c">~7.7</td></tr>
+    <tr class="tot"><td>TỔNG</td><td class="c">13</td><td class="c">55</td><td class="c">103.5</td><td class="c">~13</td></tr>
+  </table>
+
+  <h2><span class="num">4</span> Capacity check</h2>
+  <ul>
+    <li>Tổng khối lượng: <b>103.5h ≈ 13 ngày công</b>.</li>
+    <li>1 QA (8h/ngày) → ~13 ngày; 2 QA → ~6.5 ngày.</li>
+    <li>Cột "QA phụ trách" trong CSV đang trống → cần QA Lead phân công trước sprint.</li>
+  </ul>
+
+  <h2><span class="num">5</span> Rủi ro &amp; dự phòng</h2>
+  <table>
+    <tr><th>#</th><th>Rủi ro</th><th>Phương án dự phòng</th></tr>
+    <tr><td class="c">1</td><td>Dev Status = "Chưa làm" toàn bộ → chưa có build</td><td>Ưu tiên viết test case trước, chạy test khi có build</td></tr>
+    <tr><td class="c">2</td><td>QA phụ trách trống → chưa phân công</td><td>QA Lead phân người trước sprint</td></tr>
+    <tr><td class="c">3</td><td>Tính năng Cao (A1,B1,B2,B3,B5) nặng edge case + hiệu năng</td><td>Dồn QA giỏi nhất, chạy trước</td></tr>
+    <tr><td class="c">4</td><td>Định mức EST là ước tính chuẩn hoá</td><td>Điều chỉnh sau vòng test đầu theo tốc độ thực tế</td></tr>
+  </table>
+
+  <div class="callout">
+    <b>Lưu ý —</b> Ngày bắt đầu/kết thúc trong CSV tạm bỏ qua ở bản này. EST tính thuần theo số task × định mức giờ/loại test. Tiêu chí ra (Exit): 100% task ưu tiên Cao pass, không còn bug Blocker/Critical.
+  </div>
+
+  <footer>
+    QA Toolchain · gwr1410.io.vn/test-plan-phase-1 · Nguồn: QA Timeline Phase 1 (QA001–QA055)
+  </footer>
+
+</div>
+</body>
+</html>

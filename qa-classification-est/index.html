@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phân loại Kiểm thử & EST — Toàn dự án</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0f1419;--surface:#171c23;--surface-2:#1e242d;--line:#2a323d;--text:#e8eaed;--muted:#9aa4b2;--faint:#6b7480;--accent:#3b82f6;--ok:#22c55e;--warn:#f6b73c;--radius:14px;--header-h:60px;--sp-6:24px;}
+  *{box-sizing:border-box}html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  nav.sitenav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:18px;height:var(--header-h);padding:0 var(--sp-6);background:rgba(15,20,25,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .dot{width:24px;height:24px;border-radius:7px;background:var(--accent);display:grid;place-items:center}
+  nav a{color:var(--muted);font-size:14px;font-weight:600} nav a.active{color:var(--text)}
+  .wrap{max-width:1000px;margin:0 auto;padding:36px var(--sp-6) 80px}
+  .eyebrow{font-size:12.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{margin:8px 0 6px;font-size:30px;font-weight:800;letter-spacing:-.02em}
+  .doc-meta{color:var(--muted);font-size:13.5px;display:flex;flex-wrap:wrap;gap:8px}
+  .lead{color:var(--muted);margin:14px 0 24px;max-width:720px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:30px}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+  .kpi .val{font-size:26px;font-weight:800} .kpi .val.ok{color:var(--ok)} .kpi .label{font-size:12.5px;color:var(--muted);margin-top:2px}
+  h2{margin:34px 0 14px;font-size:20px;font-weight:800;display:flex;align-items:center;gap:10px}
+  h2 .num{width:26px;height:26px;flex:none;border-radius:8px;background:var(--surface-2);border:1px solid var(--line);display:grid;place-items:center;font-size:14px;color:var(--accent)}
+  h3{margin:22px 0 10px;font-size:15px;font-weight:700;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:13px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  th,td{padding:8px 11px;text-align:left;border-bottom:1px solid var(--line)}
+  th{background:var(--surface-2);color:var(--muted);font-weight:600;font-size:12px}
+  tr:last-child td{border-bottom:none} td.c,th.c{text-align:center}
+  .tot td{font-weight:800;background:var(--surface-2)}
+  .pill{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:6px}
+  .pill.hi{background:rgba(246,183,60,.15);color:var(--warn);border:1px solid rgba(246,183,60,.4)}
+  .pill.tb{background:rgba(154,164,178,.12);color:var(--muted);border:1px solid var(--line)}
+  .pill.lo{background:rgba(107,116,128,.12);color:var(--faint);border:1px solid var(--line)}
+  .callout{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:14px 16px;margin:14px 0;color:var(--muted);font-size:14px}
+  footer{margin-top:44px;border-top:1px solid var(--line);padding-top:18px;color:var(--faint);font-size:12.5px}
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Điều hướng site">
+  <span class="dot"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+  <a href="/huong-dan/">Tài liệu hướng dẫn</a>
+  <a href="/QA-kehoach/">Kế hoạch phòng QA</a>
+  <a href="/test-plan-phase-1/">Test Plan Phase 1</a>
+  <a href="/qa-classification-est/" class="active">Phân loại &amp; EST</a>
+</nav>
+<div class="wrap">
+  <span class="eyebrow">Phòng QA · Toàn dự án</span>
+  <h1>Phân loại Kiểm thử &amp; Ước lượng EST</h1>
+  <div class="doc-meta"><span>Nguồn: QA Timeline (QA001–QA286)</span><span>·</span><span>12 nhóm hệ thống A→L</span><span>·</span><span>4 Phase</span></div>
+  <p class="lead">Toàn bộ đầu việc QA cả dự án được phân loại theo 6 loại hình kiểm thử và ước lượng EST theo số task × định mức giờ/loại. Ticket: TLM-399.</p>
+  <div class="kpis">
+    <div class="kpi"><div class="val">286</div><div class="label">Task QA</div></div>
+    <div class="kpi"><div class="val">69</div><div class="label">Tính năng</div></div>
+    <div class="kpi"><div class="val">546h</div><div class="label">Tổng EST</div></div>
+    <div class="kpi"><div class="val ok">~68</div><div class="label">Ngày công (8h)</div></div>
+  </div>
+
+  <h2><span class="num">1</span> Định mức EST theo loại test</h2>
+  <table><tr><th>Loại hình kiểm thử</th><th class="c">Định mức/task</th><th class="c">Số task</th><th class="c">Tổng EST (h)</th></tr>
+  <tr><td>Chuẩn bị (viết test case)</td><td class="c">2.0h</td><td class="c">69</td><td class="c">138.0</td></tr>
+<tr><td>Chức năng + edge case</td><td class="c">4.0h</td><td class="c">27</td><td class="c">108.0</td></tr>
+<tr><td>Regression (hồi quy)</td><td class="c">1.5h</td><td class="c">42</td><td class="c">63.0</td></tr>
+<tr><td>Mobile & cảm ứng</td><td class="c">1.5h</td><td class="c">69</td><td class="c">103.5</td></tr>
+<tr><td>3D / Animation</td><td class="c">1.5h</td><td class="c">69</td><td class="c">103.5</td></tr>
+<tr><td>Hiệu năng / tải</td><td class="c">3.0h</td><td class="c">10</td><td class="c">30.0</td></tr>
+</table>
+
+  <h2><span class="num">2</span> Tổng hợp theo Phase</h2>
+  <table><tr><th>Phase</th><th class="c">Tính năng</th><th class="c">Task</th><th class="c">EST (h)</th><th class="c">Ngày công</th></tr>
+  <tr><td>Phase 1</td><td class="c">26</td><td class="c">107</td><td class="c">210.5</td><td class="c">~26.3</td></tr>
+<tr><td>Phase 2</td><td class="c">18</td><td class="c">73</td><td class="c">142.5</td><td class="c">~17.8</td></tr>
+<tr><td>Phase 3</td><td class="c">13</td><td class="c">52</td><td class="c">92.0</td><td class="c">~11.5</td></tr>
+<tr><td>Phase 4</td><td class="c">12</td><td class="c">54</td><td class="c">101.0</td><td class="c">~12.6</td></tr>
+<tr class="tot"><td>TỔNG</td><td class="c">69</td><td class="c">286</td><td class="c">546.0</td><td class="c">~68.2</td></tr></table>
+
+  <h2><span class="num">3</span> Tổng hợp theo Nhóm hệ thống</h2>
+  <table><tr><th>Nhóm</th><th class="c">Phase</th><th class="c">Tính năng</th><th class="c">Task</th><th class="c">EST (h)</th></tr>
+  <tr><td>A. Nhân vật & Môn phái</td><td class="c">P1</td><td class="c">6</td><td class="c">25</td><td class="c">42.0</td></tr>
+<tr><td>B. Chiến đấu & Võ công</td><td class="c">P1</td><td class="c">7</td><td class="c">30</td><td class="c">61.5</td></tr>
+<tr><td>C. Trang bị & Cường hóa</td><td class="c">P1</td><td class="c">8</td><td class="c">32</td><td class="c">62.0</td></tr>
+<tr><td>L. UI/UX & Onboarding</td><td class="c">P1</td><td class="c">5</td><td class="c">20</td><td class="c">45.0</td></tr>
+<tr><td>D. Nhiệm vụ & PvE</td><td class="c">P2</td><td class="c">7</td><td class="c">29</td><td class="c">61.0</td></tr>
+<tr><td>H. Kinh tế & Giao dịch</td><td class="c">P2</td><td class="c">5</td><td class="c">20</td><td class="c">37.5</td></tr>
+<tr><td>I. Nạp thẻ & Thương mại hóa</td><td class="c">P2</td><td class="c">6</td><td class="c">24</td><td class="c">44.0</td></tr>
+<tr><td>E. Bang hội & Xã hội</td><td class="c">P3</td><td class="c">7</td><td class="c">28</td><td class="c">48.0</td></tr>
+<tr><td>G. Đồng hành</td><td class="c">P3</td><td class="c">6</td><td class="c">24</td><td class="c">44.0</td></tr>
+<tr><td>F. PvP & Đấu trường</td><td class="c">P4</td><td class="c">6</td><td class="c">30</td><td class="c">62.0</td></tr>
+<tr><td>J. Hoạt động & Sự kiện</td><td class="c">P4</td><td class="c">6</td><td class="c">24</td><td class="c">39.0</td></tr>
+</table>
+
+  <h2><span class="num">4</span> Chi tiết EST theo từng tính năng</h2>
+  <h3>Phase 1 — 26 tính năng · 107 task · 210.5h</h3>
+<table>
+<tr><th>Mã</th><th>Tính năng</th><th>Nhóm</th><th class="c">Ưu tiên</th><th class="c">Task</th><th class="c">EST (h)</th></tr>
+<tr><td>A1</td><td>Hệ thống môn phái (class)</td><td>A</td><td class="c"><span class="pill hi">Cao</span></td><td class="c">5</td><td class="c">9.5</td></tr>
+<tr><td>A2</td><td>Tạo nhân vật</td><td>A</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>A3</td><td>Thuộc tính nhân vật</td><td>A</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>A4</td><td>Cấp độ & EXP</td><td>A</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>A5</td><td>Chuyển/tẩy phái</td><td>A</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>A6</td><td>Ngoại hình & thời trang</td><td>A</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>B1</td><td>Combat cốt lõi (2 chế độ)</td><td>B</td><td class="c"><span class="pill hi">Cao</span></td><td class="c">5</td><td class="c">12.0</td></tr>
+<tr><td>B2</td><td>Cây kỹ năng (9 skill/phái)</td><td>B</td><td class="c"><span class="pill hi">Cao</span></td><td class="c">5</td><td class="c">12.0</td></tr>
+<tr><td>B3</td><td>Tuyệt kỹ / Combo</td><td>B</td><td class="c"><span class="pill hi">Cao</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>B4</td><td>Buff/Debuff & trạng thái</td><td>B</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>B5</td><td>Auto-combat & AI (PvE)</td><td>B</td><td class="c"><span class="pill hi">Cao</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>B6</td><td>Sát thương & công thức</td><td>B</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>B7</td><td>Nội công / tâm pháp</td><td>B</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>C1</td><td>Hệ thống trang bị</td><td>C</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>C2</td><td>Cường hóa (nâng hàng loạt)</td><td>C</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>C3</td><td>Khảm ngọc (hàng loạt)</td><td>C</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>C4</td><td>Tinh luyện (tự động)</td><td>C</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>C5</td><td>Bảo thạch & bộ trang bị</td><td>C</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>C6</td><td>Chế tạo / rèn đồ</td><td>C</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>C7</td><td>Phân giải / tái chế</td><td>C</td><td class="c"><span class="pill lo">Thấp</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>C8</td><td>Túi đồ & kho (auto-sort)</td><td>C</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>L1</td><td>Màn hình chính (HUD 10 nút)</td><td>L</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>L2</td><td>Hướng dẫn tân thủ (tutorial)</td><td>L</td><td class="c"><span class="pill hi">Cao</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>L3</td><td>Hệ thống cài đặt</td><td>L</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>L4</td><td>Danh sách chức năng/menu</td><td>L</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>L5</td><td>Hệ thống chỉ dẫn tự động</td><td>L</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr class="tot"><td colspan="4">Tổng Phase 1</td><td class="c">107</td><td class="c">210.5</td></tr>
+</table>
+<h3>Phase 2 — 18 tính năng · 73 task · 142.5h</h3>
+<table>
+<tr><th>Mã</th><th>Tính năng</th><th>Nhóm</th><th class="c">Ưu tiên</th><th class="c">Task</th><th class="c">EST (h)</th></tr>
+<tr><td>D1</td><td>Nhiệm vụ chính (cốt truyện)</td><td>D</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>D2</td><td>Nhiệm vụ phụ/hằng ngày (auto)</td><td>D</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>D3</td><td>Phó bản (quét nhanh)</td><td>D</td><td class="c"><span class="pill hi">Cao</span></td><td class="c">5</td><td class="c">12.0</td></tr>
+<tr><td>D4</td><td>Phó bản tổ đội (6 người)</td><td>D</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>D5</td><td>Thế giới mở (tap-to-move)</td><td>D</td><td class="c"><span class="pill hi">Cao</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>D6</td><td>Quái & Boss thế giới</td><td>D</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>D7</td><td>Hệ thống rớt đồ (drop)</td><td>D</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>H1</td><td>Hệ thống tiền tệ</td><td>H</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>H2</td><td>Chợ / bày bán</td><td>H</td><td class="c"><span class="pill hi">Cao</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>H3</td><td>Giao dịch người chơi</td><td>H</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>H4</td><td>Cửa hàng NPC</td><td>H</td><td class="c"><span class="pill lo">Thấp</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>H5</td><td>Nguồn thu/tiêu (sink&faucet)</td><td>H</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>I1</td><td>Nạp tiền (IAP mobile)</td><td>I</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>I2</td><td>Shop KNB / gacha</td><td>I</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>I3</td><td>Hệ thống VIP</td><td>I</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>I4</td><td>Thẻ tháng / battle pass</td><td>I</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>I5</td><td>Ưu đãi & gói giới hạn</td><td>I</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>I6</td><td>Điểm danh & mốc nạp</td><td>I</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr class="tot"><td colspan="4">Tổng Phase 2</td><td class="c">73</td><td class="c">142.5</td></tr>
+</table>
+<h3>Phase 3 — 13 tính năng · 52 task · 92.0h</h3>
+<table>
+<tr><th>Mã</th><th>Tính năng</th><th>Nhóm</th><th class="c">Ưu tiên</th><th class="c">Task</th><th class="c">EST (h)</th></tr>
+<tr><td>E1</td><td>Hệ thống bang hội</td><td>E</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>E2</td><td>Hoạt động bang</td><td>E</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>E3</td><td>Chat & kênh liên lạc</td><td>E</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>E4</td><td>Kết bạn & danh sách</td><td>E</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>E5</td><td>Sư đồ (thầy-trò)</td><td>E</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>E6</td><td>Danh vọng / xếp hạng</td><td>E</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>E7</td><td>Kết hôn / tình duyên</td><td>E</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>G1</td><td>Thú cưỡi (mount)</td><td>G</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>G2</td><td>Pet / linh thú</td><td>G</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">9.0</td></tr>
+<tr><td>G3</td><td>Đồng hành NPC</td><td>G</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>G4</td><td>Cánh / thần binh</td><td>G</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>G5</td><td>Nuôi dưỡng đồng hành</td><td>G</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>G6</td><td>Thu thập & sưu tầm</td><td>G</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr class="tot"><td colspan="4">Tổng Phase 3</td><td class="c">52</td><td class="c">92.0</td></tr>
+</table>
+<h3>Phase 4 — 12 tính năng · 54 task · 101.0h</h3>
+<table>
+<tr><th>Mã</th><th>Tính năng</th><th>Nhóm</th><th class="c">Ưu tiên</th><th class="c">Task</th><th class="c">EST (h)</th></tr>
+<tr><td>F1</td><td>PvP tự do (open-world)</td><td>F</td><td class="c"><span class="pill tb">TB</span></td><td class="c">5</td><td class="c">9.5</td></tr>
+<tr><td>F2</td><td>Đấu trường 1v1</td><td>F</td><td class="c"><span class="pill tb">TB</span></td><td class="c">5</td><td class="c">12.0</td></tr>
+<tr><td>F3</td><td>Chiến trường tập thể</td><td>F</td><td class="c"><span class="pill tb">TB</span></td><td class="c">5</td><td class="c">12.0</td></tr>
+<tr><td>F4</td><td>Tranh đoạt bang chiến</td><td>F</td><td class="c"><span class="pill hi">Rất cao</span></td><td class="c">5</td><td class="c">9.5</td></tr>
+<tr><td>F5</td><td>Đấu Tống Kim / công thành</td><td>F</td><td class="c"><span class="pill hi">Rất cao</span></td><td class="c">5</td><td class="c">9.5</td></tr>
+<tr><td>F6</td><td>Xếp hạng & thưởng PvP</td><td>F</td><td class="c"><span class="pill tb">TB</span></td><td class="c">5</td><td class="c">9.5</td></tr>
+<tr><td>J1</td><td>Sự kiện hằng ngày/tuần</td><td>J</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>J2</td><td>Sự kiện theo mùa/lễ</td><td>J</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>J3</td><td>Vòng quay / mini-game</td><td>J</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>J4</td><td>Hệ thống thành tựu</td><td>J</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>J5</td><td>Đua top khai server</td><td>J</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr><td>J6</td><td>Hoạt động limited-time</td><td>J</td><td class="c"><span class="pill tb">TB</span></td><td class="c">4</td><td class="c">6.5</td></tr>
+<tr class="tot"><td colspan="4">Tổng Phase 4</td><td class="c">54</td><td class="c">101.0</td></tr>
+</table>
+
+
+  <div class="callout"><b>Ghi chú —</b> EST tính thuần theo số task × định mức giờ/loại test (mục 1). Ngày bắt đầu/kết thúc trong CSV tạm bỏ qua. Cột "QA phụ trách" và "Ước lượng (ngày)" trong nguồn đang trống — cần QA Lead phân công &amp; review định mức.</div>
+  <footer>QA Toolchain · gwr1410.io.vn/qa-classification-est · TLM-399 · Nguồn: QA Timeline toàn dự án (286 task)</footer>
+</div>
+</body>
+</html>

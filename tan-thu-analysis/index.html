@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Phân tích luồng tân thủ — Nội bộ QA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0f1419;--surface:#171c23;--surface-2:#1e242d;--line:#2a323d;--text:#e8eaed;--muted:#9aa4b2;--faint:#6b7480;--accent:#3b82f6;--ok:#22c55e;--warn:#f6b73c;--radius:14px;--sp-6:24px;}
+  *{box-sizing:border-box}html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  .wrap{max-width:1000px;margin:0 auto;padding:36px var(--sp-6) 80px}
+  .badge{display:inline-block;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--warn);border:1px solid rgba(246,183,60,.4);background:rgba(246,183,60,.1);padding:4px 11px;border-radius:999px;margin-bottom:14px}
+  .eyebrow{font-size:12.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{margin:8px 0 6px;font-size:29px;font-weight:800;letter-spacing:-.02em}
+  .doc-meta{color:var(--muted);font-size:13.5px;display:flex;flex-wrap:wrap;gap:8px}
+  .lead{color:var(--muted);margin:14px 0 24px;max-width:740px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin-bottom:30px}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:15px}
+  .kpi .val{font-size:24px;font-weight:800}.kpi .val.ok{color:var(--ok)}.kpi .label{font-size:12px;color:var(--muted);margin-top:2px}
+  h2{margin:34px 0 12px;font-size:20px;font-weight:800;display:flex;align-items:center;gap:10px}
+  h2 .num{width:26px;height:26px;flex:none;border-radius:8px;background:var(--surface-2);border:1px solid var(--line);display:grid;place-items:center;font-size:13px;color:var(--accent)}
+  h3{margin:22px 0 10px;font-size:15px;font-weight:700;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:12.5px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--surface-2);color:var(--muted);font-weight:600;font-size:11.5px}
+  tr:last-child td{border-bottom:none}td.c,th.c{text-align:center}
+  .tot td{font-weight:800;background:var(--surface-2)}
+  code{background:var(--surface-2);padding:1px 5px;border-radius:5px;font-size:12px;color:var(--accent)}
+  .pill{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px;white-space:nowrap}
+  .pill.func{background:rgba(59,130,246,.15);color:#8fb4ff;border:1px solid rgba(59,130,246,.35)}
+  .pill.integ{background:rgba(34,217,138,.13);color:#7ff0bf;border:1px solid rgba(34,217,138,.35)}
+  .pill.edge{background:rgba(255,107,129,.13);color:#ffb0bd;border:1px solid rgba(255,107,129,.35)}
+  .callout{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:10px;padding:14px 16px;margin:14px 0;color:var(--muted);font-size:14px}
+  ul{color:var(--muted);font-size:14px}
+  footer{margin-top:44px;border-top:1px solid var(--line);padding-top:18px;color:var(--faint);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">🔒 Nội bộ QA · Không liệt kê công khai</span>
+  <div><span class="eyebrow">TLM-398 · Phân tích thiết kế</span></div>
+  <h1>Luồng tổng tân thủ — TL Origin VNG (Lv 1-20)</h1>
+  <div class="doc-meta"><span>Nguồn: Lark Docs (Lê Đình Bách, 20/07)</span><span>·</span><span>25 trang</span><span>·</span><span>Loại: Onboarding walkthrough</span></div>
+  <p class="lead">Phân tích luồng tân thủ phục vụ QA: hiểu chuỗi nhiệm vụ, logic từng hệ thống, rủi ro và test case. Tài liệu nguồn là walkthrough (không phải GDD đầy đủ).</p>
+
+  <div class="kpis">
+    <div class="kpi"><div class="val">~19</div><div class="label">Nhiệm vụ Lv1-20</div></div>
+    <div class="kpi"><div class="val">5</div><div class="label">Hệ thống</div></div>
+    <div class="kpi"><div class="val">22</div><div class="label">Test case</div></div>
+    <div class="kpi"><div class="val ok">18h</div><div class="label">EST test</div></div>
+  </div>
+
+  <h2><span class="num">1</span> Core Loop tân thủ</h2>
+  <p style="color:var(--muted);font-size:14.5px">Nhận nhiệm vụ từ NPC → auto-path tới toạ độ → thực hiện (nói chuyện / diệt quái / dùng vật phẩm) → trả nhiệm vụ → mở khoá hướng dẫn hệ thống tiếp theo → lên cấp. Vòng lặp tuyến tính, mỗi mốc giới thiệu 1 cơ chế mới.</p>
+
+  <h2><span class="num">2</span> Chuỗi nhiệm vụ Level 1-10</h2>
+  <table>
+    <tr><th>#</th><th>Nhiệm vụ</th><th>NPC / Vị trí</th><th>Hệ thống giới thiệu</th></tr>
+    <tr><td>1</td><td>Đột phá giang hồ</td><td>Triệu Thiên Sư <code>[160,157]</code></td><td>Nhận nhiệm vụ</td></tr>
+    <tr><td>2</td><td>Vũ khí đầu tiên</td><td>Triệu Thiên Sư <code>[160,157]</code></td><td>Trang bị vũ khí</td></tr>
+    <tr><td>3</td><td>Phòng cụ đầu tiên</td><td>Bồ Lương <code>[216,133]</code></td><td>Hành trang / Túi</td></tr>
+    <tr><td>4</td><td>Lần đầu diệt quái</td><td>Diệt 4 Cao Sơn Bạch Viên → Hoàng Công Đạo <code>[238,171]</code></td><td>Đánh quái</td></tr>
+    <tr><td>5</td><td>Quay về gặp Thiên Sư</td><td>Triệu Thiên Sư</td><td>—</td></tr>
+    <tr><td>6</td><td>Kỹ năng thường</td><td>Trương Hoạch <code>[156,129]</code>, Trịnh Thanh Sương <code>[163,139]</code>, trả Tiền Long <code>[144,138]</code></td><td>Mở & trang bị kỹ năng</td></tr>
+    <tr><td>7</td><td>Linh Đan Diệu Dược</td><td>—</td><td>Sử dụng vật phẩm</td></tr>
+    <tr><td>8</td><td>Lư Tam Thất</td><td>Diệt 4 Thục Đạo Bạch Viên (Kiếm Các); Cao Thắng Tường (Đại Lý)</td><td>Thưởng chọn (vũ khí Gia Truyền Thiết Phiến)</td></tr>
+  </table>
+
+  <h2><span class="num">3</span> Chuỗi Level 10-20</h2>
+  <table>
+    <tr><th>#</th><th>Nhiệm vụ</th><th>Hệ thống</th></tr>
+    <tr><td>9-11</td><td>Đại Lý Quái Nhân · Hành thiện · Lại gặp Thiên Sư</td><td>—</td></tr>
+    <tr><td>12-14</td><td>Trân Thú gia tộc · Trân Thú đầu tiên · Bắt Trân Thú</td><td>Trân Thú (luyện Phiêu Phiêu Thố lv2, bắt pet)</td></tr>
+    <tr><td>15-16</td><td>Giao diện Trân Thú · Lửa Mừng Lễ Hội</td><td>Giao diện Trân Thú</td></tr>
+    <tr><td>17-19</td><td>Đại Thiện Nhân · Vấn Đáp Giang Hồ · Thử luyện sau cùng</td><td>—</td></tr>
+    <tr><td>—</td><td>Cửu Đại Phái · Giang Hồ Rộng Lớn · 10 Năm</td><td>Gia nhập môn phái (vd Tiêu Dao)</td></tr>
+    <tr><td>Lv11-20</td><td>Chiến đấu vì sư môn</td><td>Nhiệm vụ Sư Môn (20 Lệnh Triệu Tập Phái)</td></tr>
+  </table>
+
+  <h2><span class="num">4</span> Rủi ro &amp; lỗ hổng logic</h2>
+  <table>
+    <tr><th>#</th><th>Vấn đề</th><th class="c">Mức</th></tr>
+    <tr><td>1</td><td>Đánh số nhiệm vụ nhảy/lặp (mục "17" xuất hiện 2 lần); tr.10-12 không text</td><td class="c">TB</td></tr>
+    <tr><td>2</td><td>Điều kiện gate theo cấp chưa rõ toàn bộ mốc</td><td class="c">Cao</td></tr>
+    <tr><td>3</td><td>Quy tắc item "khoá" khi nhận thưởng chưa rõ</td><td class="c">TB</td></tr>
+    <tr><td>4</td><td>Tài liệu là walkthrough — KHÔNG có công thức số (sát thương, EXP, drop)</td><td class="c">Cao</td></tr>
+  </table>
+
+  <h2><span class="num">5</span> Test case (22 case · phân loại 4 nhóm AC)</h2>
+  <h3>Nhiệm vụ (Quest) — 6 case</h3>
+  <table>
+    <tr><th>ID</th><th>Tiêu đề</th><th class="c">Loại</th><th>Kết quả kỳ vọng</th><th class="c">EST</th></tr>
+    <tr><td>TC-QST-001</td><td>Nhận nhiệm vụ đầu từ NPC</td><td class="c"><span class="pill func">Func</span></td><td>NV vào nhật ký, hiện mục tiêu</td><td class="c">0.5</td></tr>
+    <tr><td>TC-QST-002</td><td>Auto-path tới toạ độ</td><td class="c"><span class="pill func">Func</span></td><td>Nhân vật tự đi đúng toạ độ NPC</td><td class="c">0.5</td></tr>
+    <tr><td>TC-QST-003</td><td>Trả NV &amp; nhận thưởng</td><td class="c"><span class="pill func">Func</span></td><td>Nhận thưởng, NV kế mở khoá</td><td class="c">0.5</td></tr>
+    <tr><td>TC-QST-004</td><td>Gate theo cấp độ</td><td class="c"><span class="pill func">Func</span></td><td>Chưa đủ cấp → không cho nhận</td><td class="c">1.0</td></tr>
+    <tr><td>TC-QST-005</td><td>Đếm tiến độ diệt quái</td><td class="c"><span class="pill func">Func</span></td><td>Đếm 1/4→4/4 rồi hoàn thành</td><td class="c">0.5</td></tr>
+    <tr><td>TC-QST-006</td><td>Chuỗi NV đúng thứ tự</td><td class="c"><span class="pill integ">Integ</span></td><td>NV1→NV8 mở đúng, không kẹt</td><td class="c">1.5</td></tr>
+  </table>
+  <h3>Túi đồ / Trang bị — 4 case</h3>
+  <table>
+    <tr><th>ID</th><th>Tiêu đề</th><th class="c">Loại</th><th>Kết quả kỳ vọng</th><th class="c">EST</th></tr>
+    <tr><td>TC-BAG-001</td><td>Trang bị vũ khí đầu tiên</td><td class="c"><span class="pill func">Func</span></td><td>Vũ khí lên ô, chỉ số tăng</td><td class="c">0.5</td></tr>
+    <tr><td>TC-BAG-002</td><td>Thưởng chọn 1 trong nhiều</td><td class="c"><span class="pill func">Func</span></td><td>Chỉ item đã chọn vào túi</td><td class="c">0.5</td></tr>
+    <tr><td>TC-BAG-003</td><td>Item khoá không giao dịch</td><td class="c"><span class="pill integ">Integ</span></td><td>Chặn bán/giao dịch item khoá</td><td class="c">1.0</td></tr>
+    <tr><td>TC-BAG-004</td><td>Nhận thưởng khi túi đầy</td><td class="c"><span class="pill edge">Edge</span></td><td>Chặn/gửi thư, không mất thưởng</td><td class="c">1.0</td></tr>
+  </table>
+  <h3>Kỹ năng — 3 · Trân Thú — 3 · Môn phái — 2</h3>
+  <table>
+    <tr><th>ID</th><th>Tiêu đề</th><th class="c">Loại</th><th>Kết quả kỳ vọng</th><th class="c">EST</th></tr>
+    <tr><td>TC-SKL-001</td><td>Học kỹ năng từ NPC</td><td class="c"><span class="pill func">Func</span></td><td>Kỹ năng vào danh sách đã học</td><td class="c">0.5</td></tr>
+    <tr><td>TC-SKL-002</td><td>Trang bị skill lên HUD (F1-F10)</td><td class="c"><span class="pill func">Func</span></td><td>Skill hiện HUD, dùng được</td><td class="c">0.5</td></tr>
+    <tr><td>TC-SKL-003</td><td>Skill liên kết chỉ số/nội công</td><td class="c"><span class="pill integ">Integ</span></td><td>Hiệu lực phản ánh đúng chỉ số</td><td class="c">1.0</td></tr>
+    <tr><td>TC-PET-001</td><td>Luyện Trân Thú lên cấp</td><td class="c"><span class="pill func">Func</span></td><td>Phiêu Phiêu Thố lên lv2</td><td class="c">0.5</td></tr>
+    <tr><td>TC-PET-002</td><td>Bắt Trân Thú</td><td class="c"><span class="pill func">Func</span></td><td>Bắt thành công, vào danh sách</td><td class="c">1.0</td></tr>
+    <tr><td>TC-PET-003</td><td>Mở giao diện Trân Thú</td><td class="c"><span class="pill func">Func</span></td><td>Hiển thị đúng Trân Thú sở hữu</td><td class="c">0.5</td></tr>
+    <tr><td>TC-SECT-001</td><td>Gia nhập môn phái</td><td class="c"><span class="pill func">Func</span></td><td>Vào phái, nhận Lệnh Triệu Tập, mở NV sư môn</td><td class="c">1.0</td></tr>
+    <tr><td>TC-SECT-002</td><td>Mở nhánh NV sư môn Lv11-20</td><td class="c"><span class="pill integ">Integ</span></td><td>NV "Chiến đấu vì sư môn" xuất hiện</td><td class="c">1.0</td></tr>
+  </table>
+  <h3>Edge Cases bổ sung — 4 case</h3>
+  <table>
+    <tr><th>ID</th><th>Tiêu đề</th><th class="c">Loại</th><th>Kết quả kỳ vọng</th><th class="c">EST</th></tr>
+    <tr><td>TC-EDGE-001</td><td>Mất kết nối khi trả nhiệm vụ</td><td class="c"><span class="pill edge">Edge</span></td><td>Không mất/nhân đôi thưởng</td><td class="c">1.5</td></tr>
+    <tr><td>TC-EDGE-002</td><td>Tự đi lệch khỏi auto-path</td><td class="c"><span class="pill edge">Edge</span></td><td>NV không kẹt, tiếp tục được</td><td class="c">1.0</td></tr>
+    <tr><td>TC-EDGE-003</td><td>Bỏ qua/nhảy bước tutorial</td><td class="c"><span class="pill edge">Edge</span></td><td>Chặn đúng thứ tự / skip có kiểm soát</td><td class="c">1.0</td></tr>
+    <tr><td>TC-EDGE-004</td><td>NV trùng số (mục 17)</td><td class="c"><span class="pill edge">Edge</span></td><td>Thứ tự nhất quán, không kẹt</td><td class="c">1.0</td></tr>
+  </table>
+
+  <h2><span class="num">6</span> Tổng hợp</h2>
+  <table>
+    <tr><th>Module</th><th class="c">Số case</th><th class="c">EST (h)</th></tr>
+    <tr><td>Nhiệm vụ (Quest)</td><td class="c">6</td><td class="c">4.5</td></tr>
+    <tr><td>Túi đồ / Trang bị</td><td class="c">4</td><td class="c">3.0</td></tr>
+    <tr><td>Kỹ năng</td><td class="c">3</td><td class="c">2.0</td></tr>
+    <tr><td>Trân Thú</td><td class="c">3</td><td class="c">2.0</td></tr>
+    <tr><td>Môn phái</td><td class="c">2</td><td class="c">2.0</td></tr>
+    <tr><td>Edge Cases bổ sung</td><td class="c">4</td><td class="c">4.5</td></tr>
+    <tr class="tot"><td>TỔNG</td><td class="c">22</td><td class="c">18.0</td></tr>
+  </table>
+  <p style="color:var(--muted);font-size:13.5px">Phân loại 4 nhóm AC: <span class="pill func">Functional</span> 12 · <span class="pill integ">Integration</span> 5 · <span class="pill edge">Edge Cases</span> 5 · Performance 0 (luồng tân thủ không có kịch bản tải).</p>
+
+  <div class="callout"><b>⚠️ Lưu ý —</b> Tài liệu nguồn là walkthrough, thiếu công thức số (sát thương, EXP, drop). Các case gate cấp / item khoá / túi đầy cần Game Designer xác nhận quy tắc. Bộ Integration ở đây bù trực tiếp cho khoảng trống Integration = 0 phát hiện ở khâu phân loại EST.</div>
+
+  <footer>TLM-398 · Nội bộ QA · gwr1410.io.vn/tan-thu-analysis · Nguồn: Luồng tổng TL Origin VNG</footer>
+</div>
+</body>
+</html>

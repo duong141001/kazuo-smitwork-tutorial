@@ -1,2 +1,2 @@
-﻿Bug ID;Tiêu đề;Tính năng/Module;Test Case liên quan;Mức độ;Tần suất;Môi trường (build/thiết bị);Các bước tái hiện;Kết quả thực tế;Kết quả kỳ vọng;Trạng thái;Người báo;Ngày báo;Ảnh/Clip
-BUG-001;(vd) Không vào được phái sau khi bấm Gia nhập;Môn phái;TC-SECT-001;Critical;Luôn xảy ra;Build #___ / PC Win11;1. Mở Cửu Đại Phái | 2. Chọn phái | 3. Bấm Gia nhập;Màn hình đứng, không vào phái;Vào phái và nhận vật phẩm tân thủ;Mới;;2026-08-11;
+﻿Bug ID,Tiêu đề,Tính năng/Module,Test Case liên quan,Mức độ,Tần suất,Môi trường (build/thiết bị),Các bước tái hiện,Kết quả thực tế,Kết quả kỳ vọng,Trạng thái,Người báo,Ngày báo,Ảnh/Clip
+BUG-001,(vd) Không vào được phái sau khi bấm Gia nhập,Môn phái,TC-SECT-001,Critical,Luôn xảy ra,Build #___ / PC Win11,"1. Mở Cửu Đại Phái | 2. Chọn phái | 3. Bấm Gia nhập","Màn hình đứng, không vào phái","Vào phái và nhận vật phẩm tân thủ",Mới,,2026-08-11,

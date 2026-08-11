@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kế hoạch Kiểm thử Thủ công — Phase 1 (Nhóm A+B)</title>
+<style>
+  :root{
+    --bg:#0f1220; --card:#171b2e; --line:#272c44;
+    --ink:#e8ebf7; --muted:#9aa3c4; --accent:#6ea8fe;
+    --y:#f6b73c; --t:#39d98a; --chip:#232842;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:32px 16px; background:var(--bg); color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif; line-height:1.55;
+  }
+  .wrap{max-width:960px; margin:0 auto}
+  header{
+    background:linear-gradient(135deg,#1b2140,#131730); border:1px solid var(--line);
+    border-radius:16px; padding:24px 28px; margin-bottom:24px;
+  }
+  h1{margin:0 0 6px; font-size:24px}
+  .sub{color:var(--muted); font-size:14px}
+  .meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
+  .chip{background:var(--chip); border:1px solid var(--line); color:var(--muted);
+    font-size:12px; padding:4px 10px; border-radius:999px}
+  section{margin-bottom:26px}
+  .sec-title{display:flex; align-items:center; gap:10px; font-size:17px; font-weight:700; margin:0 0 12px}
+  .dot{width:10px; height:10px; border-radius:50%; background:var(--accent)}
+  .dot.y{background:var(--y)} .dot.t{background:var(--t)}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:16px 18px; margin-bottom:12px;
+  }
+  h2{font-size:16px; margin:0 0 10px}
+  h3{font-size:14.5px; margin:14px 0 6px; color:var(--accent)}
+  p{margin:0 0 8px; color:var(--muted); font-size:13.5px}
+  ul,ol{margin:6px 0 8px; padding-left:20px; color:var(--muted); font-size:13.5px}
+  li{margin-bottom:4px}
+  table{width:100%; border-collapse:collapse; margin:8px 0 4px; font-size:13px}
+  th,td{border:1px solid var(--line); padding:7px 9px; text-align:left; vertical-align:top}
+  th{background:#1d2138; color:var(--ink); font-weight:600}
+  td{color:var(--muted)}
+  .code{font-family:ui-monospace,Consolas,monospace; font-size:12px; color:var(--accent);
+    background:#101427; border:1px solid var(--line); padding:2px 7px; border-radius:8px; white-space:nowrap}
+  .flow{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:10px 0}
+  .flow .step{background:#1d2138; border:1px solid var(--line); border-radius:10px;
+    padding:8px 12px; font-size:12.5px; color:var(--ink)}
+  .flow .arw{color:var(--accent); font-weight:700}
+  .hi{color:var(--t); font-weight:600}
+  .warn{color:var(--y)}
+  .tag{font-size:11.5px; padding:3px 9px; border-radius:6px; border:1px solid var(--line); color:var(--ink); background:#1d2138}
+  .tag.high{border-color:#ff6b8155; color:#ffb0bd}
+  footer{color:var(--muted); font-size:12px; text-align:center; margin-top:26px;
+    border-top:1px solid var(--line); padding-top:14px}
+  @media print{
+    body{background:#fff; color:#111; padding:0}
+    header,.card{border-color:#ddd; background:#fff}
+    .sub,p,td,.chip,ul,ol{color:#444}
+    th{background:#f3f4f8}
+    .code{background:#f3f4f8; color:#1a4bd6}
+    .flow .step{background:#f3f4f8}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>🧪 Kế hoạch Kiểm thử Thủ công — Phase 1</h1>
+    <div class="sub">Nhóm A (Nhân vật &amp; Môn phái) + B (Chiến đấu &amp; Võ công) · 13 tính năng / 55 task QA</div>
+    <div class="meta">
+      <span class="chip">🎫 TLM-400</span>
+      <span class="chip">🖐️ Manual — chưa có AI</span>
+      <span class="chip">✅ Đã có build staging</span>
+      <span class="chip">🗓️ 11/08/2026</span>
+    </div>
+  </header>
+
+  <!-- 1. BỐI CẢNH -->
+  <section>
+    <div class="sec-title"><span class="dot"></span> 1. Mục tiêu &amp; bối cảnh mới</div>
+    <div class="card">
+      <p><strong>Mục tiêu:</strong> 13 tính năng lõi nhóm A+B chạy đúng đặc tả, sẵn sàng Phase 1 — kiểm bằng <span class="hi">thao tác tay của QA trên build staging</span>, không dùng công cụ tự động.</p>
+      <table>
+        <tr><th>Hạng mục</th><th>Bản cũ (giả định AI)</th><th>Bản này (manual)</th></tr>
+        <tr><td>Cách chạy test</td><td>AI-PlayTester tự chạy</td><td>QA thao tác tay trên staging</td></tr>
+        <tr><td>Regression</td><td>AI chạy lại nhanh</td><td>QA chạy lại tay theo checklist</td></tr>
+        <tr><td>Định mức giờ</td><td>Tối ưu nhờ AI</td><td>Tăng ~30% do làm tay</td></tr>
+        <tr><td>Rủi ro "chưa có build"</td><td>Còn treo</td><td><span class="hi">Đã gỡ</span> — staging sẵn sàng</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 2. PHẠM VI -->
+  <section>
+    <div class="sec-title"><span class="dot"></span> 2. Phạm vi (In-scope)</div>
+    <div class="card">
+      <table>
+        <tr><th>Mã</th><th>Tính năng</th><th>Ưu tiên</th></tr>
+        <tr><td class="code">A1</td><td>Hệ thống môn phái (class)</td><td><span class="tag high">Cao</span></td></tr>
+        <tr><td class="code">A2</td><td>Tạo nhân vật</td><td>TB</td></tr>
+        <tr><td class="code">A3</td><td>Thuộc tính nhân vật</td><td>TB</td></tr>
+        <tr><td class="code">A4</td><td>Cấp độ &amp; EXP</td><td>TB</td></tr>
+        <tr><td class="code">A5</td><td>Chuyển/tẩy phái</td><td>TB</td></tr>
+        <tr><td class="code">A6</td><td>Ngoại hình &amp; thời trang</td><td>TB</td></tr>
+        <tr><td class="code">B1</td><td>Combat cốt lõi (2 chế độ)</td><td><span class="tag high">Cao</span></td></tr>
+        <tr><td class="code">B2</td><td>Cây kỹ năng (9 skill/phái)</td><td><span class="tag high">Cao</span></td></tr>
+        <tr><td class="code">B3</td><td>Tuyệt kỹ / Combo</td><td><span class="tag high">Cao</span></td></tr>
+        <tr><td class="code">B4</td><td>Buff/Debuff &amp; trạng thái</td><td>TB</td></tr>
+        <tr><td class="code">B5</td><td>Auto-combat &amp; AI (PvE)</td><td><span class="tag high">Cao</span></td></tr>
+        <tr><td class="code">B6</td><td>Sát thương &amp; công thức</td><td>TB</td></tr>
+        <tr><td class="code">B7</td><td>Nội công / tâm pháp</td><td>TB</td></tr>
+      </table>
+      <p><span class="warn">Out-of-scope:</span> Nhóm C, L (Phase 1 nhưng ngoài kế hoạch này); D–J (Phase 2–4); cân bằng số sâu (thiếu bảng số — chờ GD).</p>
+    </div>
+  </section>
+
+  <!-- 3. QUY TRÌNH -->
+  <section>
+    <div class="sec-title"><span class="dot t"></span> 3. Quy trình BUILD + CHẠY 1 test bằng tay</div>
+    <div class="card">
+      <p>Quy trình xương sống — mỗi QA làm theo đúng 6 bước cho <strong>mọi</strong> test case, để kết quả nhất quán và tái lập được.</p>
+      <div class="flow">
+        <span class="step">1. Đọc spec</span><span class="arw">→</span>
+        <span class="step">2. Viết test case</span><span class="arw">→</span>
+        <span class="step">3. Chuẩn bị data</span><span class="arw">→</span>
+        <span class="step">4. Chạy tay</span><span class="arw">→</span>
+        <span class="step">5. Ghi kết quả</span><span class="arw">→</span>
+        <span class="step">6. Regression</span>
+      </div>
+
+      <h3>Bước 1 — Đọc đặc tả &amp; xác định điểm kiểm</h3>
+      <ul>
+        <li>Đọc mô tả tính năng (GDD/Feature Spec) + phân tích TLM-398.</li>
+        <li>Gạch ra: <strong>input</strong> (thao tác người chơi), <strong>luật xử lý</strong> (điều kiện, ràng buộc), <strong>output kỳ vọng</strong>.</li>
+        <li>Spec thiếu số/luật → ghi vào cột "Q&amp;A GD", <span class="warn">không tự đoán</span>.</li>
+      </ul>
+
+      <h3>Bước 2 — Viết test case theo template</h3>
+      <ul>
+        <li>Mỗi case: ID, tiền điều kiện, các bước, kết quả kỳ vọng, loại test, ưu tiên, EST.</li>
+        <li>1 case = 1 mục tiêu kiểm. Không gộp nhiều mục tiêu.</li>
+      </ul>
+
+      <h3>Bước 3 — Chuẩn bị môi trường &amp; dữ liệu</h3>
+      <ul>
+        <li><strong>Build:</strong> xác nhận đúng phiên bản staging (ghi lại số build/commit).</li>
+        <li><strong>Tài khoản test:</strong> nhân vật đúng tiền điều kiện — thường cần: 1 nhân vật mới Lv1, 1 nhân vật đạt cấp gate (Lv10/Lv20), mỗi phái 1 nhân vật để test skill.</li>
+        <li><strong>Thiết bị:</strong> ghi rõ PC hay mobile (model + OS) — có case Mobile &amp; 3D riêng.</li>
+      </ul>
+
+      <h3>Bước 4 — Thực thi (chạy tay) &amp; quan sát</h3>
+      <ul>
+        <li>Làm đúng từng bước, không tắt bước.</li>
+        <li>So output thực tế với kỳ vọng. <strong>Chụp màn hình / quay clip</strong> mỗi mốc quan trọng, nhất là khi lệch kỳ vọng.</li>
+      </ul>
+
+      <h3>Bước 5 — Ghi nhận kết quả</h3>
+      <ul>
+        <li>Đánh <strong>Pass / Fail / Blocked</strong> từng case.</li>
+        <li>Fail → mở <strong>bug log</strong>: bước tái hiện, kết quả thực tế, ảnh/clip, severity, build số, thiết bị.</li>
+      </ul>
+
+      <h3>Bước 6 — Regression (khi có bản vá)</h3>
+      <ul>
+        <li>Dev fix xong → chạy lại case đã Fail (re-test) + case liên quan cùng module (regression) theo checklist.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4. TEMPLATE -->
+  <section>
+    <div class="sec-title"><span class="dot"></span> 4. Template test case + ví dụ</div>
+    <div class="card">
+      <h2>Template chuẩn (copy dùng chung)</h2>
+      <table>
+        <tr><th>Trường</th><th>Nội dung</th></tr>
+        <tr><td>ID</td><td>TC-&lt;MÃ MODULE&gt;-&lt;số&gt; (vd TC-SECT-001)</td></tr>
+        <tr><td>Tính năng</td><td>Mã tính năng (A1, B2...)</td></tr>
+        <tr><td>Loại test</td><td>Functional / Integration / Performance / Edge Cases</td></tr>
+        <tr><td>Ưu tiên</td><td>High / Medium / Low</td></tr>
+        <tr><td>Tiền điều kiện</td><td>Trạng thái nhân vật/tài khoản/build cần có trước khi chạy</td></tr>
+        <tr><td>Các bước</td><td>1. ... 2. ... 3. ... (thao tác cụ thể, đánh số)</td></tr>
+        <tr><td>Kết quả kỳ vọng</td><td>Điều phải xảy ra nếu đúng</td></tr>
+        <tr><td>Kết quả thực tế</td><td>(điền khi chạy)</td></tr>
+        <tr><td>Trạng thái</td><td>Pass / Fail / Blocked</td></tr>
+        <tr><td>EST(h)</td><td>Giờ công thực thi</td></tr>
+        <tr><td>Ghi chú/bug</td><td>Link bug, ảnh, build số</td></tr>
+      </table>
+
+      <h2 style="margin-top:16px">Ví dụ 1 case hoàn chỉnh (A1 — Môn phái)</h2>
+      <table>
+        <tr><td style="width:30%">ID</td><td class="code">TC-SECT-001</td></tr>
+        <tr><td>Loại / Ưu tiên</td><td>Functional / <span class="tag high">High</span></td></tr>
+        <tr><td>Tiền điều kiện</td><td>Nhân vật hoàn thành luồng tân thủ, đủ cấp gia nhập phái; build staging #&lt;số&gt;</td></tr>
+        <tr><td>Các bước</td><td>1. Mở giao diện Cửu Đại Phái 2. Chọn phái Tiêu Dao 3. Bấm "Gia nhập" 4. Xác nhận</td></tr>
+        <tr><td>Kết quả kỳ vọng</td><td>Vào phái Tiêu Dao; nhận "20 Lệnh Triệu Tập Phái"; mở nhánh NV "Nhiệm vụ Sư Môn"</td></tr>
+        <tr><td>EST</td><td>1.0h</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 5. EST -->
+  <section>
+    <div class="sec-title"><span class="dot y"></span> 5. EST thủ công &amp; capacity</div>
+    <div class="card">
+      <p>Làm tay (không AI) → định mức tăng ~30% ở khâu <strong>thực thi</strong>:</p>
+      <table>
+        <tr><th>Loại test</th><th>Định mức cũ</th><th>Manual</th><th>Ghi chú</th></tr>
+        <tr><td>Chuẩn bị (viết case)</td><td>2h</td><td>2h</td><td>Không đổi</td></tr>
+        <tr><td>Chức năng + edge</td><td>4h</td><td class="warn">5h</td><td>Thao tác tay nhiều bước</td></tr>
+        <tr><td>Regression</td><td>1.5h</td><td class="warn">2h</td><td>Chạy lại tay</td></tr>
+        <tr><td>Mobile</td><td>1.5h</td><td class="warn">2h</td><td>Test tay trên thiết bị</td></tr>
+        <tr><td>3D/Animation</td><td>1.5h</td><td>1.5h</td><td>Quan sát mắt, ~không đổi</td></tr>
+        <tr><td>Hiệu năng</td><td>3h</td><td class="warn">4h</td><td>Đo tay + lặp nhiều lần</td></tr>
+      </table>
+      <p style="margin-top:10px"><strong>Ước lượng lại A+B (55 task):</strong> bản AI = 103.5h → bản manual <span class="hi">~130–135h</span> (~16–17 ngày công 8h). Capacity: 1 QA → ~16 ngày; 2 QA → ~8 ngày.</p>
+      <p><span class="warn">⚠️</span> Cột "QA phụ trách" đang trống → QA Lead phân công trước sprint. Ưu tiên chạy trước: A1, B1, B2, B3, B5.</p>
+    </div>
+  </section>
+
+  <!-- 6. RỦI RO -->
+  <section>
+    <div class="sec-title"><span class="dot y"></span> 6. Rủi ro &amp; dự phòng</div>
+    <div class="card">
+      <table>
+        <tr><th>#</th><th>Rủi ro</th><th>Phương án dự phòng</th></tr>
+        <tr><td>1</td><td><s>Chưa có build</s> → <span class="hi">ĐÃ GỠ</span></td><td>—</td></tr>
+        <tr><td>2</td><td>Làm tay chậm hơn dự kiến, trễ timeline</td><td>Ưu tiên case High; giãn case Low cuối phase</td></tr>
+        <tr><td>3</td><td>Thiếu tài khoản test đúng tiền điều kiện</td><td>Chuẩn bị bộ tài khoản mẫu trước sprint; nhờ Dev cấp lệnh GM</td></tr>
+        <tr><td>4</td><td>Regression tay dễ sót khi build đổi nhiều</td><td>Checklist regression cố định mỗi module</td></tr>
+        <tr><td>5</td><td>Thiếu số cân bằng (B6 sát thương/EXP)</td><td>Đẩy Q&amp;A cho GD; tạm test luật, chưa test giá trị số</td></tr>
+        <tr><td>6</td><td>QA phụ trách trống</td><td>QA Lead phân người trước sprint</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 7. DELIVERABLES -->
+  <section>
+    <div class="sec-title"><span class="dot"></span> 7. Deliverables &amp; Sign-off</div>
+    <div class="card">
+      <ul>
+        <li>☐ Bộ test case 13 tính năng A1–A6, B1–B7 (theo template §4)</li>
+        <li>☐ Bộ tài khoản test chuẩn bị sẵn (đúng tiền điều kiện)</li>
+        <li>☐ Báo cáo kết quả test theo vòng (Pass/Fail/Blocked)</li>
+        <li>☐ Bug log + checklist regression mỗi module</li>
+      </ul>
+      <p><strong>Sign-off:</strong> ☐ PM duyệt &nbsp;·&nbsp; ☐ Technical Lead duyệt</p>
+    </div>
+  </section>
+
+  <footer>
+    Kế hoạch Kiểm thử Thủ công Phase 1 (Nhóm A+B) · TLM-400 · Dự án Thiên Long Mobile<br>
+    Bản manual thay thế giả định AI — khi có AI-PlayTester, chồng thêm lớp tự động lên quy trình §3, không làm lại từ đầu.
+  </footer>
+
+</div>
+</body>
+</html>

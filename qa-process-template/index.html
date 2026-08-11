@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[Draft] Quy trình Kiểm thử & Template Test Case — Phòng QA</title>
+<style>
+  :root{
+    --bg:#0f1220; --card:#171b2e; --line:#272c44;
+    --ink:#e8ebf7; --muted:#9aa3c4; --accent:#6ea8fe;
+    --y:#f6b73c; --t:#39d98a; --chip:#232842;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; padding:32px 16px; background:var(--bg); color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif; line-height:1.55}
+  .wrap{max-width:980px; margin:0 auto}
+  header{background:linear-gradient(135deg,#1b2140,#131730); border:1px solid var(--line);
+    border-radius:16px; padding:24px 28px; margin-bottom:24px}
+  h1{margin:0 0 6px; font-size:23px}
+  .sub{color:var(--muted); font-size:14px}
+  .meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
+  .chip{background:var(--chip); border:1px solid var(--line); color:var(--muted);
+    font-size:12px; padding:4px 10px; border-radius:999px}
+  section{margin-bottom:26px}
+  .sec-title{display:flex; align-items:center; gap:10px; font-size:17px; font-weight:700; margin:0 0 12px}
+  .dot{width:10px; height:10px; border-radius:50%; background:var(--accent)}
+  .dot.y{background:var(--y)} .dot.t{background:var(--t)}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin-bottom:12px}
+  h2{font-size:15.5px; margin:0 0 10px}
+  h3{font-size:14px; margin:14px 0 6px; color:var(--accent)}
+  p{margin:0 0 8px; color:var(--muted); font-size:13.5px}
+  ul,ol{margin:6px 0 8px; padding-left:20px; color:var(--muted); font-size:13.5px}
+  li{margin-bottom:4px}
+  table{width:100%; border-collapse:collapse; margin:8px 0; font-size:12.5px}
+  th,td{border:1px solid var(--line); padding:7px 9px; text-align:left; vertical-align:top}
+  th{background:#1d2138; color:var(--ink); font-weight:600}
+  td{color:var(--muted)}
+  .code{font-family:ui-monospace,Consolas,monospace; font-size:12px; color:var(--accent);
+    background:#101427; border:1px solid var(--line); padding:2px 7px; border-radius:8px; white-space:nowrap}
+  pre{background:#101427; border:1px solid var(--line); border-radius:10px; padding:12px 14px;
+    overflow-x:auto; font-family:ui-monospace,Consolas,monospace; font-size:12px; color:#bcd0ff; line-height:1.5}
+  .hi{color:var(--t); font-weight:600}
+  .warn{color:var(--y)}
+  footer{color:var(--muted); font-size:12px; text-align:center; margin-top:26px;
+    border-top:1px solid var(--line); padding-top:14px}
+  @media print{body{background:#fff;color:#111;padding:0}header,.card{border-color:#ddd;background:#fff}
+    .sub,p,td,.chip,ul,ol{color:#444}th{background:#f3f4f8}.code,pre{background:#f3f4f8;color:#1a4bd6}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>🧪 Quy trình Kiểm thử &amp; Template Test Case — Phòng QA</h1>
+    <div class="sub">Chuẩn hóa template + luồng test + quy trình test dùng chung · Độc lập nội dung game</div>
+    <div class="meta">
+      <span class="chip">📝 BẢN THẢO (draft)</span>
+      <span class="chip">⏳ Chưa có Game Document</span>
+      <span class="chip">🗓️ 11/08/2026</span>
+    </div>
+  </header>
+
+  <div class="card" style="border-color:#f6b73c55">
+    <p style="margin:0"><span class="warn">⚠️ Bản thảo:</span> soạn khi chưa có GDD/Feature Spec cụ thể. Chuẩn hóa <strong>template, luồng, quy trình</strong> dùng lại cho mọi tính năng. Khi có tài liệu game → điền test case cụ thể vào template, không dựng lại từ đầu.</p>
+  </div>
+
+  <!-- PHẦN 1 -->
+  <section>
+    <div class="sec-title"><span class="dot"></span> Phần 1 — Template Test Case</div>
+    <div class="card">
+      <h2>1.1. Cấu trúc 1 test case</h2>
+      <table>
+        <tr><th>Trường</th><th>Bắt buộc</th><th>Mô tả</th></tr>
+        <tr><td>Test Case ID</td><td>✅</td><td><span class="code">TC-&lt;MODULE&gt;-&lt;số&gt;</span> (vd TC-LOGIN-001)</td></tr>
+        <tr><td>Tính năng / Module</td><td>✅</td><td>Tên tính năng đang test</td></tr>
+        <tr><td>Tiêu đề</td><td>✅</td><td>Mục tiêu kiểm — 1 câu ngắn</td></tr>
+        <tr><td>Loại test</td><td>✅</td><td>Functional / Integration / Performance / Edge Cases</td></tr>
+        <tr><td>Độ ưu tiên</td><td>✅</td><td>High / Medium / Low</td></tr>
+        <tr><td>Tiền điều kiện</td><td>✅</td><td>Trạng thái cần có trước khi chạy</td></tr>
+        <tr><td>Dữ liệu test</td><td></td><td>Input cụ thể (nếu có)</td></tr>
+        <tr><td>Các bước</td><td>✅</td><td>1. ... 2. ... 3. ... (đánh số, rõ thao tác)</td></tr>
+        <tr><td>Kết quả kỳ vọng</td><td>✅</td><td>Điều phải xảy ra nếu đúng</td></tr>
+        <tr><td>Kết quả thực tế</td><td></td><td>Điền khi chạy</td></tr>
+        <tr><td>Trạng thái</td><td></td><td>Pass / Fail / Blocked / Chưa chạy</td></tr>
+        <tr><td>EST (h)</td><td></td><td>Giờ công thực thi</td></tr>
+        <tr><td>Môi trường</td><td></td><td>PC / Mobile (model+OS) · số build</td></tr>
+        <tr><td>Ghi chú / Bug</td><td></td><td>Link bug, ảnh, clip</td></tr>
+      </table>
+
+      <h2 style="margin-top:14px">1.2. Quy tắc viết test case</h2>
+      <ul>
+        <li><strong>1 case = 1 mục tiêu kiểm.</strong> Không gộp nhiều mục tiêu.</li>
+        <li><strong>Bước phải tái lập được:</strong> người khác đọc làm lại y hệt.</li>
+        <li><strong>Kết quả kỳ vọng đo được:</strong> ghi cụ thể cái nhìn thấy, tránh "chạy ổn".</li>
+        <li><span class="warn">Không đoán khi thiếu spec:</span> thiếu luật/số → ghi "Q&amp;A gửi GD/Dev".</li>
+      </ul>
+
+      <h2 style="margin-top:14px">1.3. Quy ước mã module</h2>
+      <table>
+        <tr><th>Tiền tố</th><th>Nhóm tính năng</th></tr>
+        <tr><td class="code">TC-CHAR-*</td><td>Nhân vật</td></tr>
+        <tr><td class="code">TC-SECT-*</td><td>Môn phái</td></tr>
+        <tr><td class="code">TC-CBT-*</td><td>Chiến đấu / kỹ năng</td></tr>
+        <tr><td class="code">TC-BAG-*</td><td>Túi đồ / trang bị</td></tr>
+        <tr><td class="code">TC-QST-*</td><td>Nhiệm vụ</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- PHẦN 2 -->
+  <section>
+    <div class="sec-title"><span class="dot t"></span> Phần 2 — Các luồng test</div>
+    <div class="card">
+      <h2>2.1. Bốn loại test &amp; khi nào dùng</h2>
+      <table>
+        <tr><th>Loại</th><th>Kiểm cái gì</th><th>Ví dụ</th></tr>
+        <tr><td>Functional</td><td>1 chức năng đúng đặc tả</td><td>Bấm X → ra Y</td></tr>
+        <tr><td>Integration</td><td>Nhiều tính năng ghép nối đúng</td><td>Xong A mở khóa B</td></tr>
+        <tr><td>Edge Cases</td><td>Biên, input bất thường</td><td>Túi đầy, mất mạng giữa chừng</td></tr>
+        <tr><td>Performance</td><td>Tốc độ, tải, độ mượt</td><td>Nhiều đối tượng cùng lúc</td></tr>
+      </table>
+
+      <h2 style="margin-top:14px">2.2. Ba luồng test chuẩn</h2>
+      <h3>A. Smoke (kiểm nhanh sau mỗi build)</h3>
+      <p>Chỉ case <strong>High</strong> của mỗi module. Chạy ngay khi nhận build. Smoke fail → trả build, không test tiếp.</p>
+      <h3>B. Functional đầy đủ (test chính)</h3>
+      <p>Toàn bộ case Functional + Edge Cases của module. Chạy sau khi smoke pass.</p>
+      <h3>C. Regression (kiểm hồi quy)</h3>
+      <p>Checklist cố định mỗi module + case liên quan bug vừa fix. Chạy sau mỗi bản vá/build mới.</p>
+
+      <h2 style="margin-top:14px">2.3. Sơ đồ luồng tổng</h2>
+      <pre>Nhận build → Smoke test → (fail: trả build)
+                        → (pass) → Functional đầy đủ → Log bug
+                                                     → Dev fix → Re-test + Regression
+                                                                → Đạt Exit Criteria → Đóng vòng test</pre>
+    </div>
+  </section>
+
+  <!-- PHẦN 3 -->
+  <section>
+    <div class="sec-title"><span class="dot y"></span> Phần 3 — Quy trình test của phòng QA</div>
+    <div class="card">
+      <h2>3.1. Vòng đời 1 lần kiểm thử (6 bước)</h2>
+      <table>
+        <tr><th>Bước</th><th>Việc</th><th>Đầu ra</th></tr>
+        <tr><td>1</td><td>Đọc đặc tả — bóc input/luật/output</td><td>Điểm cần kiểm + Q&amp;A GD</td></tr>
+        <tr><td>2</td><td>Viết test case theo template</td><td>Bộ test case</td></tr>
+        <tr><td>3</td><td>Chuẩn bị build + tài khoản + thiết bị</td><td>Môi trường sẵn sàng</td></tr>
+        <tr><td>4</td><td>Thực thi, chụp ảnh/clip</td><td>Kết quả thực tế</td></tr>
+        <tr><td>5</td><td>Ghi Pass/Fail/Blocked; Fail → log bug</td><td>Báo cáo + bug log</td></tr>
+        <tr><td>6</td><td>Regression sau bản vá</td><td>Xác nhận không hồi quy</td></tr>
+      </table>
+
+      <h2 style="margin-top:14px">3.2. Mức độ lỗi (Severity)</h2>
+      <table>
+        <tr><th>Mức</th><th>Định nghĩa</th><th>Xử lý</th></tr>
+        <tr><td><span class="warn">Blocker</span></td><td>Chặn luồng chính, không chơi tiếp</td><td>Fix trước release</td></tr>
+        <tr><td>Critical</td><td>Sai logic nghiêm trọng</td><td>Fix trong phase</td></tr>
+        <tr><td>Major</td><td>Ảnh hưởng trải nghiệm rõ</td><td>Cân nhắc theo timeline</td></tr>
+        <tr><td>Minor</td><td>Lỗi nhỏ, cosmetic</td><td>Backlog</td></tr>
+      </table>
+
+      <h2 style="margin-top:14px">3.3. Bug report chuẩn</h2>
+      <ul>
+        <li><strong>Tiêu đề:</strong> ngắn, hiện tượng · <strong>Môi trường:</strong> build số, thiết bị</li>
+        <li><strong>Bước tái hiện</strong> (đánh số) · <strong>Thực tế</strong> vs <strong>Kỳ vọng</strong></li>
+        <li><strong>Severity</strong> + ảnh/clip · <strong>Tần suất:</strong> luôn / thỉnh thoảng</li>
+      </ul>
+
+      <h2 style="margin-top:14px">3.4. Tiêu chí Vào / Ra</h2>
+      <p><strong>Entry:</strong> có build pass smoke · tính năng dev xong · đã có test case.</p>
+      <p><strong>Exit:</strong> 100% case High Pass · không còn Blocker/Critical · bug còn lại đã log &amp; được chấp nhận hoãn.</p>
+
+      <h2 style="margin-top:14px">3.5. Vòng đời trạng thái test case</h2>
+      <pre>Chưa chạy → Đang chạy → Pass
+                      → Fail → (Dev fix) → Re-test → Pass
+                      → Blocked (thiếu điều kiện / chặn bởi bug khác)</pre>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-title"><span class="dot"></span> Việc còn treo &amp; Q&amp;A</div>
+    <div class="card">
+      <ul>
+        <li>Chờ <strong>GDD/Feature Spec</strong> để điền test case cụ thể.</li>
+        <li>Cần <strong>PM / QA Lead duyệt</strong> template + quy trình trước khi áp dụng toàn phòng.</li>
+      </ul>
+      <p><strong>Q&amp;A cần làm rõ:</strong></p>
+      <ol>
+        <li>Công cụ quản lý test case + bug dùng gì (KazuoTask, Excel, TestRail...)?</li>
+        <li>Định mức EST/loại test của phòng có chuẩn riêng chưa?</li>
+        <li>Checklist regression cố định mỗi module do ai chốt?</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    Bản thảo Quy trình &amp; Template Test Case — Phòng QA · Dự án Thiên Long Mobile<br>
+    Độc lập nội dung game — điền test case cụ thể khi có GDD/Feature Spec.
+  </footer>
+
+</div>
+</body>
+</html>

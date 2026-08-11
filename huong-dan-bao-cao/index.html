@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hướng dẫn — Báo cáo công việc (Daily Report) trên SMIT Work</title>
+<style>
+  :root{--bg:#0f1220;--card:#171b2e;--line:#272c44;--ink:#e8ebf7;--muted:#9aa3c4;--accent:#6ea8fe;--y:#f6b73c;--t:#39d98a;--chip:#232842}
+  *{box-sizing:border-box}
+  body{margin:0;padding:32px 16px;background:var(--bg);color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;line-height:1.55}
+  .wrap{max-width:980px;margin:0 auto}
+  header{background:linear-gradient(135deg,#1b2140,#131730);border:1px solid var(--line);
+    border-radius:16px;padding:24px 28px;margin-bottom:24px}
+  h1{margin:0 0 6px;font-size:23px}
+  .sub{color:var(--muted);font-size:14px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .chip{background:var(--chip);border:1px solid var(--line);color:var(--muted);font-size:12px;padding:4px 10px;border-radius:999px}
+  section{margin-bottom:26px}
+  .sec-title{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;margin:0 0 12px}
+  .num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;
+    background:var(--accent);color:#0f1220;border-radius:50%;font-size:14px;font-weight:700}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:12px}
+  p{margin:0 0 8px;color:var(--muted);font-size:13.5px}
+  ul,ol{margin:6px 0 8px;padding-left:20px;color:var(--muted);font-size:13.5px}
+  li{margin-bottom:5px}
+  b,strong{color:var(--ink)}
+  .shot{width:100%;border:1px solid var(--line);border-radius:12px;margin:10px 0;display:block}
+  .cap{font-size:12px;color:var(--muted);text-align:center;margin:-2px 0 6px}
+  .pill{font-size:11.5px;padding:2px 8px;border-radius:6px;border:1px solid var(--line);background:#1d2138;color:var(--ink);white-space:nowrap}
+  .hi{color:var(--t);font-weight:600}
+  .warn{color:var(--y)}
+  .field{border-left:3px solid var(--accent);padding:6px 0 6px 12px;margin:8px 0}
+  .field b{color:var(--accent)}
+  footer{color:var(--muted);font-size:12px;text-align:center;margin-top:26px;border-top:1px solid var(--line);padding-top:14px}
+  @media print{body{background:#fff;color:#111;padding:0}header,.card{border-color:#ddd;background:#fff}.sub,p,ul,ol,.cap{color:#444}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>📝 Hướng dẫn: Báo cáo công việc (Daily Report)</h1>
+    <div class="sub">Tính năng mới trên SMIT Work · Nộp báo cáo hằng ngày theo dự án</div>
+    <div class="meta">
+      <span class="chip">🆕 Tính năng mới</span>
+      <span class="chip">📅 Daily Report</span>
+      <span class="chip">🗓️ 11/08/2026</span>
+    </div>
+  </header>
+
+  <div class="card">
+    <p style="margin:0"><b>Báo cáo công việc</b> giúp mỗi thành viên nộp báo cáo hằng ngày theo dự án (hôm qua làm gì, hôm nay làm gì, vướng mắc gì). Quản lý xem được ai đã nộp / chưa nộp, đúng giờ hay trễ. Có <b>2 nơi</b> để dùng: nút <span class="pill">Báo cáo</span> nhanh ở Backlog, và trang <b>Báo cáo công việc</b> để xem tổng hợp.</p>
+  </div>
+
+  <!-- BƯỚC 1 -->
+  <section>
+    <div class="sec-title"><span class="num">1</span> Mở nút "Báo cáo" ở Backlog</div>
+    <div class="card">
+      <p>Vào <b>Project → Backlog</b>. Ở góc phải thanh công cụ (cạnh nút <span class="pill">+ Tạo Issue</span>) có nút <span class="pill">Báo cáo</span>.</p>
+      <img class="shot" src="img/daily-report-1-backlog-button.png" alt="Nút Báo cáo ở Backlog">
+      <div class="cap">Nút "Báo cáo" nằm góc phải trên, cạnh "Tạo Issue".</div>
+    </div>
+  </section>
+
+  <!-- BƯỚC 2 -->
+  <section>
+    <div class="sec-title"><span class="num">2</span> Điền &amp; nộp báo cáo trong ngày</div>
+    <div class="card">
+      <p>Bấm nút <span class="pill">Báo cáo</span> → hộp thoại <b>"Báo cáo công việc"</b> mở ra cho ngày hôm nay. Điền các trường:</p>
+      <div class="field"><b>Hôm qua đã làm gì?</b> — việc đã hoàn thành hôm trước.</div>
+      <div class="field"><b>Đang làm dở gì?</b> — việc đang thực hiện, chưa xong.</div>
+      <div class="field"><b>Có gì cản trở?</b> — khó khăn, vướng mắc (nếu có).</div>
+      <div class="field"><b>Hôm nay định làm gì?</b> — kế hoạch trong ngày.</div>
+      <img class="shot" src="img/daily-report-2-dialog.png" alt="Hộp thoại Báo cáo công việc">
+      <div class="cap">Hộp thoại Báo cáo — trái: các ô nhập; phải: "Việc của tôi" để copy mã task.</div>
+      <ul>
+        <li>Mỗi ô có 2 chế độ soạn: <span class="pill">Soạn thảo</span> (định dạng nhanh) hoặc <span class="pill">Markdown</span>.</li>
+        <li>Panel bên phải <b>"Việc của tôi"</b> liệt kê task đang gán cho mình — <b>bấm để copy mã + tên</b> (vd TLM-448) dán vào báo cáo cho nhanh.</li>
+        <li><span class="warn">Lưu ý:</span> hệ thống chỉ cho nộp báo cáo của <b>ngày hôm nay</b>; ngày cũ không nhập bù được.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- BƯỚC 3 -->
+  <section>
+    <div class="sec-title"><span class="num">3</span> Xem tổng hợp ở trang "Báo cáo công việc"</div>
+    <div class="card">
+      <p>Ở menu trái chọn <b>Báo cáo công việc</b> (hoặc vào <span class="pill">/w/kazuo/daily-reports</span>). Trang này để theo dõi cả nhóm:</p>
+      <img class="shot" src="img/daily-report-3-page.png" alt="Trang Báo cáo công việc">
+      <div class="cap">Trang tổng hợp: nhóm Đã nộp / Chưa nộp, lọc theo ngày &amp; dự án.</div>
+      <ul>
+        <li><b>Đã nộp / Chưa nộp:</b> chia theo phòng ban, thấy ngay ai còn thiếu báo cáo.</li>
+        <li><b>Nhãn <span class="pill">Trễ</span>:</b> nộp sau <b>"Giờ chốt báo cáo"</b> (góc phải trên, vd 10:30 AM) sẽ bị đánh dấu trễ.</li>
+        <li><b>Chọn ngày</b> ở ô lịch góc phải để xem báo cáo ngày khác.</li>
+        <li><b>Chọn dự án</b> ở ô dropdown để lọc theo dự án.</li>
+        <li>Bấm vào <b>tên 1 người</b> để xem chi tiết báo cáo của họ ở panel bên phải.</li>
+        <li>Tab <span class="pill">Thống kê</span>: xem số liệu tổng hợp (số người nộp/trễ...).</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TÓM TẮT -->
+  <section>
+    <div class="sec-title"><span class="num">✓</span> Tóm tắt nhanh</div>
+    <div class="card">
+      <ol>
+        <li>Vào <b>Backlog</b> → bấm <span class="pill">Báo cáo</span>.</li>
+        <li>Điền 4 ô (Hôm qua / Đang làm dở / Cản trở / Hôm nay), dùng panel phải copy mã task.</li>
+        <li>Nộp <b>trước giờ chốt</b> để không bị đánh dấu <span class="pill">Trễ</span>.</li>
+        <li>Quản lý theo dõi ở trang <b>Báo cáo công việc</b> (Đã nộp/Chưa nộp, Thống kê).</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    Hướng dẫn sử dụng tính năng Báo cáo công việc · SMIT Work (Kazuo) · Dự án Thiên Long Mobile<br>
+    Ảnh chụp thực tế từ hệ thống ngày 11/08/2026.
+  </footer>
+
+</div>
+</body>
+</html>

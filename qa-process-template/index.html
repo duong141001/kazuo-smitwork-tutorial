@@ -41,6 +41,32 @@
     overflow-x:auto; font-family:ui-monospace,Consolas,monospace; font-size:12px; color:#bcd0ff; line-height:1.5}
   .hi{color:var(--t); font-weight:600}
   .warn{color:var(--y)}
+  /* 2.2 — 3 luồng test dạng cột */
+  .flows3{display:flex; flex-wrap:wrap; align-items:stretch; gap:8px; margin:10px 0}
+  .flowcol{flex:1; min-width:200px; background:#1d2138; border:1px solid var(--line);
+    border-radius:12px; padding:12px 14px; border-top-width:3px}
+  .flowcol.smoke{border-top-color:#6ea8fe}
+  .flowcol.func{border-top-color:#39d98a}
+  .flowcol.regr{border-top-color:#f6b73c}
+  .flowcol-h{font-size:14px; font-weight:700; color:var(--ink); margin-bottom:2px}
+  .flowcol-tag{font-size:11.5px; color:var(--muted); margin-bottom:8px}
+  .flowcol ul{margin:0; padding-left:16px; font-size:12.5px}
+  .flowarrow{display:flex; align-items:center; color:var(--accent); font-size:22px; font-weight:700}
+  /* 2.3 — sơ đồ luồng tổng (flowchart) */
+  .fc{display:flex; flex-direction:column; gap:6px; margin:12px 0; align-items:flex-start}
+  .fc-node{background:#1d2138; border:1px solid var(--line); border-radius:10px;
+    padding:10px 14px; font-size:13px; color:var(--ink); text-align:center; width:100%}
+  .fc-node small{color:var(--muted); font-size:11px}
+  .fc-node.start{background:#16233c; border-color:#6ea8fe}
+  .fc-node.decision{background:#2a2340; border-color:#b98cff}
+  .fc-node.reject{background:#3a2130; border-color:#ff6b81; color:#ffb0bd}
+  .fc-node.done{background:#16321f; border-color:#39d98a; color:#7ff0bf; font-weight:600}
+  .fc-arrow{color:var(--accent); font-size:18px; text-align:center; width:100%}
+  .fc-branch{display:flex; width:100%; gap:8px}
+  .fc-lbl{flex:1; text-align:center; font-size:12px; font-weight:600}
+  .fc-lbl.fail{color:#ff9bab} .fc-lbl.pass{color:#7ff0bf}
+  .fc-row{display:flex; width:100%; gap:8px}
+  .fc-row .fc-node{width:50%}
   footer{color:var(--muted); font-size:12px; text-align:center; margin-top:26px;
     border-top:1px solid var(--line); padding-top:14px}
   @media print{body{background:#fff;color:#111;padding:0}header,.card{border-color:#ddd;background:#fff}
@@ -134,18 +160,59 @@
       </table>
 
       <h2 style="margin-top:14px">2.2. Ba luồng test chuẩn</h2>
-      <h3>A. Smoke (kiểm nhanh sau mỗi build)</h3>
-      <p>Chỉ case <strong>High</strong> của mỗi module. Chạy ngay khi nhận build. Smoke fail → trả build, không test tiếp.</p>
-      <h3>B. Functional đầy đủ (test chính)</h3>
-      <p>Toàn bộ case Functional + Edge Cases của module. Chạy sau khi smoke pass.</p>
-      <h3>C. Regression (kiểm hồi quy)</h3>
-      <p>Checklist cố định mỗi module + case liên quan bug vừa fix. Chạy sau mỗi bản vá/build mới.</p>
+      <div class="flows3">
+        <div class="flowcol smoke">
+          <div class="flowcol-h">A · Smoke</div>
+          <div class="flowcol-tag">Kiểm nhanh sau mỗi build</div>
+          <ul>
+            <li>Chỉ case <strong>High</strong> của mỗi module</li>
+            <li>Chạy ngay khi nhận build</li>
+            <li><span class="warn">Fail → trả build, dừng test</span></li>
+          </ul>
+        </div>
+        <div class="flowarrow">→</div>
+        <div class="flowcol func">
+          <div class="flowcol-h">B · Functional đầy đủ</div>
+          <div class="flowcol-tag">Test chính</div>
+          <ul>
+            <li>Toàn bộ case <strong>Functional + Edge Cases</strong></li>
+            <li>Chạy sau khi smoke pass</li>
+          </ul>
+        </div>
+        <div class="flowarrow">↻</div>
+        <div class="flowcol regr">
+          <div class="flowcol-h">C · Regression</div>
+          <div class="flowcol-tag">Kiểm hồi quy</div>
+          <ul>
+            <li>Checklist cố định mỗi module</li>
+            <li>+ case liên quan bug vừa fix</li>
+            <li>Chạy sau mỗi bản vá / build mới</li>
+          </ul>
+        </div>
+      </div>
 
-      <h2 style="margin-top:14px">2.3. Sơ đồ luồng tổng</h2>
-      <pre>Nhận build → Smoke test → (fail: trả build)
-                        → (pass) → Functional đầy đủ → Log bug
-                                                     → Dev fix → Re-test + Regression
-                                                                → Đạt Exit Criteria → Đóng vòng test</pre>
+      <h2 style="margin-top:18px">2.3. Sơ đồ luồng tổng</h2>
+      <div class="fc">
+        <div class="fc-node start">📦 Nhận build</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-node decision">🔍 Smoke test</div>
+        <div class="fc-branch">
+          <span class="fc-lbl fail">✗ Fail</span>
+          <span class="fc-lbl pass">✓ Pass</span>
+        </div>
+        <div class="fc-row">
+          <div class="fc-node reject">↩ Trả build<br><small>không test tiếp</small></div>
+          <div class="fc-node">🧪 Functional đầy đủ</div>
+        </div>
+        <div class="fc-arrow" style="margin-left:auto; width:50%">↓</div>
+        <div class="fc-node" style="margin-left:auto; width:50%">🐞 Log bug</div>
+        <div class="fc-arrow" style="margin-left:auto; width:50%">↓</div>
+        <div class="fc-node" style="margin-left:auto; width:50%">🔧 Dev fix</div>
+        <div class="fc-arrow" style="margin-left:auto; width:50%">↓</div>
+        <div class="fc-node" style="margin-left:auto; width:50%">🔁 Re-test + Regression</div>
+        <div class="fc-arrow" style="margin-left:auto; width:50%">↓</div>
+        <div class="fc-node done" style="margin-left:auto; width:50%">✅ Đạt Exit Criteria → Đóng vòng test</div>
+      </div>
     </div>
   </section>
 

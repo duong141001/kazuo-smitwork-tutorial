@@ -1,0 +1,3 @@
+﻿Test Case ID;Tính năng/Module;Tiêu đề;Loại test;Độ ưu tiên;Tiền điều kiện;Dữ liệu test;Các bước thực hiện;Kết quả kỳ vọng;Kết quả thực tế;Trạng thái;EST(h);Môi trường;Ghi chú/Bug link
+TC-SECT-001;Môn phái;Gia nhập môn phái;Functional;High;Nhân vật hoàn thành luồng tân thủ, đủ cấp, build staging #___;;1. Mở giao diện Cửu Đại Phái | 2. Chọn phái | 3. Bấm Gia nhập | 4. Xác nhận;Vào phái, nhận vật phẩm tân thủ, mở nhánh NV sư môn;;Chưa chạy;1.0;PC;
+TC-CHAR-001;Nhân vật;Tạo nhân vật mới;Functional;Medium;Tài khoản mới chưa có nhân vật;;1. Vào màn tạo nhân vật | 2. Chọn giới tính/phái | 3. Đặt tên | 4. Xác nhận;Nhân vật được tạo, vào game đúng thông tin đã chọn;;Chưa chạy;0.5;PC;

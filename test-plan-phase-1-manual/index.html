@@ -73,7 +73,7 @@
     <div class="meta">
       <span class="chip">🎫 TLM-400</span>
       <span class="chip">🖐️ Manual — chưa có AI</span>
-      <span class="chip">✅ Đã có build staging</span>
+      <span class="chip">⏳ Build dự kiến ~15/08 (giữa Sprint 3)</span>
       <span class="chip">🗓️ 11/08/2026</span>
     </div>
   </header>
@@ -82,13 +82,18 @@
   <section>
     <div class="sec-title"><span class="dot"></span> 1. Mục tiêu &amp; bối cảnh mới</div>
     <div class="card">
-      <p><strong>Mục tiêu:</strong> 13 tính năng lõi nhóm A+B chạy đúng đặc tả, sẵn sàng Phase 1 — kiểm bằng <span class="hi">thao tác tay của QA trên build staging</span>, không dùng công cụ tự động.</p>
+      <p><strong>Mục tiêu:</strong> 13 tính năng lõi nhóm A+B chạy đúng đặc tả, sẵn sàng Phase 1 — kiểm bằng <span class="hi">thao tác tay của QA</span>, không dùng công cụ tự động.</p>
+      <p><strong>Tình trạng build:</strong> Build dự kiến có <span class="warn">cuối tuần làm việc này (~15/08, giữa Sprint 3)</span> → chia 2 giai đoạn:</p>
+      <ul>
+        <li><strong>Giai đoạn 1 (tuần này, chưa có build):</strong> viết test case, chuẩn bị bộ tài khoản test, checklist regression.</li>
+        <li><strong>Giai đoạn 2 (từ khi có build):</strong> chạy thực thi tay, ghi kết quả, log bug, regression.</li>
+      </ul>
       <table>
         <tr><th>Hạng mục</th><th>Bản cũ (giả định AI)</th><th>Bản này (manual)</th></tr>
-        <tr><td>Cách chạy test</td><td>AI-PlayTester tự chạy</td><td>QA thao tác tay trên staging</td></tr>
+        <tr><td>Cách chạy test</td><td>AI-PlayTester tự chạy</td><td>QA thao tác tay</td></tr>
         <tr><td>Regression</td><td>AI chạy lại nhanh</td><td>QA chạy lại tay theo checklist</td></tr>
         <tr><td>Định mức giờ</td><td>Tối ưu nhờ AI</td><td>Tăng ~30% do làm tay</td></tr>
-        <tr><td>Rủi ro "chưa có build"</td><td>Còn treo</td><td><span class="hi">Đã gỡ</span> — staging sẵn sàng</td></tr>
+        <tr><td>Thời điểm chạy test</td><td>Ngay</td><td><span class="warn">Chờ build (~15/08, giữa Sprint 3)</span></td></tr>
       </table>
     </div>
   </section>
@@ -227,7 +232,7 @@
     <div class="card">
       <table>
         <tr><th>#</th><th>Rủi ro</th><th>Phương án dự phòng</th></tr>
-        <tr><td>1</td><td><s>Chưa có build</s> → <span class="hi">ĐÃ GỠ</span></td><td>—</td></tr>
+        <tr><td>1</td><td><span class="warn">Build trễ (~15/08, giữa Sprint 3)</span> → tuần này chưa chạy thực thi</td><td>Giai đoạn 1 làm hết viết case + chuẩn bị tài khoản; chạy ngay khi có build</td></tr>
         <tr><td>2</td><td>Làm tay chậm hơn dự kiến, trễ timeline</td><td>Ưu tiên case High; giãn case Low cuối phase</td></tr>
         <tr><td>3</td><td>Thiếu tài khoản test đúng tiền điều kiện</td><td>Chuẩn bị bộ tài khoản mẫu trước sprint; nhờ Dev cấp lệnh GM</td></tr>
         <tr><td>4</td><td>Regression tay dễ sót khi build đổi nhiều</td><td>Checklist regression cố định mỗi module</td></tr>

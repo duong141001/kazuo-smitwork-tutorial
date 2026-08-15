@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Báo cáo tuần — QA Dương — Sprint 3</title>
+<style>
+  :root{--bg:#0f1115;--panel:#171a21;--panel2:#1e222b;--bd:#2a2f3a;--tx:#e6e9ef;--mut:#9aa4b2;
+    --acc:#5b9dff;--grn:#3fb950;--amb:#d29922;--red:#f85149;--pur:#a371f7;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6;font-size:15px}
+  .wrap{max-width:1000px;margin:0 auto;padding:32px 24px 80px}
+  header.hero{border:1px solid var(--bd);border-radius:14px;background:linear-gradient(135deg,#1a2233,#171a21);padding:26px 30px;margin-bottom:26px}
+  header.hero h1{margin:0 0 6px;font-size:24px}
+  header.hero p{margin:3px 0;color:var(--mut)}
+  .badges{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px}
+  .badge{font-size:12px;padding:4px 10px;border-radius:20px;border:1px solid var(--bd);background:var(--panel2);color:var(--mut)}
+  .badge.g{color:var(--grn);border-color:#24422b}
+  .badge.a{color:var(--amb);border-color:#4a3a12}
+  h2{font-size:19px;margin:30px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--bd)}
+  section.card{background:var(--panel);border:1px solid var(--bd);border-radius:12px;padding:18px 22px;margin-bottom:16px}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--bd);vertical-align:top}
+  th{color:var(--mut);font-weight:600;background:var(--panel2)}
+  tr:last-child td{border-bottom:none}
+  code{background:var(--panel2);padding:2px 6px;border-radius:5px;font-family:"SF Mono",Consolas,monospace;font-size:13px;color:#cbb7ff}
+  ul.clean{margin:8px 0;padding-left:20px}
+  ul.clean li{margin:5px 0}
+  .tag{font-size:11px;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .done{background:#16351f;color:#56d364}
+  .prog{background:#3a2f10;color:#e3b341}
+  .todo{background:#2a2f3a;color:#9aa4b2}
+  .callout{border-left:3px solid var(--amb);background:#221d11;padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0}
+  .callout.ok{border-color:var(--grn);background:#10240f}
+  .callout.info{border-color:var(--acc);background:#10233d}
+  .callout.warn{border-color:var(--red);background:#2a1414}
+  .callout b{color:var(--tx)}
+  .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:10px 0}
+  .kpi .box{background:var(--panel2);border:1px solid var(--bd);border-radius:10px;padding:14px}
+  .kpi .n{font-size:26px;font-weight:700}
+  .kpi .l{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.03em}
+  @media(max-width:760px){.kpi{grid-template-columns:repeat(2,1fr)}}
+  .muted{color:var(--mut)}
+  footer{margin-top:36px;color:var(--mut);font-size:13px;text-align:center}
+  .bar{height:10px;border-radius:6px;background:var(--panel2);overflow:hidden;margin-top:6px}
+  .bar>span{display:block;height:100%;background:var(--amb)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>Báo cáo tuần — chuẩn bị họp</h1>
+  <p><b>Người báo cáo:</b> Dương (QA) · <b>Project:</b> Thiên Long Mobile</p>
+  <p><b>Sprint 3:</b> 10/08 → 22/08/2026 · <b>Còn lại:</b> 7 ngày · <b>Ngày báo cáo:</b> 15/08/2026</p>
+  <div class="badges">
+    <span class="badge g">Việc QA cụm Trang bị: DONE</span>
+    <span class="badge g">Kiểm thử KazuoWiki: DONE</span>
+    <span class="badge a">3 story sprint: đang dở</span>
+    <span class="badge">Hỗ trợ kỹ thuật: &lt;1 ngày</span>
+  </div>
+</header>
+
+<section class="card">
+  <h2 style="margin-top:0">1. Tóm tắt nhanh</h2>
+  <div class="kpi">
+    <div class="box"><div class="n" style="color:var(--grn)">6</div><div class="l">story/subtask Done</div></div>
+    <div class="box"><div class="n" style="color:var(--acc)">32</div><div class="l">test case (xlsx)</div></div>
+    <div class="box"><div class="n" style="color:var(--pur)">13</div><div class="l">lỗi/đề xuất KazuoWiki</div></div>
+    <div class="box"><div class="n" style="color:var(--amb)">3</div><div class="l">story sprint đang dở</div></div>
+  </div>
+  <p class="muted">Tuần qua hoàn thành trọn 2 mảng: (1) phân tích & viết test case cụm Trang bị, (2) kiểm thử công cụ nội bộ KazuoWiki. Đây là phần việc thực tế đã có sản phẩm bàn giao (file phân tích, 2 bảng xlsx, bộ ảnh bằng chứng, 2 báo cáo).</p>
+</section>
+
+<section class="card">
+  <h2 style="margin-top:0">2. Tuần vừa rồi đã làm gì</h2>
+
+  <h3 style="color:var(--acc)">A. Kiểm thử game — cụm Trang bị <span class="tag done">DONE</span></h3>
+  <table>
+    <tr><th>Mã</th><th>Việc</th><th>EST</th><th>Sản phẩm</th></tr>
+    <tr><td><code>TLM-468</code></td><td>Phân tích GDD cơ chế cụm Trang bị (Giám định/Cường hóa/Sửa chữa)</td><td>3h</td><td>Bản phân tích GDD (8 chức năng, 8 rủi ro, 7 câu hỏi cho GD/Dev)</td></tr>
+    <tr><td><code>TLM-469</code></td><td>Viết test case Functional + Edge, xuất xlsx</td><td>4h</td><td>32 test case (3 sheet: Scope/Cases/EST)</td></tr>
+  </table>
+
+  <h3 style="color:var(--acc)">B. Kiểm thử công cụ nội bộ — KazuoWiki <span class="tag done">DONE</span></h3>
+  <table>
+    <tr><th>Mã</th><th>Việc</th><th>EST</th><th>Sản phẩm</th></tr>
+    <tr><td><code>TLM-470</code></td><td>Cài & test chức năng MCP WikiBase</td><td>3h</td><td>Phát hiện 2 bug backend chặn ghi wiki; báo cáo + issue</td></tr>
+    <tr><td><code>TLM-471</code></td><td>Audit web KazuoWiki (Playwright) + báo lỗi & đề xuất cải tiến</td><td>5h</td><td>13 lỗi/điểm bất hợp lý + đề xuất, xlsx + 17 ảnh bằng chứng</td></tr>
+  </table>
+
+  <h3 style="color:var(--amb)">C. Việc phát sinh ngoài kế hoạch</h3>
+  <div class="callout">
+    <b>Hỗ trợ kỹ thuật cho anh em</b> (setup máy, cài Windows, cấu hình kỹ thuật). Không nằm trong sprint, không được track trên hệ thống nhưng <b>có chiếm thời gian làm việc</b>. Ước tính tuần qua: <b>dưới 1 ngày công</b> (vài tiếng rải rác).
+  </div>
+</section>
+
+<section class="card">
+  <h2 style="margin-top:0">3. Dự kiến theo Sprint 3 — có hoàn thành không?</h2>
+  <p>3 story QA của cá nhân trong Sprint 3 (đều <b>chưa nhập EST giờ</b> trên hệ thống, tự đánh giá đã làm được một phần):</p>
+  <table>
+    <tr><th>Mã</th><th>Story</th><th>Trạng thái</th><th>Đã làm được phần nào</th></tr>
+    <tr><td><code>TLM-398</code></td><td>[QA] Nghiên cứu tài liệu GDD & Game Mechanics</td><td><span class="tag prog">Đang làm</span></td><td>Đã đọc trọn tài liệu TLBB + phân tích cơ chế cụm Trang bị. Còn các cụm khác.</td></tr>
+    <tr><td><code>TLM-399</code></td><td>[QA] Phân loại Kiểm thử & Cập nhật EST cho Test Plan</td><td><span class="tag prog">Đang làm</span></td><td>Đã có mẫu phân loại (Functional/Edge) + EST cho cụm Trang bị. Cần nhân rộng ra toàn tính năng Phase 1.</td></tr>
+    <tr><td><code>TLM-400</code></td><td>[QA] Hoàn thiện Chiến lược & Kế hoạch Kiểm thử Phase 1</td><td><span class="tag prog">Đang làm</span></td><td>Có khung test plan + template test case. Chờ hoàn thiện sau khi phủ hết cụm tính năng.</td></tr>
+  </table>
+
+  <p style="margin-top:16px"><b>Tiến độ tổng (tự đánh giá):</b></p>
+  <div class="bar"><span style="width:45%"></span></div>
+  <p class="muted" style="margin-top:6px">Khoảng 45% khối lượng 3 story — đã xong mẫu/phương pháp trên cụm Trang bị, phần còn lại là nhân rộng ra các cụm tính năng khác.</p>
+
+  <div class="callout warn">
+    <b>Dự báo: KHÓ hoàn thành trọn 3 story trong 7 ngày còn lại</b> nếu giữ nguyên yêu cầu "100% tính năng" (AC của TLM-399). Lý do: Phase 1 có rất nhiều cụm tính năng (Nhân vật, 9 môn phái, Trân Thú, Chiến đấu, Túi đồ...), mỗi cụm cần lặp lại quy trình phân tích + phân loại + EST như cụm Trang bị.
+  </div>
+
+  <div class="callout info">
+    <b>Đề xuất để kịp sprint:</b>
+    <ul class="clean" style="margin-top:6px">
+      <li>Chốt <b>độ ưu tiên cụm tính năng</b>: làm trọn vài cụm quan trọng nhất (thay vì 100%) để có Test Plan chạy được ngay.</li>
+      <li>Nhập <b>EST giờ</b> cho 3 story sprint để đo tiến độ chính xác (hiện đang trống).</li>
+      <li>Ghi nhận thời gian <b>hỗ trợ kỹ thuật</b> như một khoản trừ vào năng lực sprint.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card">
+  <h2 style="margin-top:0">4. Vướng mắc &amp; cần hỗ trợ</h2>
+  <ul class="clean">
+    <li><b>2 bug backend KazuoWiki</b> (create/propose trang) chặn ghi wiki qua công cụ — cần đội backend fix mới test trọn được luồng duyệt.</li>
+    <li><b>Thiếu số liệu game</b> trong tài liệu (tỉ lệ thất bại sửa chữa, bảng nguyên liệu cường hóa...) — cần GD/Dev bổ sung để hoàn thiện test case.</li>
+    <li><b>3 story sprint chưa có EST</b> — nên chốt định mức để theo dõi tiến độ.</li>
+    <li><b>Hỗ trợ kỹ thuật cho anh em</b> đang là việc ngầm, chưa được tính vào năng lực — đề xuất ghi nhận chính thức.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 style="margin-top:0">5. Kế hoạch tuần tới</h2>
+  <ul class="clean">
+    <li>Nhân rộng quy trình (phân tích GDD → phân loại test → EST) sang các cụm tính năng ưu tiên tiếp theo của Phase 1.</li>
+    <li>Tổng hợp bộ test case + EST vào Test Plan Phase 1 (TLM-400).</li>
+    <li>Gửi danh sách câu hỏi cho GD/Dev để lấp các lỗ hổng số liệu.</li>
+    <li>Theo dõi backend fix 2 bug KazuoWiki, test lại luồng duyệt khi có bản vá.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 style="margin-top:0">6. Hướng dẫn sử dụng KazuoWork (nhanh cho team)</h2>
+  <p class="muted">KazuoWork là công cụ quản lý công việc của công ty (project, sprint, story, báo cáo ngày). Dưới đây là các thao tác cơ bản team hay dùng.</p>
+
+  <h3 style="color:var(--acc)">6.1 Cấu trúc công việc</h3>
+  <table>
+    <tr><th>Cấp</th><th>Là gì</th><th>Ví dụ</th></tr>
+    <tr><td><b>Project</b></td><td>Dự án lớn</td><td>Thiên Long Mobile</td></tr>
+    <tr><td><b>Epic</b></td><td>Nhóm việc lớn theo chủ đề</td><td>Hoàn thiện Kế hoạch Kiểm thử Phase 1</td></tr>
+    <tr><td><b>Sprint</b></td><td>Chu kỳ làm việc (thường 2 tuần)</td><td>Sprint 3 (10–22/08)</td></tr>
+    <tr><td><b>Story</b></td><td>Đầu việc chính, có người phụ trách</td><td>[QA] Phân loại Kiểm thử &amp; EST</td></tr>
+    <tr><td><b>Subtask</b></td><td>Việc con của story</td><td>Phân tích GDD cụm Trang bị</td></tr>
+  </table>
+
+  <h3 style="color:var(--acc)">6.2 Thao tác cơ bản</h3>
+  <ul class="clean">
+    <li><b>Nhận việc:</b> mở Story được gán cho mình → đặt <b>người phụ trách</b> (assignee) và <b>ngày bắt đầu</b>.</li>
+    <li><b>Ước lượng (EST):</b> nhập số <b>giờ công</b> dự kiến cho story/subtask — dùng để đo tiến độ và phân bổ nhân lực.</li>
+    <li><b>Cập nhật trạng thái:</b> kéo thẻ giữa các cột <span class="tag todo">TODO</span> → <span class="tag prog">Đang làm</span> → <span class="tag done">Done</span> đúng với thực tế.</li>
+    <li><b>Chia nhỏ:</b> việc lớn thì tách thành subtask để dễ theo dõi (mỗi subtask có EST + trạng thái riêng).</li>
+    <li><b>Liên kết:</b> gắn story vào đúng <b>Epic</b>/<b>Sprint</b>; dùng <b>comment</b> để nối các việc liên quan.</li>
+    <li><b>Báo cáo ngày (Daily Report):</b> mỗi ngày điền 4 mục — xem mục 7.</li>
+  </ul>
+
+  <div class="callout info">
+    <b>Nguyên tắc vàng:</b> trạng thái trên KazuoWork phải <b>khớp thực tế</b>. Việc xong mới kéo Done; việc chưa xong giữ nguyên. Không để story "treo" sai trạng thái — vì báo cáo sprint đọc thẳng từ đây.
+  </div>
+</section>
+
+<section class="card">
+  <h2 style="margin-top:0">7. Đề xuất: dùng Daily Report trên KazuoWork</h2>
+  <p>Đề xuất cả team QA (và các nhóm khác) dùng tính năng <b>Báo cáo ngày</b> trên KazuoWork thay vì báo miệng/chat rời rạc.</p>
+
+  <h3 style="color:var(--acc)">7.1 Mẫu 4 mục</h3>
+  <table>
+    <tr><th>Mục</th><th>Ghi gì</th></tr>
+    <tr><td><b>Hôm qua</b></td><td>Việc đã làm hôm trước (ngắn gọn, 1–3 gạch đầu dòng)</td></tr>
+    <tr><td><b>Hôm nay</b></td><td>Dự định làm hôm nay</td></tr>
+    <tr><td><b>Vướng mắc (Blocker)</b></td><td>Đang bị chặn bởi gì, cần ai hỗ trợ</td></tr>
+    <tr><td><b>Task trễ hạn</b></td><td>Có việc nào đang trễ không (có/không + ghi chú)</td></tr>
+  </table>
+
+  <h3 style="color:var(--acc)">7.2 Vì sao nên dùng</h3>
+  <ul class="clean">
+    <li><b>Minh bạch tiến độ:</b> quản lý thấy ai làm gì, ở đâu, mà không cần hỏi từng người.</li>
+    <li><b>Phát hiện blocker sớm:</b> việc bị chặn được nêu ngay trong ngày, xử lý kịp thay vì để dồn tới cuối sprint.</li>
+    <li><b>Ghi nhận việc "ngầm":</b> các việc không có story (vd hỗ trợ kỹ thuật, setup máy cho anh em) vẫn được ghi lại → phản ánh đúng năng lực thực tế.</li>
+    <li><b>Dữ liệu cho họp:</b> báo cáo tuần/sprint tổng hợp lại từ daily report, đỡ phải nhớ lại.</li>
+  </ul>
+
+  <div class="callout ok">
+    <b>Cam kết mẫu:</b> mỗi thành viên nộp Daily Report <b>cuối giờ làm mỗi ngày</b>. Giữ ngắn gọn (2–4 dòng/mục), không cần văn vẻ. Ưu tiên nêu rõ <b>blocker</b> và <b>việc phát sinh ngoài kế hoạch</b>.
+  </div>
+
+  <div class="callout">
+    <b>Lưu ý thực tế:</b> bản thân người báo cáo này đã áp dụng — daily report ngày 14/08 đã nộp và được duyệt trên hệ thống. Đề xuất nhân rộng cho cả nhóm.
+  </div>
+</section>
+
+<footer>
+  Báo cáo tuần — QA Dương · Sprint 3 (Thiên Long Mobile) · 15/08/2026<br>
+  <span class="muted">Số liệu story lấy từ hệ thống Kazuotask. Thời gian hỗ trợ kỹ thuật &amp; tiến độ % là tự đánh giá.</span>
+</footer>
+
+</div>
+</body>
+</html>
